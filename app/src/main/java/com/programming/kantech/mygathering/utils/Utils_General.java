@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 /**
  * @class Utils_General
- *
  * @brief Helper methods shared by various Activities.
  */
 public class Utils_General {
@@ -44,14 +43,11 @@ public class Utils_General {
      */
     static public boolean isNetworkAvailable(Context c) {
         ConnectivityManager cm =
-                (ConnectivityManager)c.getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
     }
-
-
-
 
 }
