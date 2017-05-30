@@ -1,3 +1,48 @@
 <resources>
     <string name="app_name">MyGathering</string>
+    <string name="app_description">A Full Stack Application</string>
+    <string name="app_year">May 2017</string>
+
+
+    <string name="action_settings">Settings</string>
+
+    <!-- Label for the login credentials group title [CHAR LIMIT=30] -->
+    <string name="pref_group_login_label">Login Credentials</string>
+
+    <!-- Key name for login group in SharedPreferences [CHAR LIMIT=NONE] -->
+    <string name="pref_group_login_key" translatable="false">group_login</string>
+
+    <!-- Label for the username preference [CHAR LIMIT=30] -->
+    <string name="pref_preferred_email_label">Email</string>
+    <!-- Key name for storing username (email) in SharedPreferences [CHAR LIMIT=NONE] -->
+    <string name="pref_preferred_email_key" translatable="false">preferred email</string>
+    <!-- Default username for username preference [CHAR LIMIT=NONE] -->
+    <string name="pref_preferred_email_default" translatable="false">preferred email not set</string>
+
+    <string name="pref_save_credentials_key" translatable="false">Save Credentials</string>
+
+
+    <!-- Key name for storing username in SharedPreferences [CHAR LIMIT=NONE] -->
+    <string name="pref_logged_email_key" translatable="false">logged user email</string>
+
+    <string name="title_login_screen">Sign Into Your Account</string>
+    <string name="title_login_email">Email</string>
+    <string name="title_login_password">Password</string>
+
+    <string name="title_register_screen">Sign Up For Free</string>
+    <string name="title_register_name">Name</string>
+    <string name="title_register_email">Email Address</string>
+
+
+    <string name="login_save_credentials">Remember Me</string>
+
+    <string name="btn_signin">Sign In</string>
+    <string name="btn_register">Register Now</string>
+
+    <string name="register_login_msg">Already a member? Login</string>
+    <string name="login_register_msg">Not yet a member?  Register now</string>
+    <string name="login_password_msg">If you have not reset your password, use the password emailed to you during registration!</string>
+    <string name="action_logout">Sign Out</string>
+    <string name="app_title_details">Details</string>
+
 </resources>
