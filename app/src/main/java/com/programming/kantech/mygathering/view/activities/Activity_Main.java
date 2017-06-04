@@ -33,6 +33,7 @@ import com.programming.kantech.mygathering.utils.Constants;
 import com.programming.kantech.mygathering.utils.Utils_ContentValues;
 import com.programming.kantech.mygathering.utils.Utils_ConvertToPojo;
 import com.programming.kantech.mygathering.utils.Utils_General;
+import com.programming.kantech.mygathering.utils.Utils_Preferences;
 import com.programming.kantech.mygathering.view.ui.Adapter_Gatherings;
 
 import java.util.ArrayList;
@@ -228,6 +229,12 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
     }
 
     public void getGatherings() {
+
+        String distance = Utils_Preferences.getPreferredDistance(getApplicationContext());
+        float lat = 113;
+        float lng = -75;
+
+
 
         Call<List<Gathering>> call = apiService.getGatherings();
 

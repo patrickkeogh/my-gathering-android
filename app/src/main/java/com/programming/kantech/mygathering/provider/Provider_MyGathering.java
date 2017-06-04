@@ -208,7 +208,7 @@ public class Provider_MyGathering extends ContentProvider {
 
         switch (match) {
             case TOPICS_ALL:
-                Log.i(Constants.TAG, "INSERT TOPICS_ALL called");
+                //Log.i(Constants.TAG, "INSERT TOPICS_ALL called");
                 id = db.insert(TopicEntry.TABLE_NAME, null, values);
                 if ( id > 0 ) {
                     returnUri = ContentUris.withAppendedId(TopicEntry.CONTENT_URI, id);
@@ -217,7 +217,7 @@ public class Provider_MyGathering extends ContentProvider {
                 }
                 break;
             case TYPES_ALL:
-                Log.i(Constants.TAG, "INSERT TYPES_ALL called");
+                //Log.i(Constants.TAG, "INSERT TYPES_ALL called");
                 // Insert new values into the database
                 // Inserting values into tasks table
                 id = db.insert(TypeEntry.TABLE_NAME, null, values);
@@ -334,7 +334,7 @@ public class Provider_MyGathering extends ContentProvider {
 
                         long _id = db.insert(GatheringEntry.TABLE_NAME, null, value);
 
-                        Log.i(Constants.TAG, "_id returned from insert:" + _id);
+                        //Log.i(Constants.TAG, "_id returned from insert:" + _id);
 
                         if (_id != -1) {
                             rowsInserted++;

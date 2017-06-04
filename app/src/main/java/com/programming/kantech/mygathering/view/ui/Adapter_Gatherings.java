@@ -113,7 +113,7 @@ public class Adapter_Gatherings extends RecyclerView.Adapter<Adapter_Gatherings.
 
 
 
-        Log.i(Constants.TAG, "Banner URL:" + gathering.getBanner_url());
+        //Log.i(Constants.TAG, "Banner URL:" + gathering.getBanner_url());
 
         if (gathering.getBanner_url() == "null") {
             Picasso.with(mContext)

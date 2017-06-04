@@ -22,17 +22,8 @@ import retrofit2.http.POST;
 public interface ApiInterface {
 
     // Parameters used
+    public static final String PARAM_ID = "id";
 
-
-    // Users
-    public static final String PARAM_ID = "_id";
-    public static final String PARAM_USERNAME = "username";
-    public static final String PARAM_PASSWORD = "password";
-    public static final String PARAM_NAME = "name";
-
-
-    // The path used for OAuth 2.0 authorization token
-    public static final String TOKEN_PATH = "/oauth/token";
 
     // Root paths for the server
     public static final String SERVICE_ROOT_PATH = "/api";
@@ -44,6 +35,7 @@ public interface ApiInterface {
     public static final String SERVICE_GATHERING_PATH = SERVICE_ROOT_PATH + "/gathering";
 
     public static final String GATHERING_GET_TOPICS = SERVICE_GATHERING_PATH + "/topics";
+    public static final String GATHERING_GET_TYPES = SERVICE_GATHERING_PATH + "/types";
 
     // /impatient/checklogin
 //    @GET(SERVICE_LOGIN_PATH)
@@ -64,8 +56,10 @@ public interface ApiInterface {
     @GET(GATHERING_GET_TOPICS)
     Call<List<GatheringTopic>> getGatheringTopics();
 
-    @GET("api/gathering/types")
+    @GET(GATHERING_GET_TYPES)
     Call<List<GatheringType>> getGatheringTypes();
+
+
 
     @GET("api/testing/android/gatherings")
     Call<List<Gathering>> getGatherings();

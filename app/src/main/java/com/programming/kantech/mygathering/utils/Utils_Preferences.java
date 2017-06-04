@@ -50,5 +50,15 @@ public class Utils_Preferences {
         spe.apply();
     }
 
+    public static String getPreferredLocation(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(context.getString(R.string.pref_preferred_gathering_location_key),"");
+    }
+
+    public static String getPreferredDistance(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(context.getString(R.string.pref_preferred_gathering_distance_key),"");
+    }
+
 
 }

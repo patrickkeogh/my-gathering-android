@@ -6,18 +6,22 @@ import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.programming.kantech.mygathering.R;
 import com.programming.kantech.mygathering.utils.Constants;
+import com.programming.kantech.mygathering.utils.Utils_General;
 
 /**
  * Created by patrick keogh on 2017-05-22.
  */
 
-public class fragment_settings extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class fragment_settings extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener,
+        Preference.OnPreferenceChangeListener {
     /**
      * Called during {@link #onCreate(Bundle)} to supply the preferences for this fragment.
      * Subclasses are expected to call {@link #setPreferenceScreen(PreferenceScreen)} either
@@ -40,6 +44,8 @@ public class fragment_settings extends PreferenceFragmentCompat implements Share
 
         Log.i(Constants.TAG, "Count in Prefs:" + count);
 
+        //initSummary(getPreferenceScreen());
+
         // Go through all of the preferences, and set up their preference summary.
         for (int i = 0; i < count; i++) {
             Preference p = prefScreen.getPreference(i);
@@ -48,16 +54,43 @@ public class fragment_settings extends PreferenceFragmentCompat implements Share
             // they are already set up in xml using summaryOff and summary On
             if (!(p instanceof CheckBoxPreference)) {
 
-                String value = sharedPreferences.getString(p.getKey(), "");
+                if (p instanceof PreferenceCategory) {
+                    Log.i(Constants.TAG, "We have a category");
 
-                Log.i(Constants.TAG, "Key in Prefs:" + p.getKey());
+                    PreferenceCategory cat = (PreferenceCategory) p;
+                    for (int x = 0; x < cat.getPreferenceCount(); x++) {
+                        //initSummary(pGrp.getPreference(i));
 
-                Log.i(Constants.TAG, "Value in Prefs:" + value);
+
+                        Preference pref = cat.getPreference(x);
+
+                        String value = sharedPreferences.getString(pref.getKey(), "");
+
+                        Log.i(Constants.TAG, "Key in cat Prefs:" + pref.getKey());
+
+                        setPreferenceSummary(pref, value);
+                    }
+                } else {
+
+                    String value = sharedPreferences.getString(p.getKey(), "");
+
+                    Log.i(Constants.TAG, "Key in Prefs:" + p.getKey());
+
+                    Log.i(Constants.TAG, "Value in Prefs:" + value);
 
 
-                setPreferenceSummary(p, value);
+                    setPreferenceSummary(p, value);
+
+                }
+
+
             }
         }
+
+        // COMPLETED (3) Add the OnPreferenceChangeListener specifically to the EditTextPreference
+        // Add the preference listener which checks that the size is correct to the size preference
+        Preference preference = findPreference(getString(R.string.pref_preferred_gathering_distance_key));
+        preference.setOnPreferenceChangeListener(this);
 
 
     }
@@ -122,5 +155,50 @@ public class fragment_settings extends PreferenceFragmentCompat implements Share
             }
         }
 
+    }
+
+    /**
+     * Called when a Preference has been changed by the user. This is
+     * called before the state of the Preference is about to be updated and
+     * before the state is persisted.
+     *
+     * @param preference The changed Preference.
+     * @param newValue   The new value of the Preference.
+     * @return True to update the state of the Preference with the new value.
+     */
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+        Log.i(Constants.TAG, "onPreferenceChange() called");
+        // In this context, we're using the onPreferenceChange listener for checking whether the
+        // size setting was set to a valid value.
+
+        String error = "Location distance must be a number between 1 and 1,000,000";
+
+        // Make sure the preference is for distance
+        String distanceKey = getString(R.string.pref_preferred_gathering_distance_key);
+
+        Log.i(Constants.TAG, "Key in onPrefChange:" + distanceKey);
+
+        if (preference.getKey().equals(distanceKey)) {
+            String stringDistance = (String) newValue;
+            try {
+                float distance = Float.parseFloat((stringDistance));
+
+                // Distance must be betwenn 1 and 1,000,000 km
+                if (distance > 1000000 || distance < 1) {
+
+                    Utils_General.showToast(getContext(), error);
+                    return false;
+
+                }
+
+            } catch (NumberFormatException nfe) {
+                // If whatever the user entered can't be parsed to a number, show an error
+                Utils_General.showToast(getContext(), error);
+                return false;
+            }
+        }
+        return true;
     }
 }

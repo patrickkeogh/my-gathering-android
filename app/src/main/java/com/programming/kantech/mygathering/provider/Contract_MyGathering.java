@@ -80,10 +80,10 @@ public class Contract_MyGathering {
          * Create a Patient object with the data from a cursor.
          *
          * @param cursor
-         * @return Patient
+         * @return Gathering_Pojo
          */
         public static Gathering_Pojo getGatheringFromCursor(Cursor cursor) {
-            Log.i(Constants.TAG, "Entered getGatheringFromCursor() in Contract_Gathering");
+            //Log.i(Constants.TAG, "Entered getGatheringFromCursor() in Contract_Gathering");
 
             Gathering_Pojo g = new Gathering_Pojo();
 

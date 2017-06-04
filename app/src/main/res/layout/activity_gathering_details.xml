@@ -41,6 +41,13 @@
             android:adjustViewBounds="true"
             android:src="@drawable/barbeque" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="testNotification"
+            android:text="Test Notification" />
+
         <TextView
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"

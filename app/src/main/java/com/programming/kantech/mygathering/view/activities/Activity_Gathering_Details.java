@@ -11,6 +11,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import com.programming.kantech.mygathering.data.model.mongo.Location;
 import com.programming.kantech.mygathering.data.model.pojo.Gathering_Pojo;
 import com.programming.kantech.mygathering.provider.Contract_MyGathering;
 import com.programming.kantech.mygathering.utils.Constants;
+import com.programming.kantech.mygathering.utils.Utils_Notifications;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -197,5 +199,9 @@ public class Activity_Gathering_Details extends AppCompatActivity implements Loa
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+    }
+
+    public void testNotification(View view) {
+        Utils_Notifications.remindUserOfGathering(this);
     }
 }

@@ -8,9 +8,14 @@
 
     <!-- Label for the login credentials group title [CHAR LIMIT=30] -->
     <string name="pref_group_login_label">Login Credentials</string>
+    <!-- Label for the login credentials group title [CHAR LIMIT=30] -->
+    <string name="pref_group_gatherings_label">Search Preferences</string>
 
-    <!-- Key name for login group in SharedPreferences [CHAR LIMIT=NONE] -->
+
+    <!-- Key name for login credentials group in SharedPreferences [CHAR LIMIT=NONE] -->
     <string name="pref_group_login_key" translatable="false">group_login</string>
+    <!-- Key name for login credentials group in SharedPreferences [CHAR LIMIT=NONE] -->
+    <string name="pref_group_gatherings_key" translatable="false">group_gatherings</string>
 
     <!-- Label for the username preference [CHAR LIMIT=30] -->
     <string name="pref_preferred_email_label">Email</string>
@@ -18,6 +23,22 @@
     <string name="pref_preferred_email_key" translatable="false">preferred email</string>
     <!-- Default username for username preference [CHAR LIMIT=NONE] -->
     <string name="pref_preferred_email_default" translatable="false">preferred email not set</string>
+
+
+    <!-- Label for the location preference [CHAR LIMIT=30] -->
+    <string name="pref_preferred_gathering_location_label">Location</string>
+    <!-- Key name for storing location in SharedPreferences [CHAR LIMIT=NONE] -->
+    <string name="pref_preferred_gathering_location_key" translatable="false">preferred gathering location</string>
+    <!-- Default location preference [CHAR LIMIT=NONE] -->
+    <string name="pref_preferred_gathering_location_default" translatable="false">preferred location not set</string>
+
+    <!-- Label for the location distance preference [CHAR LIMIT=30] -->
+    <string name="pref_preferred_gathering_distance_label">Max Distance (km)</string>
+    <!-- Key name for storing location distance in SharedPreferences [CHAR LIMIT=NONE] -->
+    <string name="pref_preferred_gathering_distance_key" translatable="false">preferred gathering distance</string>
+    <!-- Default location distance preference [CHAR LIMIT=NONE] -->
+    <string name="pref_preferred_gathering_distance_default" translatable="false">20</string>
+
 
     <string name="pref_save_credentials_key" translatable="false">Save Credentials</string>
 
@@ -44,5 +65,7 @@
     <string name="login_password_msg">If you have not reset your password, use the password emailed to you during registration!</string>
     <string name="action_logout">Sign Out</string>
     <string name="app_title_details">Details</string>
+
+    <string name="gathering_reminder_notification_title">Gathering Reminder - Have you registered yet?</string>
 
 </resources>

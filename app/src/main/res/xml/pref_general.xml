@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory
+        android:key="@string/pref_group_login_key"
+        android:title="@string/pref_group_login_label">
 
-    <EditTextPreference
-        android:defaultValue="@string/pref_preferred_email_default"
-        android:inputType="text"
-        android:summary="Please provide your email address"
-        android:key="@string/pref_preferred_email_key"
-        android:singleLine="true"
-        android:title="@string/pref_preferred_email_label" />
+        <EditTextPreference
+            android:defaultValue="@string/pref_preferred_email_default"
+            android:inputType="text"
+            android:summary="Please provide your email address"
+            android:key="@string/pref_preferred_email_key"
+            android:singleLine="true"
+            android:title="@string/pref_preferred_email_label" />
 
+    </PreferenceCategory>
 
-    <!--<PreferenceCategory-->
-        <!--android:key="@string/pref_group_login_key"-->
-        <!--android:title="@string/pref_group_login_label">-->
+    <PreferenceCategory
+        android:key="@string/pref_group_gatherings_key"
+        android:title="@string/pref_group_gatherings_label">
 
+        <EditTextPreference
+            android:defaultValue="@string/pref_preferred_gathering_location_default"
+            android:inputType="text"
+            android:summary="Please provide your preferred search location"
+            android:key="@string/pref_preferred_gathering_location_key"
+            android:singleLine="true"
+            android:title="@string/pref_preferred_gathering_location_label" />
 
+        <EditTextPreference
+            android:defaultValue="@string/pref_preferred_gathering_distance_default"
+            android:inputType="text"
+            android:summary="Please provide your preferred search distance"
+            android:key="@string/pref_preferred_gathering_distance_key"
+            android:singleLine="true"
+            android:title="@string/pref_preferred_gathering_distance_label" />
 
-    <!--</PreferenceCategory>-->
+    </PreferenceCategory>
 
 </PreferenceScreen>
