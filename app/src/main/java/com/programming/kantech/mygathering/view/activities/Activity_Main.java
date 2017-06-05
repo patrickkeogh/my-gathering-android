@@ -26,18 +26,30 @@ import com.programming.kantech.mygathering.R;
 import com.programming.kantech.mygathering.data.model.mongo.Gathering;
 import com.programming.kantech.mygathering.data.model.mongo.Result_Logout;
 import com.programming.kantech.mygathering.data.model.pojo.Gathering_Pojo;
+import com.programming.kantech.mygathering.data.model.pojo.Query_Search;
 import com.programming.kantech.mygathering.data.retrofit.ApiClient;
 import com.programming.kantech.mygathering.data.retrofit.ApiInterface;
 import com.programming.kantech.mygathering.provider.Contract_MyGathering;
+import com.programming.kantech.mygathering.sync.ReminderUtilities;
+import com.programming.kantech.mygathering.sync.tasks.Task_getGatherings;
 import com.programming.kantech.mygathering.utils.Constants;
 import com.programming.kantech.mygathering.utils.Utils_ContentValues;
 import com.programming.kantech.mygathering.utils.Utils_ConvertToPojo;
+import com.programming.kantech.mygathering.utils.Utils_DateFormatting;
 import com.programming.kantech.mygathering.utils.Utils_General;
 import com.programming.kantech.mygathering.utils.Utils_Preferences;
 import com.programming.kantech.mygathering.view.ui.Adapter_Gatherings;
 
+import java.lang.ref.WeakReference;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -154,6 +166,9 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
          * the last created loader is re-used.
          */
         getSupportLoaderManager().initLoader(Constants.GATHERING_DETAIL_LOADER, null, this);
+
+        // COMPLETED (23) Schedule the new gathering search
+        ReminderUtilities.scheduleNewGatheringSearch(this);
     }
 
     @Override
@@ -234,59 +249,85 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
         float lat = 113;
         float lng = -75;
 
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 
+        //current data and time - 1 hr
+        final Date date = new Date(System.currentTimeMillis() - 3600 * 1000);
 
-        Call<List<Gathering>> call = apiService.getGatherings();
+        final String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        final SimpleDateFormat sdf = new SimpleDateFormat(ISO_FORMAT);
+        //final TimeZone utc = TimeZone.getTimeZone("UTC");
+        //sdf.setTimeZone(utc);
+        Log.i(Constants.TAG, "start-date:" + sdf.format(date));
 
-        call.enqueue(new Callback<List<Gathering>>() {
-            @Override
-            public void onResponse(Call<List<Gathering>> call, Response<List<Gathering>> response) {
+        List<Double> coords = Arrays.asList(-79.691124, 44.38760379999999);
 
-                Log.i(Constants.TAG, "Response:" + response);
-                List<Gathering> gatherings = response.body();
-                Log.d(Constants.TAG, "Number of Gathering Types received: " + gatherings.size());
+        Query_Search query = new Query_Search(coords, 200000, sdf.format(date));
 
-                for (int i = 0; i < gatherings.size(); i++) {
-                    //Log.i(Constants.TAG, "Gathering Mongo:" + gatherings.get(i).toString());
-                }
+        Call<List<Gathering>> call = apiService.getGatherings(query);
 
+        WeakReference<Context> mContext = new WeakReference<Context>(getApplicationContext());
 
+        new Task_getGatherings(mContext).execute(call);
 
-                List<ContentValues> values = new ArrayList<ContentValues>();
+        //Call<List<Gathering>> call = apiService.getGatherings();
 
-                //loop over the returned values and convert them to pogos
-                for (int i = 0; i < gatherings.size(); i++) {
-                    // Convert mongo db doc to pojo and store in content provider
-                    Gathering_Pojo gathering = Utils_ConvertToPojo.convertGatheringMongoToPojo(gatherings.get(i));
-
-                    //Log.i(Constants.TAG, "Gathering Pojo:" + gathering.toString());
-
-                    values.add(Utils_ContentValues.extractGatheringValues(gathering));
-                }
-
-                /*
-                 * Set the returned data to the adapter
-                 */
-                //mAdapter.setGatheringData(gatherings);
-
-                // Delete all patients and restore them in the provider
-                ContentResolver resolver = getContentResolver();
-                resolver.delete(Contract_MyGathering.GatheringEntry.CONTENT_URI, null, null);
-
-                // Bulk Insert our new weather data into Sunshine's Database
-                getApplicationContext().getContentResolver().bulkInsert(
-                        Contract_MyGathering.GatheringEntry.CONTENT_URI,
-                        values.toArray(new ContentValues[gatherings.size()]));
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Gathering>> call, Throwable t) {
-                // Log error here since request failed
-                Log.i(Constants.TAG, "We got an error somewhere");
-                Log.e(Constants.TAG, t.toString());
-            }
-        });
+//        call.enqueue(new Callback<List<Gathering>>() {
+//            @Override
+//            public void onResponse(Call<List<Gathering>> call, Response<List<Gathering>> response) {
+//
+//                Log.i(Constants.TAG, "Response:" + response);
+//                List<Gathering> gatherings = response.body();
+//                Log.d(Constants.TAG, "Number of gatherings returned: " + gatherings.size());
+//
+//                if(gatherings != null){
+//
+//
+//
+//
+//                }
+//
+////                for (int i = 0; i < gatherings.size(); i++) {
+////                    //Log.i(Constants.TAG, "Gathering Mongo:" + gatherings.get(i).toString());
+////                }
+//
+//
+//
+//                List<ContentValues> values = new ArrayList<ContentValues>();
+//
+//                //loop over the returned values and convert them to pogos
+//                for (int i = 0; i < gatherings.size(); i++) {
+//                    // Convert mongo db doc to pojo and store in content provider
+//                    Gathering_Pojo gathering = Utils_ConvertToPojo.convertGatheringMongoToPojo(gatherings.get(i));
+//
+//                    //Log.i(Constants.TAG, "Gathering Pojo:" + gathering.toString());
+//
+//                    values.add(Utils_ContentValues.extractGatheringValues(gathering));
+//                }
+//
+//                /*
+//                 * Set the returned data to the adapter
+//                 */
+//                //mAdapter.setGatheringData(gatherings);
+//
+//                // Delete all patients and restore them in the provider
+//                ContentResolver resolver = getContentResolver();
+//                resolver.delete(Contract_MyGathering.GatheringEntry.CONTENT_URI, null, null);
+//
+//                // Bulk Insert our new weather data into Sunshine's Database
+//                getApplicationContext().getContentResolver().bulkInsert(
+//                        Contract_MyGathering.GatheringEntry.CONTENT_URI,
+//                        values.toArray(new ContentValues[gatherings.size()]));
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Gathering>> call, Throwable t) {
+//                // Log error here since request failed
+//                Log.i(Constants.TAG, "We got an error somewhere");
+//                Log.e(Constants.TAG, t.toString());
+//            }
+//        });
 
     }
 

@@ -112,7 +112,6 @@ public class Adapter_Gatherings extends RecyclerView.Adapter<Adapter_Gatherings.
         viewHolder.itemView.setTag(position);
 
 
-
         //Log.i(Constants.TAG, "Banner URL:" + gathering.getBanner_url());
 
         if (gathering.getBanner_url() == "null") {
@@ -128,26 +127,25 @@ public class Adapter_Gatherings extends RecyclerView.Adapter<Adapter_Gatherings.
         }
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 
-            try {
-                Date date = format.parse(gathering.getStart_date());
-                viewHolder.tv_gathering_date.setText(Utils_DateFormatting.getFormattedGatheringDate(date));
+        try {
+            Date date = format.parse(gathering.getStart_date());
+            viewHolder.tv_gathering_date.setText(Utils_DateFormatting.getFormattedGatheringDate(date));
 
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-
-            viewHolder.tv_gathering_name.setText(gathering.getName());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
+        viewHolder.tv_gathering_name.setText(gathering.getName());
 
-            //Location location = gathering.getLocation();
-            viewHolder.tv_gathering_location.setText(gathering.getLocation_name());
-            viewHolder.tv_gathering_city.setText(gathering.getLocation_city());
-            viewHolder.tv_gathering_country.setText(gathering.getLocation_country());
 
-            viewHolder.tv_gathering_type.setText(gathering.getType());
-            viewHolder.tv_gathering_topic.setText(gathering.getTopic());
+        //Location location = gathering.getLocation();
+        viewHolder.tv_gathering_location.setText(gathering.getLocation_name());
+        viewHolder.tv_gathering_city.setText(gathering.getLocation_city());
+        viewHolder.tv_gathering_country.setText(gathering.getLocation_country());
+
+        viewHolder.tv_gathering_type.setText(gathering.getType());
+        viewHolder.tv_gathering_topic.setText(gathering.getTopic());
     }
 
     /**
@@ -241,13 +239,12 @@ public class Adapter_Gatherings extends RecyclerView.Adapter<Adapter_Gatherings.
             Log.i(Constants.TAG, "id returned:" + id);
 
 
-
             //int position = (int) v.getTag();
             //Log.i(Constants.TAG, "Position:" + position);
 
             //mClickHandler.onClick(getGathering(position));
 
-           mClickHandler.onClick(id);
+            mClickHandler.onClick(id);
         }
     }
 }

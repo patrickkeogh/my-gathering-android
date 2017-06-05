@@ -261,13 +261,5 @@ public class Gathering_Pojo implements Serializable {
         this.owner_username = owner_username;
     }
 
-    @Override
-    public String toString() {
-        return "Gathering_Pojo{" +
-                "id=" + id +
-                ", gathering_id='" + gathering_id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
+
 }

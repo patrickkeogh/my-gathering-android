@@ -68,6 +68,17 @@
             android:name=".provider.Provider_MyGathering"
             android:authorities="com.programming.kantech.mygathering"
             android:exported="false" />
+
+        <!-- COMPLETED (14) Add the WaterReminderFirebaseJobService here. It should not be exported and it
+        should have an intent filter for the action com.firebase.jobdispatcher.ACTION_EXECUTE -->
+        <!-- This is the Service declaration used in conjunction with FirebaseJobDispatcher -->
+        <service
+            android:name=".sync.JobService_SearchForNewGatherings"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

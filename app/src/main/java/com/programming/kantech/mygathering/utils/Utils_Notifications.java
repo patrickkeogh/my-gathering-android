@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
@@ -54,6 +55,7 @@ public class Utils_Notifications {
                 .setStyle(new NotificationCompat.BigTextStyle().bigText("This will be details about the gathering"))
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setContentIntent(contentIntent(context))
+                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setAutoCancel(true);
 
         // If the build version is greater than JELLY_BEAN, set the notification's priority
@@ -66,7 +68,7 @@ public class Utils_Notifications {
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        // COMPLETED (12) Trigger the notification by calling notify on the NotificationManager.
+        // Trigger the notification by calling notify on the NotificationManager.
         // Pass in a unique ID of your choosing for the notification and notificationBuilder.build()
         notificationManager.notify(GATHERING_REMINDER_NOTIFICATION_ID, notificationBuilder.build());
 
