@@ -35,6 +35,13 @@
             android:singleLine="true"
             android:title="@string/pref_preferred_gathering_distance_label" />
 
+        <ListPreference
+            android:defaultValue="@string/pref_preferred_gathering_topic_default"
+            android:entries="@array/pref_topic_option_labels"
+            android:entryValues="@array/pref_topic_option_values"
+            android:key="@string/pref_preferred_gathering_topic_key"
+            android:title="@string/pref_preferred_gathering_topic_label" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -64,6 +64,8 @@ public class fragment_settings extends PreferenceFragmentCompat implements Share
                     for (int x = 0; x < cat.getPreferenceCount(); x++) {
                         Preference pref = cat.getPreference(x);
 
+                        //if (pref.getKey().equals(notificationsKey)) {
+
                         // You don't need to set up preference summaries for checkbox preferences because
                         // they are already set up in xml using summaryOff and summary On
                         if (!(pref instanceof CheckBoxPreference)) {
@@ -131,17 +133,16 @@ public class fragment_settings extends PreferenceFragmentCompat implements Share
      * @param value      The value that the preference was updated to
      */
     private void setPreferenceSummary(Preference preference, String value) {
-        // COMPLETED (3) Don't forget to add code here to properly set the summary for an EditTextPreference
-//        if (preference instanceof ListPreference) {
-//            // For list preferences, figure out the label of the selected value
-//            ListPreference listPreference = (ListPreference) preference;
-//            int prefIndex = listPreference.findIndexOfValue(value);
-//            if (prefIndex >= 0) {
-//                // Set the summary to that label
-//                listPreference.setSummary(listPreference.getEntries()[prefIndex]);
-//            }
-//        } else
-        if (preference instanceof EditTextPreference) {
+        // set the summary for a ListPreference or EditTextPreference
+        if (preference instanceof ListPreference) {
+            // For list preferences, figure out the label of the selected value
+            ListPreference listPreference = (ListPreference) preference;
+            int prefIndex = listPreference.findIndexOfValue(value);
+            if (prefIndex >= 0) {
+                // Set the summary to that label
+                listPreference.setSummary(listPreference.getEntries()[prefIndex]);
+            }
+        } else if (preference instanceof EditTextPreference) {
             // For EditTextPreferences, set the summary to the value's simple string representation.
             preference.setSummary(value);
         }
@@ -180,9 +181,8 @@ public class fragment_settings extends PreferenceFragmentCompat implements Share
 
         String error = "Location distance must be a number between 1 and 10,000,000";
 
-        // Make sure the preference is for distance
+        // Get the keys for the prefs we want to validate
         String distanceKey = getString(R.string.pref_preferred_gathering_distance_key);
-
         String notificationsKey = getString(R.string.pref_allow_notifications_key);
 
 

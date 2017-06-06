@@ -61,6 +61,12 @@ public class Utils_Preferences {
                 context.getResources().getString(R.string.pref_preferred_gathering_distance_default));
     }
 
+    public static String getPreferredTopic(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(context.getString(R.string.pref_preferred_gathering_topic_key),
+                context.getResources().getString(R.string.pref_preferred_gathering_topic_default));
+    }
+
     public static Boolean isNotificationsAllowed(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean(context.getString(R.string.pref_allow_notifications_key),
