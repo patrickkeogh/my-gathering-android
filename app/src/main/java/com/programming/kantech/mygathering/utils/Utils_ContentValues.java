@@ -59,7 +59,7 @@ public class Utils_ContentValues {
         result.put(GatheringEntry.COLUMN_GATHERING_STATUS, gathering.getStatus());
 
         result.put(GatheringEntry.COLUMN_GATHERING_TOPIC, gathering.getTopic());
-        result.put(GatheringEntry.COLUMN_GATHERING_TYPE, gathering.getStatus());
+        result.put(GatheringEntry.COLUMN_GATHERING_TYPE, gathering.getType());
         result.put(GatheringEntry.COLUMN_GATHERING_BANNER_URL,gathering.getBanner_url());
 
         result.put(GatheringEntry.COLUMN_GATHERING_LOCATION_NAME, gathering.getLocation_name());

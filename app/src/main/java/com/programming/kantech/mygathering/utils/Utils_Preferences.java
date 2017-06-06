@@ -67,6 +67,17 @@ public class Utils_Preferences {
                 context.getResources().getString(R.string.pref_preferred_gathering_topic_default));
     }
 
+    public static String getPreferredType(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(context.getString(R.string.pref_preferred_gathering_type_key),
+                context.getResources().getString(R.string.pref_preferred_gathering_type_default));
+    }
+
+    public static String getSearchFrequency(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(context.getString(R.string.pref_search_freq_key),"120");
+    }
+
     public static Boolean isNotificationsAllowed(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean(context.getString(R.string.pref_allow_notifications_key),

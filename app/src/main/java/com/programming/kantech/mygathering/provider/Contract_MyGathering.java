@@ -96,6 +96,7 @@ public class Contract_MyGathering {
             g.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_DESC)));
             g.setTopic(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_TOPIC)));
             g.setType(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_TYPE)));
+            //Log.i(Constants.TAG, "Type in Cursor:" + g.getType());
             g.setStart_date(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_START_DATE)));
             g.setEnd_date(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_END_DATE)));
             g.setCreatedAt_date(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_CREATED_DATE)));

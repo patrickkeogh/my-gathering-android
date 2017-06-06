@@ -12,6 +12,8 @@ public class Query_Search {
     private float distance = 0;
     private String start_date;
     private String end_date;
+    private String topic;
+    private String type;
 
 
     /**
@@ -21,10 +23,12 @@ public class Query_Search {
 
     }
 
-    public Query_Search(List<Double> coordinates, float distance, String start_date) {
+    public Query_Search(List<Double> coordinates, float distance, String start_date, String topic, String type) {
         this.coordinates = coordinates;
         this.distance = distance;
         this.start_date = start_date;
+        this.topic = topic;
+        this.type = type;
     }
 
     public List<Double> getCoordinates() {
@@ -49,5 +53,33 @@ public class Query_Search {
 
     public void setStart_date(String start_date) {
         this.start_date = start_date;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Query_Search{" +
+                "coordinates=" + coordinates +
+                ", distance=" + distance +
+                ", start_date='" + start_date + '\'' +
+                ", end_date='" + end_date + '\'' +
+                ", topic='" + topic + '\'' +
+                ", type='" + type + '\'' +
+                '}';
     }
 }

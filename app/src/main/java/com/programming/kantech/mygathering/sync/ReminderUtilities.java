@@ -12,6 +12,7 @@ import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.Trigger;
 import com.programming.kantech.mygathering.utils.Constants;
+import com.programming.kantech.mygathering.utils.Utils_Preferences;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,9 +32,9 @@ public class ReminderUtilities {
      * and risk making a silly mistake.
      */
 
-    private static final int REMINDER_INTERVAL_MINUTES = 1;
-    private static final int REMINDER_INTERVAL_SECONDS = (int) (TimeUnit.MINUTES.toSeconds(REMINDER_INTERVAL_MINUTES));
-    private static final int SYNC_FLEXTIME_SECONDS = REMINDER_INTERVAL_SECONDS;
+    //private static final int REMINDER_INTERVAL_MINUTES = 1;
+    //private static final int REMINDER_INTERVAL_SECONDS = (int) (TimeUnit.MINUTES.toSeconds(REMINDER_INTERVAL_MINUTES));
+    //private static final int SYNC_FLEXTIME_SECONDS = REMINDER_INTERVAL_SECONDS;
 
     private static final String REMINDER_JOB_TAG = "search-new-gatherings-job";
 
@@ -49,6 +50,18 @@ public class ReminderUtilities {
 
         // if the job has already been initialized, return
         if (sInitialized) return;
+
+        //reminder_interval_seconds = Utils_Preferences.getSearchFrequency(context);
+
+        Log.i(Constants.TAG, "FREQUENCY: ReminderUtils:" + Utils_Preferences.getSearchFrequency(context));
+
+        int reminder_interval_seconds = 120;
+
+        try {
+            reminder_interval_seconds = Integer.parseInt(Utils_Preferences.getSearchFrequency(context));
+        } catch(NumberFormatException nfe) {
+            System.out.println("Could not parse " + nfe);
+        }
 
         // Create a new GooglePlayDriver
         Driver driver = new GooglePlayDriver(context);
@@ -90,9 +103,7 @@ public class ReminderUtilities {
                  * which the data should be synced. Please note that this end time is not
                  * guaranteed, but is more of a guideline for FirebaseJobDispatcher to go off of.
                  */
-                .setTrigger(Trigger.executionWindow(
-                        REMINDER_INTERVAL_SECONDS,
-                        REMINDER_INTERVAL_SECONDS + SYNC_FLEXTIME_SECONDS))
+                .setTrigger(Trigger.executionWindow(60, 120))
                 /*
                  * If a Job with the tag with provided already exists, this new job will replace
                  * the old one.

@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Label ordering must match values -->
-    <array name="pref_topic_option_labels">
-        <item>@string/pref_topic_all</item>
-        <item>@string/pref_topic_air</item>
-        <item>@string/pref_topic_animals</item>
-        <item>@string/pref_topic_business</item>
+    <array name="pref_search_freq_option_labels">
+        <item>@string/pref_search_freq_min_label</item>
+        <item>@string/pref_search_freq_hour_label</item>
+        <item>@string/pref_search_freq_day_label</item>
     </array>
 
-    <array name="pref_topic_option_values">
-        <item>@string/pref_topic_all_value</item>
-        <item>@string/pref_topic_air_value</item>
-        <item>@string/pref_topic_animals_value</item>
-        <item>@string/pref_topic_business_value</item>
+    <array name="pref_search_freq_option_values">
+        <item>@string/pref_search_freq_min_value</item>
+        <item>@string/pref_search_freq_hour_value</item>
+        <item>@string/pref_search_freq_day_value</item>
     </array>
 </resources>

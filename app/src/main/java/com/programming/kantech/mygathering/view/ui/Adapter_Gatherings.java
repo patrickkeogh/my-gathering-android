@@ -181,7 +181,6 @@ public class Adapter_Gatherings extends RecyclerView.Adapter<Adapter_Gatherings.
         viewHolder.tv_gathering_location.setText(gathering.getLocation_name());
         viewHolder.tv_gathering_city.setText(gathering.getLocation_city());
         viewHolder.tv_gathering_country.setText(gathering.getLocation_country());
-
         viewHolder.tv_gathering_type.setText(gathering.getType());
         viewHolder.tv_gathering_topic.setText(gathering.getTopic());
     }

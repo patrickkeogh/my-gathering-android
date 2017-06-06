@@ -1,5 +1,6 @@
 package com.programming.kantech.mygathering.view.fragments;
 
+import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.preference.CheckBoxPreference;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.programming.kantech.mygathering.R;
+import com.programming.kantech.mygathering.data.model.mongo.GatheringTopic;
 import com.programming.kantech.mygathering.sync.ReminderUtilities;
 import com.programming.kantech.mygathering.utils.Constants;
 import com.programming.kantech.mygathering.utils.Utils_General;
@@ -64,7 +66,29 @@ public class fragment_settings extends PreferenceFragmentCompat implements Share
                     for (int x = 0; x < cat.getPreferenceCount(); x++) {
                         Preference pref = cat.getPreference(x);
 
-                        //if (pref.getKey().equals(notificationsKey)) {
+                        // Get the keys for the prefs we want to validate
+                        String topicKey = getString(R.string.pref_preferred_gathering_topic_key);
+                        String typeKey = getString(R.string.pref_preferred_gathering_type_key);
+
+                        // Load the entries and entry values from Constants
+                        // since we are not supporting multiple languages
+                        if (pref.getKey().equals(topicKey)) {
+                            String[] topics = Constants.GATHERING_TOPICS;
+                            CharSequence[] entries = topics;
+                            CharSequence[] entryValues = topics;
+                            ListPreference lp = (ListPreference)findPreference(topicKey);
+                            lp.setEntries(entries);
+                            lp.setEntryValues(entryValues);
+                        }
+
+                        if (pref.getKey().equals(typeKey)) {
+                            String[] types = Constants.GATHERING_TYPES;
+                            CharSequence[] entries = types;
+                            CharSequence[] entryValues = types;
+                            ListPreference lp = (ListPreference)findPreference(typeKey);
+                            lp.setEntries(entries);
+                            lp.setEntryValues(entryValues);
+                        }
 
                         // You don't need to set up preference summaries for checkbox preferences because
                         // they are already set up in xml using summaryOff and summary On

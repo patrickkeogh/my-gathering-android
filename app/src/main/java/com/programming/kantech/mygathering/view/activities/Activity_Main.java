@@ -91,7 +91,6 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
         //setupSharedPreferences();
 
 
-
         apiService = ApiClient.getClient().create(ApiInterface.class);
         Log.i(Constants.TAG, "API Service Created");
 
@@ -169,7 +168,7 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
 
         // Schedule the new gathering search job if notifications are allowed
         Boolean isAllowed = Utils_Preferences.isNotificationsAllowed(this);
-        if(isAllowed){
+        if (isAllowed) {
             Log.i(Constants.TAG, "Notifications are allowed");
 
             ReminderUtilities.scheduleNewGatheringSearch(this);
@@ -251,28 +250,32 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
 
     public void getGatherings() {
 
+        // Load the search preferences from preferences
         float distance = Float.parseFloat(Utils_Preferences.getPreferredDistance(this));
+        distance = distance * 1000;
+        final String topic = Utils_Preferences.getPreferredTopic(this);
+        final String type = Utils_Preferences.getPreferredType(this);
+        Log.i(Constants.TAG, "Topic in Preferences:" + topic);
 
         // test coords for Barrie ON CA
         double lat = -79.691124;
         double lng = 44.38760379999999;
 
-        // Date format for mondoDB dates stored on the server
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
-
-        //current data and time - 1 hr
-        final Date date = new Date(System.currentTimeMillis() - 3600 * 1000);
-
-        final String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        final SimpleDateFormat sdf = new SimpleDateFormat(ISO_FORMAT);
-        //final TimeZone utc = TimeZone.getTimeZone("UTC");
-        //sdf.setTimeZone(utc);
-        Log.i(Constants.TAG, "start-date:" + sdf.format(date));
-
         // TODO: Load coords from prefs
         List<Double> coords = Arrays.asList(lat, lng);
 
-        Query_Search query = new Query_Search(coords, distance, sdf.format(date));
+        Query_Search query = new Query_Search();
+
+        query.setDistance(distance);
+        query.setCoordinates(coords);
+
+        if (!topic.equals("All")) query.setTopic(topic);
+        if (!type.equals("All")) query.setType(type);
+
+        Log.i(Constants.TAG, "query1:" + query);
+
+
+        //Query_Search query = new Query_Search(coords, distance, sdf.format(date), "NULL");
 
         Call<List<Gathering>> call = apiService.getGatherings(query);
 
@@ -398,9 +401,7 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
         mGatheringsList.smoothScrollToPosition(mPosition);
 
         //Log.v(Constants.TAG, "Cursor Object:" + DatabaseUtils.dumpCursorToString(data));
-
-//      COMPLETED (31) If the Cursor's size is not equal to 0, call showWeatherDataView
-        if (data.getCount() != 0) showDataView();
+        showDataView();
     }
 
     /**

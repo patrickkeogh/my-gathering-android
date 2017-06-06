@@ -10,6 +10,7 @@ import com.firebase.jobdispatcher.JobService;
 import com.firebase.jobdispatcher.RetryStrategy;
 import com.programming.kantech.mygathering.sync.tasks.Task_getGatherings;
 import com.programming.kantech.mygathering.utils.Constants;
+import com.programming.kantech.mygathering.utils.Utils_Preferences;
 
 /**
  * Created by patrick keogh on 2017-06-04.
@@ -89,8 +90,9 @@ public class JobService_SearchForNewGatherings extends JobService {
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
         Log.i(Constants.TAG, "onStopJob() called");
-        // COMPLETED (12) If mBackgroundTask is valid, cancel it
-        // COMPLETED (13) Return true to signify the job should be retried
+        //Utils_Preferences.saveLastSearchDate(getApplicationContext(), System.currentTimeMillis());
+        // If mBackgroundTask is valid, cancel it
+        // Return true to signify the job should be retried
         if (mBackgroundTask != null) mBackgroundTask.cancel(true);
         return true;
     }

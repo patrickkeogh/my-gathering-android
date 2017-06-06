@@ -30,6 +30,21 @@ public class Constants {
     // Fragment in which they reside.
     public static final int GATHERING_DETAIL_LOADER = 1;
 
+    public static final String[] GATHERING_TOPICS = {
+            "All",
+            "Air, Boat, & Auto",
+            "Animals & Nature",
+            "Business & Professional"
+    };
+
+    public static final String[] GATHERING_TYPES = {
+            "All",
+            "Appearance or Signing",
+            "Attraction",
+            "Camp, Trip, or Retreat",
+            "Class, Training, or Workshop"
+    };
+
     /*
      * The columns of data that we are interested in displaying within our MainActivity's list of
      * weather data.
