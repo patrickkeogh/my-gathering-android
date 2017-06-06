@@ -1,14 +1,49 @@
 package com.programming.kantech.mygathering.utils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by patrick keogh on 2017-05-25.
  */
 
 public class Utils_DateFormatting {
+
+    public static String convertLocalToUtc(Date date_in){
+
+        String date_out = null;
+
+        DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        date_out = utcFormat.format(date_in);
+
+        return date_out;
+    }
+
+    public static Date convertUtcToLocal(String date_in){
+
+        DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+
+        utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        Date date_out = null;
+
+        try {
+            date_out = utcFormat.parse(date_in);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        return date_out;
+    }
 
     public static String getFormattedGatheringDate(Date date_in) {
 
@@ -40,7 +75,7 @@ public class Utils_DateFormatting {
         SimpleDateFormat year = new SimpleDateFormat("yyyy");
         String strYear = year.format(cal.getTime());
 
-        SimpleDateFormat time = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat time = new SimpleDateFormat("hh:mm a");
         String strTime = time.format(cal.getTime());
 
 

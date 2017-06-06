@@ -53,7 +53,8 @@ public class Constants {
             Contract_MyGathering.GatheringEntry.COLUMN_GATHERING_ACCESS,
             Contract_MyGathering.GatheringEntry.COLUMN_GATHERING_OWNER_ID,
             Contract_MyGathering.GatheringEntry.COLUMN_GATHERING_OWNER_USERNAME,
-            Contract_MyGathering.GatheringEntry.COLUMN_GATHERING_BANNER_URL
+            Contract_MyGathering.GatheringEntry.COLUMN_GATHERING_BANNER_URL,
+            Contract_MyGathering.GatheringEntry.COLUMN_GATHERING_CREATED_DATE
 
     };
 
@@ -81,6 +82,7 @@ public class Constants {
     public static final int COL_GATHERING_OWNER_ID = 16;
     public static final int COL_GATHERING_OWNER_USERNAME = 17;
     public static final int COL_GATHERING_BANNER_URL = 18;
+    public static final int COL_GATHERING_CREATED_DATE = 19;
 
 
 

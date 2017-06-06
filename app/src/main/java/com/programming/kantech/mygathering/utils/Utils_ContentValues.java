@@ -1,6 +1,7 @@
 package com.programming.kantech.mygathering.utils;
 
 import android.content.ContentValues;
+import android.util.Log;
 
 import com.programming.kantech.mygathering.data.model.mongo.GatheringTopic;
 import com.programming.kantech.mygathering.data.model.mongo.GatheringType;
@@ -70,6 +71,8 @@ public class Utils_ContentValues {
 
         result.put(GatheringEntry.COLUMN_GATHERING_OWNER_ID, gathering.getOwner_id());
         result.put(GatheringEntry.COLUMN_GATHERING_OWNER_USERNAME, gathering.getOwner_username());
+
+        result.put(GatheringEntry.COLUMN_GATHERING_CREATED_DATE, gathering.getCreatedAt_date());
 
         return result;
     }

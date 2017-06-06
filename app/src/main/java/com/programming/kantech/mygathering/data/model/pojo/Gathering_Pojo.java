@@ -15,6 +15,7 @@ public class Gathering_Pojo implements Serializable {
     private String description;
     private String start_date;
     private String end_date;
+    private String createdAt_date;
     private String directions;
     private String notes;
     private String status;
@@ -62,6 +63,7 @@ public class Gathering_Pojo implements Serializable {
      * @param type
      * @param owner_id
      * @param owner_username
+     * @param createdAt
      *
      */
 
@@ -69,7 +71,7 @@ public class Gathering_Pojo implements Serializable {
                           String end_date, String directions, String notes, String status,
                           String access, String banner_url, String location_name, String location_city,
                           String location_prov, String location_postal, String location_country,
-                          String location_notes, String topic, String type, String owner_id, String owner_username) {
+                          String location_notes, String topic, String type, String owner_id, String owner_username, String createdAt) {
         this.id = id;
         this.gathering_id = gathering_id;
         this.name = name;
@@ -91,6 +93,7 @@ public class Gathering_Pojo implements Serializable {
         this.type = type;
         this.owner_id = owner_id;
         this.owner_username = owner_username;
+        this.createdAt_date = createdAt;
     }
 
     public long getId() {
@@ -261,5 +264,11 @@ public class Gathering_Pojo implements Serializable {
         this.owner_username = owner_username;
     }
 
+    public String getCreatedAt_date() {
+        return createdAt_date;
+    }
 
+    public void setCreatedAt_date(String createdAt_date) {
+        this.createdAt_date = createdAt_date;
+    }
 }

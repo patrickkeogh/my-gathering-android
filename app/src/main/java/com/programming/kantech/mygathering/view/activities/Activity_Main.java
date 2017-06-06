@@ -167,8 +167,14 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
          */
         getSupportLoaderManager().initLoader(Constants.GATHERING_DETAIL_LOADER, null, this);
 
-        // COMPLETED (23) Schedule the new gathering search
-        ReminderUtilities.scheduleNewGatheringSearch(this);
+        // Schedule the new gathering search job if notifications are allowed
+        Boolean isAllowed = Utils_Preferences.isNotificationsAllowed(this);
+        if(isAllowed){
+            Log.i(Constants.TAG, "Notifications are allowed");
+
+            ReminderUtilities.scheduleNewGatheringSearch(this);
+        }
+
     }
 
     @Override
@@ -245,10 +251,13 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
 
     public void getGatherings() {
 
-        String distance = Utils_Preferences.getPreferredDistance(getApplicationContext());
-        float lat = 113;
-        float lng = -75;
+        float distance = Float.parseFloat(Utils_Preferences.getPreferredDistance(this));
 
+        // test coords for Barrie ON CA
+        double lat = -79.691124;
+        double lng = 44.38760379999999;
+
+        // Date format for mondoDB dates stored on the server
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 
         //current data and time - 1 hr
@@ -260,9 +269,10 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
         //sdf.setTimeZone(utc);
         Log.i(Constants.TAG, "start-date:" + sdf.format(date));
 
-        List<Double> coords = Arrays.asList(-79.691124, 44.38760379999999);
+        // TODO: Load coords from prefs
+        List<Double> coords = Arrays.asList(lat, lng);
 
-        Query_Search query = new Query_Search(coords, 200000, sdf.format(date));
+        Query_Search query = new Query_Search(coords, distance, sdf.format(date));
 
         Call<List<Gathering>> call = apiService.getGatherings(query);
 

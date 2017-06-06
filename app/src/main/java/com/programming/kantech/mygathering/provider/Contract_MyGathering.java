@@ -53,6 +53,8 @@ public class Contract_MyGathering {
         public static final String COLUMN_GATHERING_START_DATE = "gathering_start_date";
         public static final String COLUMN_GATHERING_END_DATE = "gathering_end_date";
 
+        public static final String COLUMN_GATHERING_CREATED_DATE = "gathering_created_date";
+
         public static final String COLUMN_GATHERING_LOCATION_COUNTRY = "gathering_location_country";
         public static final String COLUMN_GATHERING_LOCATION_LOCALITY = "gathering_location_locality";
         public static final String COLUMN_GATHERING_LOCATION_POSTAL = "gathering_location_postal";
@@ -96,6 +98,9 @@ public class Contract_MyGathering {
             g.setType(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_TYPE)));
             g.setStart_date(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_START_DATE)));
             g.setEnd_date(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_END_DATE)));
+            g.setCreatedAt_date(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_CREATED_DATE)));
+
+
             g.setStatus(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_STATUS)));
             g.setAccess(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_ACCESS)));
 

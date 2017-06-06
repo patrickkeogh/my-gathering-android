@@ -57,7 +57,26 @@ public class Utils_Preferences {
 
     public static String getPreferredDistance(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getString(context.getString(R.string.pref_preferred_gathering_distance_key),"");
+        return prefs.getString(context.getString(R.string.pref_preferred_gathering_distance_key),
+                context.getResources().getString(R.string.pref_preferred_gathering_distance_default));
+    }
+
+    public static Boolean isNotificationsAllowed(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(context.getString(R.string.pref_allow_notifications_key),
+                context.getResources().getBoolean(R.bool.pref_allow_notifications_default));
+    }
+
+    public static long getLastSearchDate(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getLong(context.getString(R.string.pref_last_search_date_key),0);
+    }
+
+    public static void saveLastSearchDate(Context context, long date) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putLong(context.getString(R.string.pref_last_search_date_key), date);
+        spe.apply();
     }
 
 

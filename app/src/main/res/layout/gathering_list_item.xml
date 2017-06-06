@@ -161,7 +161,7 @@
             android:layout_height="30dp">
 
             <TextView
-                android:id="@+id/tv_gathering_statuss"
+                android:id="@+id/tv_gathering_createdAt"
                 style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="0dp"
                 android:layout_weight=".5"

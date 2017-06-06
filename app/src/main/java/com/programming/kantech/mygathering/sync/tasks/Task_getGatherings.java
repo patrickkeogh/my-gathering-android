@@ -40,6 +40,9 @@ public class Task_getGatherings extends AsyncTask<Call, Void, List<Gathering>> {
             Response<List<Gathering>> response = call.execute();
 
             List<Gathering> gatherings = response.body();
+
+
+
             return gatherings;
 
         } catch (IOException e) {
@@ -51,33 +54,38 @@ public class Task_getGatherings extends AsyncTask<Call, Void, List<Gathering>> {
     @Override
     protected void onPostExecute(List<Gathering> gatherings) {
 
-        Log.i(Constants.TAG, "Entered onPostExecute() in Task getGatherings: " + gatherings.size());
+        if(gatherings != null) {
 
-        List<ContentValues> values = new ArrayList<ContentValues>();
+            Log.i(Constants.TAG, "Entered onPostExecute() in Task getGatherings: " + gatherings.size());
 
-        //loop over the returned values and convert them to pogos
-        for (int i = 0; i < gatherings.size(); i++) {
-            // Convert mongo db doc to pojo and store in content provider
-            Gathering_Pojo gathering = Utils_ConvertToPojo.convertGatheringMongoToPojo(gatherings.get(i));
+            List<ContentValues> values = new ArrayList<ContentValues>();
 
-            //Log.i(Constants.TAG, "Gathering Pojo:" + gathering.toString());
+            //loop over the returned values and convert them to pogos
+            for (int i = 0; i < gatherings.size(); i++) {
+                // Convert mongo db doc to pojo and store in content provider
+                Gathering_Pojo gathering = Utils_ConvertToPojo.convertGatheringMongoToPojo(gatherings.get(i));
 
-            values.add(Utils_ContentValues.extractGatheringValues(gathering));
-        }
+                Log.i(Constants.TAG, "Gathering Pojo:" + gathering.toString());
+
+                values.add(Utils_ContentValues.extractGatheringValues(gathering));
+            }
 
                 /*
                  * Set the returned data to the adapter
                  */
-        //mAdapter.setGatheringData(gatherings);
+            //mAdapter.setGatheringData(gatherings);
 
-        // Delete all patients and restore them in the provider
-        ContentResolver resolver = mContext.get().getContentResolver();
-        resolver.delete(Contract_MyGathering.GatheringEntry.CONTENT_URI, null, null);
+            // Delete all patients and restore them in the provider
+            ContentResolver resolver = mContext.get().getContentResolver();
+            resolver.delete(Contract_MyGathering.GatheringEntry.CONTENT_URI, null, null);
 
-        // Bulk Insert our new weather data into Sunshine's Database
-        mContext.get().getContentResolver().bulkInsert(
-                Contract_MyGathering.GatheringEntry.CONTENT_URI,
-                values.toArray(new ContentValues[gatherings.size()]));
+            // Bulk Insert our new weather data into Sunshine's Database
+            mContext.get().getContentResolver().bulkInsert(
+                    Contract_MyGathering.GatheringEntry.CONTENT_URI,
+                    values.toArray(new ContentValues[gatherings.size()]));
+        }
+
+
     }
 }
 

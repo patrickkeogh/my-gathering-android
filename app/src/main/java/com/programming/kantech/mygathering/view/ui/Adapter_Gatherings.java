@@ -21,8 +21,10 @@ import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by patrick keogh on 2017-05-18.
@@ -111,7 +113,6 @@ public class Adapter_Gatherings extends RecyclerView.Adapter<Adapter_Gatherings.
 
         viewHolder.itemView.setTag(position);
 
-
         //Log.i(Constants.TAG, "Banner URL:" + gathering.getBanner_url());
 
         if (gathering.getBanner_url() == "null") {
@@ -125,15 +126,52 @@ public class Adapter_Gatherings extends RecyclerView.Adapter<Adapter_Gatherings.
                     .placeholder(R.drawable.blank)
                     .into(viewHolder.iv_gathering_banner);
         }
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+
 
         try {
-            Date date = format.parse(gathering.getStart_date());
+            Date date = utcFormat.parse(gathering.getStart_date());
             viewHolder.tv_gathering_date.setText(Utils_DateFormatting.getFormattedGatheringDate(date));
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        //DateFormat utcFormat2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+
+        Date createdDate = Utils_DateFormatting.convertUtcToLocal(gathering.getCreatedAt_date());
+
+        if(createdDate != null){
+            viewHolder.tv_gathering_createdAt.setText(Utils_DateFormatting.getFormattedGatheringDate(createdDate));
+        }
+
+
+
+//        try {
+//            String dateStr = gathering.getCreatedAt_date();
+//            Log.i(Constants.TAG, "Created Date string:" + dateStr);
+//
+//            //SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss a");
+//
+//            utcFormat2.setTimeZone(TimeZone.getTimeZone("UTC"));
+//            Date date = utcFormat2.parse(dateStr);
+//            utcFormat2.setTimeZone(TimeZone.getDefault());
+//            String formattedDate = utcFormat2.format(date);
+//
+//
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+
+
+//        try {
+//
+//            Date date = format.parse(gathering.getCreatedAt_date());
+//            viewHolder.tv_gathering_createdAt.setText(Utils_DateFormatting.getFormattedGatheringDate(date));
+//
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 
 
         viewHolder.tv_gathering_name.setText(gathering.getName());
@@ -201,6 +239,8 @@ public class Adapter_Gatherings extends RecyclerView.Adapter<Adapter_Gatherings.
         final TextView tv_gathering_topic;
         final TextView tv_gathering_type;
 
+        final TextView tv_gathering_createdAt;
+
 
         final ImageView iv_gathering_banner;
 
@@ -214,6 +254,8 @@ public class Adapter_Gatherings extends RecyclerView.Adapter<Adapter_Gatherings.
 
             tv_gathering_topic = (TextView) view.findViewById(R.id.tv_gathering_topic);
             tv_gathering_type = (TextView) view.findViewById(R.id.tv_gathering_type);
+
+            tv_gathering_createdAt = (TextView) view.findViewById(R.id.tv_gathering_createdAt);
 
 
             iv_gathering_banner = (ImageView) view.findViewById(R.id.iv_gathering_banner);

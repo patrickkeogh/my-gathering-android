@@ -332,6 +332,7 @@ public class Provider_MyGathering extends ContentProvider {
                 try {
                     for (ContentValues value : values) {
 
+
                         long _id = db.insert(GatheringEntry.TABLE_NAME, null, value);
 
                         //Log.i(Constants.TAG, "_id returned from insert:" + _id);

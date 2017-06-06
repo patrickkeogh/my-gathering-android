@@ -7,19 +7,17 @@ import com.programming.kantech.mygathering.data.model.mongo.Gathering;
 import com.programming.kantech.mygathering.data.model.pojo.Query_Search;
 import com.programming.kantech.mygathering.data.retrofit.ApiClient;
 import com.programming.kantech.mygathering.data.retrofit.ApiInterface;
-import com.programming.kantech.mygathering.sync.tasks.Task_getGatherings;
-import com.programming.kantech.mygathering.sync.tasks.Task_getNewGatheringsCount;
+import com.programming.kantech.mygathering.sync.tasks.Task_getNewGatherings;
 import com.programming.kantech.mygathering.utils.Constants;
+import com.programming.kantech.mygathering.utils.Utils_DateFormatting;
 import com.programming.kantech.mygathering.utils.Utils_Preferences;
-import com.programming.kantech.mygathering.utils.Utils_ServerCalls;
 
 import java.lang.ref.WeakReference;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 
@@ -35,38 +33,57 @@ public class Tasks_Gatherings {
 
     public static void executeTask(Context context, String action) {
         if (ACTION_SEARCH_FOR_NEW_GATHERINGS.equals(action)) {
-            getNewGatheringsCount(context);
+            getNewGatherings(context);
         }
     }
 
-    private static void getNewGatheringsCount(Context context) {
+    private static void getNewGatherings(Context context) {
+
+        Log.i(Constants.TAG, "Entered getNewGatherings in Tasks_Gatherings");
+
 
         apiService = ApiClient.getClient().create(ApiInterface.class);
 
-        String distance = Utils_Preferences.getPreferredDistance(context);
+        /*
+         * Get the preferred distance from location from preferences
+         */
+        float distance = Float.parseFloat(Utils_Preferences.getPreferredDistance(context));
+
+        /*
+         * Get the last search date and time from preferences
+         */
+        long lastSearchDate = Utils_Preferences.getLastSearchDate(context);
+
+
+
         float lat = 113;
         float lng = -75;
 
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        //DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 
-        //current data and time - 1 hr
-        final Date date = new Date(System.currentTimeMillis() - 3600 * 1000);
+        final Date date = new Date(lastSearchDate);
+//
+//        final String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+//        final SimpleDateFormat sdf = new SimpleDateFormat(ISO_FORMAT);
+//
+//        final TimeZone utc = TimeZone.getTimeZone("UTC");
+//        sdf.setTimeZone(utc);
 
-        final String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-        final SimpleDateFormat sdf = new SimpleDateFormat(ISO_FORMAT);
-        //final TimeZone utc = TimeZone.getTimeZone("UTC");
-        //sdf.setTimeZone(utc);
-        Log.i(Constants.TAG, "start-date:" + sdf.format(date));
 
+        String start_date = Utils_DateFormatting.convertLocalToUtc(date);
+        Log.i(Constants.TAG, "start-date UTC:" + start_date);
+        Log.i(Constants.TAG, "start-date Local:" + Utils_DateFormatting.convertUtcToLocal(start_date));
         List<Double> coords = Arrays.asList(-79.691124, 44.38760379999999);
 
-        Query_Search query = new Query_Search(coords, 200000, sdf.format(date));
+        Query_Search query = new Query_Search(coords, distance, start_date);
 
-        Call<List<Gathering>> call = apiService.getGatherings(query);
+        Call<List<Gathering>> call = apiService.getNewGatherings(query);
 
         WeakReference<Context> mContext = new WeakReference<Context>(context);
 
-        new Task_getNewGatheringsCount(mContext).execute(call);
+        new Task_getNewGatherings(mContext).execute(call);
+
+        Utils_Preferences.saveLastSearchDate(context, System.currentTimeMillis());
 
     }
 

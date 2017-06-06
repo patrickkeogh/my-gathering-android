@@ -37,4 +37,18 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="@string/pref_group_options_key"
+        android:title="@string/pref_group_options_label">
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/pref_allow_notifications_default"
+            android:key="@string/pref_allow_notifications_key"
+            android:summaryOff="@string/pref_allow_notifications_false"
+            android:summaryOn="@string/pref_allow_notifications_true"
+            android:title="@string/pref_allow_notifications_label" />
+
+
+        </PreferenceCategory>
+
 </PreferenceScreen>

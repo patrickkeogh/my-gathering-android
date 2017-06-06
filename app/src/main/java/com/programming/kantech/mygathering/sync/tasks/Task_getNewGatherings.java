@@ -26,12 +26,12 @@ import retrofit2.Response;
  * Created by patrick keogh on 2017-06-04.
  */
 
-public class Task_getNewGatheringsCount extends AsyncTask<Call, Void, List<Gathering>> {
+public class Task_getNewGatherings extends AsyncTask<Call, Void, List<Gathering>> {
 
 
     private WeakReference<Context> mContext;
 
-    public Task_getNewGatheringsCount(WeakReference<Context> mContext) {
+    public Task_getNewGatherings(WeakReference<Context> mContext) {
         this.mContext = mContext;
     }
 
@@ -52,13 +52,15 @@ public class Task_getNewGatheringsCount extends AsyncTask<Call, Void, List<Gathe
 
     @Override
     protected void onPostExecute(List<Gathering> gatherings) {
-        Log.i(Constants.TAG, "Entered onPostExecute() in Task_getNewGatheringsCount: " + gatherings.size());
+        //Log.i(Constants.TAG, "Entered onPostExecute() in Task_getNewGatheringsCount: " + gatherings.size());
 
-        if(gatherings.size() > 0 ){
-            Log.i(Constants.TAG, "More than 1 gathering count:");
-            // Send notification that there are new gathering
+        if(gatherings != null) {
+            if(gatherings.size() > 0 ){
+                Log.i(Constants.TAG, "More than 1 gathering count:" + gatherings.size());
+                // Send notification that there are new gathering
 
-            Utils_Notifications.remindUserOfGathering(mContext.get());
+                Utils_Notifications.notifyUserOfNewGatherings(mContext.get(), gatherings.size());
+            }
         }
     }
 }

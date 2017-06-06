@@ -35,7 +35,18 @@ public class Utils_Notifications {
      */
     private static final int GATHERING_REMINDER_PENDING_INTENT_ID = 3417;
 
-    public static void remindUserOfGathering(Context context) {
+    public static void notifyUserOfNewGatherings(Context context, int count) {
+
+        String title = "";
+        String body = "";
+
+        if (count == 1) {
+            title = context.getString(R.string.gathering_reminder_notification_title_1);
+            body = "A new gathering matching your prefs has been created.";
+        } else {
+            title = context.getString(R.string.gathering_reminder_notification_title);
+            body = count + " new gatherings matching your prefs have been created.";
+        }
 
         // - has a color of R.colorPrimary - use ContextCompat.getColor to get a compatible color
         // - has ic_drink_notification as the small icon
@@ -50,9 +61,9 @@ public class Utils_Notifications {
                 .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
                 .setSmallIcon(R.mipmap.ic_add_alert_white_18dp)
 //                .setLargeIcon(largeIcon(context))
-                .setContentTitle(context.getString(R.string.gathering_reminder_notification_title))
-                .setContentText("This will be details about the gathering")
-                .setStyle(new NotificationCompat.BigTextStyle().bigText("This will be details about the gathering"))
+                .setContentTitle(title)
+                .setContentText(body)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setContentIntent(contentIntent(context))
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
@@ -116,4 +127,6 @@ public class Utils_Notifications {
     private Utils_Notifications() {
         throw new AssertionError();
     }
+
+
 }

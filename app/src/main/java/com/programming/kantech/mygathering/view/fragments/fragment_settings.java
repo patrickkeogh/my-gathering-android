@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.programming.kantech.mygathering.R;
+import com.programming.kantech.mygathering.sync.ReminderUtilities;
 import com.programming.kantech.mygathering.utils.Constants;
 import com.programming.kantech.mygathering.utils.Utils_General;
 
@@ -58,17 +59,18 @@ public class fragment_settings extends PreferenceFragmentCompat implements Share
                     Log.i(Constants.TAG, "We have a category");
 
                     PreferenceCategory cat = (PreferenceCategory) p;
+
+
                     for (int x = 0; x < cat.getPreferenceCount(); x++) {
-                        //initSummary(pGrp.getPreference(i));
-
-
                         Preference pref = cat.getPreference(x);
 
-                        String value = sharedPreferences.getString(pref.getKey(), "");
-
-                        Log.i(Constants.TAG, "Key in cat Prefs:" + pref.getKey());
-
-                        setPreferenceSummary(pref, value);
+                        // You don't need to set up preference summaries for checkbox preferences because
+                        // they are already set up in xml using summaryOff and summary On
+                        if (!(pref instanceof CheckBoxPreference)) {
+                            Log.i(Constants.TAG, "Key in cat Prefs:" + pref.getKey());
+                            String value = sharedPreferences.getString(pref.getKey(), "");
+                            setPreferenceSummary(pref, value);
+                        }
                     }
                 } else {
 
@@ -90,6 +92,9 @@ public class fragment_settings extends PreferenceFragmentCompat implements Share
         // COMPLETED (3) Add the OnPreferenceChangeListener specifically to the EditTextPreference
         // Add the preference listener which checks that the size is correct to the size preference
         Preference preference = findPreference(getString(R.string.pref_preferred_gathering_distance_key));
+        preference.setOnPreferenceChangeListener(this);
+
+        preference = findPreference(getString(R.string.pref_allow_notifications_key));
         preference.setOnPreferenceChangeListener(this);
 
 
@@ -173,20 +178,34 @@ public class fragment_settings extends PreferenceFragmentCompat implements Share
         // In this context, we're using the onPreferenceChange listener for checking whether the
         // size setting was set to a valid value.
 
-        String error = "Location distance must be a number between 1 and 1,000,000";
+        String error = "Location distance must be a number between 1 and 10,000,000";
 
         // Make sure the preference is for distance
         String distanceKey = getString(R.string.pref_preferred_gathering_distance_key);
 
-        Log.i(Constants.TAG, "Key in onPrefChange:" + distanceKey);
+        String notificationsKey = getString(R.string.pref_allow_notifications_key);
+
+
+
+        if (preference.getKey().equals(notificationsKey)) {
+            Log.i(Constants.TAG, "Key in onPrefChange:" + notificationsKey);
+
+            Boolean isAllowed = (Boolean) newValue;
+
+            if(!isAllowed){
+                ReminderUtilities.unscheduleNewGatheringSearch(getContext());
+            }
+        }
 
         if (preference.getKey().equals(distanceKey)) {
+            Log.i(Constants.TAG, "Key in onPrefChange:" + distanceKey);
+
             String stringDistance = (String) newValue;
             try {
                 float distance = Float.parseFloat((stringDistance));
 
-                // Distance must be betwenn 1 and 1,000,000 km
-                if (distance > 1000000 || distance < 1) {
+                // Distance must be betwenn 1 and 10,000,000 km
+                if (distance > 10000000 || distance < 1) {
 
                     Utils_General.showToast(getContext(), error);
                     return false;
@@ -199,6 +218,7 @@ public class fragment_settings extends PreferenceFragmentCompat implements Share
                 return false;
             }
         }
+
         return true;
     }
 }

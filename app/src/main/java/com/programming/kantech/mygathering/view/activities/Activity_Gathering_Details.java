@@ -202,6 +202,6 @@ public class Activity_Gathering_Details extends AppCompatActivity implements Loa
     }
 
     public void testNotification(View view) {
-        Utils_Notifications.remindUserOfGathering(this);
+        //Utils_Notifications.remindUserOfGathering(this);
     }
 }

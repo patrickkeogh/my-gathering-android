@@ -15,7 +15,7 @@ import com.programming.kantech.mygathering.provider.Contract_MyGathering.TopicEn
 public class DBHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    private static final int DATABASE_VERSION = 14;
+    private static final int DATABASE_VERSION = 16;
 
     // Name of the sql database on the device
     static final String DATABASE_NAME = "mygathering.db";
@@ -50,6 +50,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 GatheringEntry.COLUMN_GATHERING_STATUS + " TEXT NOT NULL, " +
                 GatheringEntry.COLUMN_GATHERING_START_DATE + " TEXT NOT NULL, " +
                 GatheringEntry.COLUMN_GATHERING_END_DATE + " TEXT NOT NULL, " +
+                GatheringEntry.COLUMN_GATHERING_CREATED_DATE + " TEXT NOT NULL, " +
                 GatheringEntry.COLUMN_GATHERING_TOPIC + " TEXT NOT NULL, " +
                 GatheringEntry.COLUMN_GATHERING_TYPE + " TEXT NOT NULL, " +
                 GatheringEntry.COLUMN_GATHERING_LOCATION_COUNTRY + " TEXT NOT NULL, " +

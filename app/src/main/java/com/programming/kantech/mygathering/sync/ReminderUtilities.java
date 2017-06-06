@@ -35,7 +35,7 @@ public class ReminderUtilities {
     private static final int REMINDER_INTERVAL_SECONDS = (int) (TimeUnit.MINUTES.toSeconds(REMINDER_INTERVAL_MINUTES));
     private static final int SYNC_FLEXTIME_SECONDS = REMINDER_INTERVAL_SECONDS;
 
-    private static final String REMINDER_JOB_TAG = "hydration_reminder_tag";
+    private static final String REMINDER_JOB_TAG = "search-new-gatherings-job";
 
     private static boolean sInitialized;
 
@@ -107,6 +107,27 @@ public class ReminderUtilities {
         /* The job has been initialized */
         sInitialized = true;
 
+    }
+
+    // A synchronized, public static method called scheduleNewGatheringSearch that takes
+    // in a context. This method will use FirebaseJobDispatcher to stop a scheduled job
+    synchronized public static void unscheduleNewGatheringSearch(@NonNull final Context context) {
+
+        Log.i(Constants.TAG, "Entered unscheduleNewGatheringSearch()");
+
+        // if the job has not already been initialized, return
+        if (!sInitialized) return;
+
+        // Create a new GooglePlayDriver
+        Driver driver = new GooglePlayDriver(context);
+
+        // Create a new FirebaseJobDispatcher with the driver
+        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(driver);
+
+        dispatcher.cancelAll();
+
+        /* Set the job to uninitialized */
+        sInitialized = false;
 
     }
 

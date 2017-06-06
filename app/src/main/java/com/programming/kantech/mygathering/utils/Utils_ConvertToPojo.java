@@ -25,6 +25,7 @@ public class Utils_ConvertToPojo {
         String description = doc.getDescription();
         String start_date = doc.getGatheringStartDateTime();
         String end_date = doc.getGatheringEndDateTime();
+        String createdAt = doc.getCreatedAt();
         String directions = doc.getDirections();
         String notes = doc.getNotes();
         String status = doc.getStatus();
@@ -60,7 +61,7 @@ public class Utils_ConvertToPojo {
 
         Gathering_Pojo gathering = new Gathering_Pojo(gathering_id, name, description, start_date,
                 end_date, directions, notes, status, access, banner_url, location_name, location_city,
-                location_prov, location_postal, location_country, location_notes, topic, type, owner_id, owner_username );
+                location_prov, location_postal, location_country, location_notes, topic, type, owner_id, owner_username, createdAt );
 
 
         return gathering;

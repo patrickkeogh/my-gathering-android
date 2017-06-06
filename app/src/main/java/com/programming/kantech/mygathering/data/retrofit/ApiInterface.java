@@ -67,13 +67,14 @@ public interface ApiInterface {
     @GET(GATHERING_GET_TYPES)
     Call<List<GatheringType>> getGatheringTypes();
 
-
-
-    @POST(GATHERING_GET_NEW_COUNT_PATH)
+    @POST(GATHERING_ROOT_PATH)
     Call<List<Gathering>> getGatherings(@Body Query_Search q);
 
     @GET(GATHERING_GET_PATH)
     Call<List<Gathering>> getGathering(@Path(PARAM_ID) String id);
+
+    @POST(GATHERING_GET_NEW_COUNT_PATH)
+    Call<List<Gathering>> getNewGatherings(@Body Query_Search q);
 
 
     //@GET("movie/top_rated")
