@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_fav_add"
+        android:title="@string/action_fav_add"
+        android:icon="@drawable/ic_favorite_black_18dp"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/action_map_show"
+        android:title="@string/action_map_show"
+        android:orderInCategory="200"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_request_invite"
+        android:title="@string/action_request_invite"
+        android:orderInCategory="300"
+        app:showAsAction="never" />
+
+</menu>

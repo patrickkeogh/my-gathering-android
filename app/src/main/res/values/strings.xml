@@ -118,6 +118,9 @@
     <string name="gathering_reminder_notification_title">New Gatherings</string>
     <string name="gathering_reminder_notification_title_1">New Gathering</string>
     <string name="pref_last_search_date_key">last_search_date</string>
+    <string name="action_fav_add">Add To Favorites</string>
+    <string name="action_map_show">Show Map</string>
+    <string name="action_request_invite">Request Invite</string>
 
 
 </resources>

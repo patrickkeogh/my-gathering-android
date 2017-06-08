@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -17,21 +17,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorLightGrey"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_gathering_name"
-            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:paddingTop="1dp"
-            android:textColor="@color/colorWhite"
-            android:background="@color/colorBlack"
-            tools:text="Gathering Name"
-            android:textSize="20sp" />
+
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:textSize="18sp"
+            android:textColor="@color/primaryText"
+            tools:text="Gathering Name" />
 
         <ImageView
             android:id="@+id/iv_gathering_banner"
@@ -41,76 +39,200 @@
             android:adjustViewBounds="true"
             android:src="@drawable/barbeque" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="testNotification"
-            android:text="Test Notification" />
-
         <TextView
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
-            android:paddingLeft="10dp"
+            android:paddingLeft="16dp"
             android:paddingTop="1dp"
             android:textColor="@color/colorWhite"
             android:background="@color/colorAccent"
-            android:text="Free"
-            android:textSize="20sp" />
+            android:text="Free" />
+
+        <!--<LinearLayout-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:weightSum="3"-->
+            <!--android:layout_height="80dp">-->
+
+            <!--<LinearLayout-->
+                <!--android:orientation="vertical"-->
+                <!--android:layout_weight="1"-->
+                 <!--android:layout_width="60dp"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<ImageView-->
+                    <!--app:srcCompat="@drawable/ic_favorite_black_18dp"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+
+                    <!--android:layout_width="60dp"-->
+                    <!--android:layout_height="60dp" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:textSize="12sp"-->
+                    <!--android:layout_width="60dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:text="Favorite"/>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:orientation="vertical"-->
+                <!--android:layout_weight="1"-->
+
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<ImageView-->
+                    <!--app:srcCompat="@drawable/ic_map_18dp"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+
+                    <!--android:layout_width="60dp"-->
+                    <!--android:layout_height="60dp" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:textSize="12sp"-->
+                    <!--android:layout_width="60dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:text="Map"/>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:orientation="vertical"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<ImageView-->
+                    <!--app:srcCompat="@drawable/ic_person_add_18dp"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+
+                    <!--android:layout_width="60dp"-->
+                    <!--android:layout_height="60dp" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:textSize="12sp"-->
+                    <!--android:layout_width="60dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:text="Join"/>-->
+            <!--</LinearLayout>-->
+
+
+
+        <!--</LinearLayout>-->
+
+
 
         <TextView
-            android:id="@+id/tv_gathering_date"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_gathering_start_date"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:text="Thursday May 5th, 2017"
-            android:textSize="18sp" />
+            android:paddingTop="8dp"
+            android:paddingLeft="16dp"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorDarkGrey"
+            android:textSize="18sp"
+            tools:text="Start: 12:00 AM JUL 23rd, 2017" />
+
+        <TextView
+            android:id="@+id/tv_gathering_end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingLeft="16dp"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorDarkGrey"
+            android:textSize="18sp"
+            tools:text="End:    12:00 AM JUL 23rd, 2017" />
 
         <TextView
             android:id="@+id/tv_gathering_location"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:text="Barrie Molson Centre"
-            android:textSize="18sp" />
+            android:paddingTop="8dp"
+            android:paddingLeft="16dp"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorDarkGrey"
+            android:textSize="18sp"
+            tools:text="Barrie Molson Centre" />
 
         <TextView
             android:id="@+id/tv_gathering_city"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Barrie, ON"
-            android:textSize="18sp" />
+            android:paddingTop="8dp"
+            android:paddingLeft="16dp"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorDarkGrey"
+            android:textSize="18sp"
+            tools:text="Barrie, ON" />
 
         <TextView
             android:id="@+id/tv_gathering_country"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Canada"
-            android:textSize="18sp" />
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorDarkGrey"
+            android:textSize="18sp"
+            tools:text="L4N3E2, Canada" />
 
         <TextView
             android:id="@+id/tv_gathering_type"
-            android:paddingTop="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Concert"
-            android:textSize="18sp" />
+            android:background="@color/colorGrey"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            tools:text="Something" />
+
+        <ImageView
+            android:id="@+id/divider"
+            android:background="@color/colorPrimaryLight"
+            android:layout_height="1dp"
+            android:layout_width="match_parent"/>
+
+
         <TextView
             android:id="@+id/tv_gathering_topic"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Music"
-            android:textSize="18sp" />
+            android:background="@color/colorGrey"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            tools:text="Something" />
 
         <TextView
             android:id="@+id/tv_gathering_description"
-            android:paddingTop="10dp"
-            android:layout_width="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingLeft="16dp"
+            android:paddingStart="16dp"
+            android:paddingRight="16dp"
+            android:paddingEnd="16dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bacon ipsum dolor amet biltong cow tenderloin corned beef beef ribs sirloin swine shankle tongue alcatra ham hock hamburger shank. Rump pork chop fatback, drumstick tongue shoulder turducken ribeye. Porchetta ham hock t-bone jowl, prosciutto shoulder turducken leberkas salami pork belly frankfurter. T-bone filet mignon kevin swine turducken chicken beef ribs."
-            android:textSize="14sp" />
+            android:text="Bacon ipsum dolor amet biltong cow tenderloin corned beef beef ribs sirloin swine shankle tongue alcatra ham hock hamburger shank. Rump pork chop fatback, drumstick tongue shoulder turducken ribeye. Porchetta ham hock t-bone jowl, prosciutto shoulder turducken leberkas salami pork belly frankfurter. T-bone filet mignon kevin swine turducken chicken beef ribs.
+
+Bacon ipsum dolor amet biltong cow tenderloin corned beef beef ribs sirloin swine shankle tongue alcatra ham hock hamburger shank. Rump pork chop fatback, drumstick tongue shoulder turducken ribeye. Porchetta ham hock t-bone jowl, prosciutto shoulder turducken leberkas salami pork belly frankfurter. T-bone filet mignon kevin swine turducken chicken beef ribs.
+
+Bacon ipsum dolor amet biltong cow tenderloin corned beef beef ribs sirloin swine shankle tongue alcatra ham hock hamburger shank. Rump pork chop fatback, drumstick tongue shoulder turducken ribeye. Porchetta ham hock t-bone jowl, prosciutto shoulder turducken leberkas salami pork belly frankfurter. T-bone filet mignon kevin swine turducken chicken beef ribs."
+            android:textSize="12sp" />
+
+
 
 
 

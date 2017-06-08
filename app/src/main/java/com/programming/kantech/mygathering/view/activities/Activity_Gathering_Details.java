@@ -11,6 +11,9 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
@@ -25,9 +28,14 @@ import com.programming.kantech.mygathering.data.model.mongo.Location;
 import com.programming.kantech.mygathering.data.model.pojo.Gathering_Pojo;
 import com.programming.kantech.mygathering.provider.Contract_MyGathering;
 import com.programming.kantech.mygathering.utils.Constants;
+import com.programming.kantech.mygathering.utils.Utils_DateFormatting;
+import com.programming.kantech.mygathering.utils.Utils_General;
 import com.programming.kantech.mygathering.utils.Utils_Notifications;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +46,8 @@ public class Activity_Gathering_Details extends AppCompatActivity implements Loa
 
     /* Fields to store our TextViews */
     private TextView mName;
+    private TextView mStartDate;
+    private TextView mEndDate;
     private TextView mDescription;
     private TextView mType;
     private TextView mTopic;
@@ -66,6 +76,8 @@ public class Activity_Gathering_Details extends AppCompatActivity implements Loa
 
         /* Typical usage of findViewById... */
         mName = (TextView) findViewById(R.id.tv_gathering_name);
+        mStartDate = (TextView) findViewById((R.id.tv_gathering_start_date));
+        mEndDate = (TextView) findViewById((R.id.tv_gathering_end_date));
 
         mLocation = (TextView) findViewById(R.id.tv_gathering_location);
         mCity = (TextView) findViewById(R.id.tv_gathering_city);
@@ -91,8 +103,8 @@ public class Activity_Gathering_Details extends AppCompatActivity implements Loa
     /**
      * Instantiate and return a new Loader for the given ID.
      *
-     * @param loaderId   The ID whose loader is to be created.
-     * @param args Any arguments supplied by the caller.
+     * @param loaderId The ID whose loader is to be created.
+     * @param args     Any arguments supplied by the caller.
      * @return Return a new Loader instance that is ready to start loading.
      */
     @Override
@@ -156,6 +168,21 @@ public class Activity_Gathering_Details extends AppCompatActivity implements Loa
         Log.i(Constants.TAG, "Gathering Returned in Details cursor:" + gathering.toString());
 
         mName.setText(gathering.getName());
+
+        Date start_date = Utils_DateFormatting.convertUtcToLocal(gathering.getStart_date());
+
+        String start = "Start: " + Utils_DateFormatting.getFormattedGatheringDate(start_date);
+
+        mStartDate.setText(start);
+
+
+
+        Date end_date = Utils_DateFormatting.convertUtcToLocal(gathering.getEnd_date());
+
+        String end = "End:   " + Utils_DateFormatting.getFormattedGatheringDate(end_date);
+        mEndDate.setText(end);
+
+
         mDescription.setText(gathering.getDescription());
 
         String banner_url = gathering.getBanner_url();
@@ -163,7 +190,13 @@ public class Activity_Gathering_Details extends AppCompatActivity implements Loa
         mLocation.setText(gathering.getLocation_name());
 
         mCity.setText(gathering.getLocation_city() + ", " + gathering.getLocation_prov());
-        mCountry.setText(gathering.getLocation_country());
+
+        if(gathering.getLocation_postal().length() >= 1) {
+            mCountry.setText(gathering.getLocation_postal() + ", " + gathering.getLocation_country());
+        }else{
+            mCountry.setText(gathering.getLocation_country());
+        }
+
 
         mType.setText(gathering.getType());
         mTopic.setText(gathering.getTopic());
@@ -203,5 +236,33 @@ public class Activity_Gathering_Details extends AppCompatActivity implements Loa
 
     public void testNotification(View view) {
         //Utils_Notifications.remindUserOfGathering(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_details, menu);
+        return true; //true means been handled
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_fav_add) {
+            //Intent intent = new Intent(this, Activity_Settings.class);
+            //startActivity(intent);
+            Utils_General.showToast(this, "Add gathering to favorites");
+            return true; // we handle it
+        } else if (id == R.id.action_map_show) {
+            Utils_General.showToast(this, "Show gathering on map");
+            return true; // we handle it
+
+        }else if (id == R.id.action_request_invite) {
+            Utils_General.showToast(this, "Request invite to gathering");
+            return true; // we handle it
+
+        }
+        return super.onOptionsItemSelected(item); // let app handle it
     }
 }
