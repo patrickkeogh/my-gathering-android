@@ -99,6 +99,22 @@ public class Constants {
     public static final int COL_GATHERING_BANNER_URL = 18;
     public static final int COL_GATHERING_CREATED_DATE = 19;
 
+    /**
+     * The Request Codes needed in Implicit Intents
+     */
+    public static final int REQUEST_GET_LOCATION = 101;
+    public static final int REQUEST_GET_QUERY = 201;
+
+    /**
+     * The Constants used for data added as extras to intents
+     */
+    public static final String EXTRA_LOCATION_NAME = "location_name";
+    public static final String EXTRA_LOCATION_ADDRESS = "location_address";
+    public static final String EXTRA_LOCATION_LAT = "location_lat";
+    public static final String EXTRA_LOCATION_LONG = "location_long";
+    public static final String EXTRA_SEARCH_QUERY = "search_query";
+
+
 
 
 

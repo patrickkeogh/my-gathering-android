@@ -28,6 +28,17 @@ public class Contract_MyGathering {
     public static final String PATH_TOPIC = TopicEntry.TABLE_NAME;
     public static final String PATH_TYPE = TypeEntry.TABLE_NAME;
     public static final String PATH_GATHERINGS = GatheringEntry.TABLE_NAME;
+    public static final String PATH_PLACES = PlaceEntry.TABLE_NAME;
+
+    public static final class PlaceEntry implements BaseColumns {
+
+        // PlaceEntry content URI = base content URI + path
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_PLACES).build();
+
+        public static final String TABLE_NAME = "places";
+        public static final String COLUMN_PLACE_ID = "placeID";
+    }
 
     /* Inner class that defines the table contents of the topics table */
     public static final class GatheringEntry implements BaseColumns {

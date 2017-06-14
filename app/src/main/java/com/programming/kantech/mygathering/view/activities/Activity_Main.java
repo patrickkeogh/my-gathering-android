@@ -154,7 +154,6 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
         mGatheringsList.setAdapter(mGatheringAdapter);
 
 
-//      COMPLETED (18) Call the showLoading method
         showLoading();
 
 
@@ -187,12 +186,25 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
+        Log.i(Constants.TAG, "id=" + id);
         if (id == R.id.action_settings) {
+            Log.i(Constants.TAG, "id=settings" + id);
             Intent intent = new Intent(this, Activity_Settings.class);
             startActivity(intent);
             return true; // we handle it
         } else if (id == R.id.action_logout) {
+            Log.i(Constants.TAG, "id=logout" + id);
+
             logout();
+            return true;
+
+
+        }else if (id == R.id.action_search) {
+            Log.i(Constants.TAG, "id=search" + id);
+            Intent intent = new Intent(this, Activity_Search.class);
+            startActivity(intent);
+            return true;
 
         }
         return super.onOptionsItemSelected(item); // let app handle it
@@ -258,11 +270,11 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
         Log.i(Constants.TAG, "Topic in Preferences:" + topic);
 
         // test coords for Barrie ON CA
-        double lat = -79.691124;
-        double lng = 44.38760379999999;
+        double lng = -79.691124;
+        double lat = 44.38760379999999;
 
         // TODO: Load coords from prefs
-        List<Double> coords = Arrays.asList(lat, lng);
+        List<Double> coords = Arrays.asList(lng, lat); //Reverse for mongo (lng, lat)
 
         Query_Search query = new Query_Search();
 
@@ -412,9 +424,8 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
      */
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-//      COMPLETED (32) Call mForecastAdapter's swapCursor method and pass in null
         /*
-         * Since this Loader's data is now invalid, we need to clear the Adapter that is/
+         * Since this Loader's data is now invalid, we need to clear the Adapter that is
          * displaying the data.
          */
         mGatheringAdapter.swapCursor(null);

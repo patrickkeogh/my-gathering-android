@@ -78,7 +78,6 @@
     <string name="pref_search_freq_day_value" translatable="false">86400</string>
 
 
-
     <!-- Label for the Allow Notifications preference [CHAR LIMIT=30] -->
     <string name="pref_allow_notifications_label">Allow Notifications</string>
     <!-- Key name for storing All Notifications in SharedPreferences [CHAR LIMIT=NONE] -->
@@ -121,6 +120,24 @@
     <string name="action_fav_add">Add To Favorites</string>
     <string name="action_map_show">Show Map</string>
     <string name="action_request_invite">Request Invite</string>
+    <string name="gathering_description_test_">Bacon ipsum dolor amet biltong cow tenderloin corned beef beef ribs sirloin swine shankle tongue alcatra ham hock hamburger shank. Rump pork chop fatback, drumstick tongue shoulder turducken ribeye. Porchetta ham hock t-bone jowl, prosciutto shoulder turducken leberkas salami pork belly frankfurter. T-bone filet mignon kevin swine turducken chicken beef ribs. Bacon ipsum dolor amet biltong cow tenderloin corned beef beef ribs sirloin swine shankle tongue alcatra ham hock hamburger shank. Rump pork chop fatback, drumstick tongue shoulder turducken ribeye. Porchetta ham hock t-bone jowl, prosciutto shoulder turducken leberkas salami pork belly frankfurter. T-bone filet mignon kevin swine turducken chicken beef ribs. Bacon ipsum dolor amet biltong cow tenderloin corned beef beef ribs sirloin swine shankle tongue alcatra ham hock hamburger shank. Rump pork chop fatback, drumstick tongue shoulder turducken ribeye. Porchetta ham hock t-bone jowl, prosciutto shoulder turducken leberkas salami pork belly frankfurter. T-bone filet mignon kevin swine turducken chicken beef ribs.</string>
+    <string name="action_search">Search</string>
+    <string name="title_search_filters_distance">Distance</string>
+    <string name="title_search_filters">Search Filters</string>
+    <string name="btn_add_new_location">ADD NEW LOCATION</string>
+    <string name="location_list">Locations</string>
+    <string name="privacy">http://www.google.com/policies/privacy</string>
+    <string name="app_title_search">Search</string>
+
+    <string name="need_location_permission_message">You need to enable location permissions first</string>
+    <string name="location_permissions_granted_message">Location Permissions Granted</string>
+    <string name="location_permissions">Location Permissions</string>
+    <string name="app_title_search_filters">Search Filters</string>
+    <string name="title_search_filter_permissions">Required Permissions</string>
+    <string name="title_search_filter_instructions">Select your filters</string>
+    <string name="title_search_filter_distance">Max Distance (km)</string>
+    <string name="title_search_filter_location">Location</string>
+    <string name="btn_search_for_gatherings">Search</string>
 
 
 </resources>

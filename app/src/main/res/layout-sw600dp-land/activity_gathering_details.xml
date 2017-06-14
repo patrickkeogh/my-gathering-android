@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -40,6 +39,9 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:paddingTop="1dp"
                     android:textColor="@color/colorWhite"
                     android:background="@color/colorAccent"
@@ -51,6 +53,9 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="8dp"
                     android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
                     tools:text="Start: 12:00 AM JUL 23rd, 2017" />
@@ -60,7 +65,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
                     tools:text="End:    12:00 AM JUL 23rd, 2017" />
@@ -69,8 +78,12 @@
                     android:id="@+id/tv_gathering_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorGrey"
                     android:paddingTop="8dp"
                     android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
                     tools:text="Barrie Molson Centre" />
@@ -79,8 +92,12 @@
                     android:id="@+id/tv_gathering_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorGrey"
                     android:paddingTop="8dp"
                     android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
                     tools:text="Barrie, ON" />
@@ -89,9 +106,13 @@
                     android:id="@+id/tv_gathering_country"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorGrey"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
                     tools:text="L4N3E2, Canada" />
@@ -100,29 +121,34 @@
                     android:id="@+id/tv_gathering_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorGrey"
+                    android:background="@color/colorDarkGrey"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
                     tools:text="Something" />
 
-                <ImageView
-                    android:id="@+id/divider"
-                    android:background="@color/colorPrimaryLight"
-                    android:layout_height="1dp"
-                    android:layout_width="match_parent"/>
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dip"
+                    android:background="@color/colorGrey" />
 
 
                 <TextView
                     android:id="@+id/tv_gathering_topic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorGrey"
+                    android:background="@color/colorDarkGrey"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
                     tools:text="Something" />
@@ -144,8 +170,28 @@
                     android:paddingStart="16dp"
                     android:paddingRight="16dp"
                     android:paddingEnd="16dp"
-                    android:textColor="@color/colorBlack"
+                    android:textColor="@color/colorAccent"
                     tools:text="Gathering Name" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Description"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dip"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/colorPrimary" />
 
 
 
@@ -158,11 +204,39 @@
                     android:paddingEnd="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Bacon ipsum dolor amet biltong cow tenderloin corned beef beef ribs sirloin swine shankle tongue alcatra ham hock hamburger shank. Rump pork chop fatback, drumstick tongue shoulder turducken ribeye. Porchetta ham hock t-bone jowl, prosciutto shoulder turducken leberkas salami pork belly frankfurter. T-bone filet mignon kevin swine turducken chicken beef ribs.
+                    android:text="@string/gathering_description_test_"
+                    android:textSize="14sp" />
 
-Bacon ipsum dolor amet biltong cow tenderloin corned beef beef ribs sirloin swine shankle tongue alcatra ham hock hamburger shank. Rump pork chop fatback, drumstick tongue shoulder turducken ribeye. Porchetta ham hock t-bone jowl, prosciutto shoulder turducken leberkas salami pork belly frankfurter. T-bone filet mignon kevin swine turducken chicken beef ribs.
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Notes"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/colorPrimaryDark" />
 
-Bacon ipsum dolor amet biltong cow tenderloin corned beef beef ribs sirloin swine shankle tongue alcatra ham hock hamburger shank. Rump pork chop fatback, drumstick tongue shoulder turducken ribeye. Porchetta ham hock t-bone jowl, prosciutto shoulder turducken leberkas salami pork belly frankfurter. T-bone filet mignon kevin swine turducken chicken beef ribs."
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dip"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tv_gathering_notes"
+                    android:paddingTop="16dp"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingEnd="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gathering_description_test_"
                     android:textSize="14sp" />
 
 

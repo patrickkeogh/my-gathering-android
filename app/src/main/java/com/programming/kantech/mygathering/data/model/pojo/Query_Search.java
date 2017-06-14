@@ -4,9 +4,10 @@ package com.programming.kantech.mygathering.data.model.pojo;
  * Created by patrick keogh on 2017-06-04.
  */
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Query_Search {
+public class Query_Search implements Serializable {
 
     private List<Double> coordinates = null;
     private float distance = 0;
@@ -14,6 +15,8 @@ public class Query_Search {
     private String end_date;
     private String topic;
     private String type;
+
+    private final static long serialVersionUID = -9177985143038762336L;
 
 
     /**

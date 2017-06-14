@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.programming.kantech.mygathering.provider.Contract_MyGathering.GatheringEntry;
 import com.programming.kantech.mygathering.provider.Contract_MyGathering.TypeEntry;
 import com.programming.kantech.mygathering.provider.Contract_MyGathering.TopicEntry;
+import com.programming.kantech.mygathering.provider.Contract_MyGathering.PlaceEntry;
 
 /**
  * Created by patrick keogh on 2017-05-23.
@@ -15,7 +16,7 @@ import com.programming.kantech.mygathering.provider.Contract_MyGathering.TopicEn
 public class DBHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    private static final int DATABASE_VERSION = 16;
+    private static final int DATABASE_VERSION = 18;
 
     // Name of the sql database on the device
     static final String DATABASE_NAME = "mygathering.db";
@@ -74,11 +75,18 @@ public class DBHelper extends SQLiteOpenHelper {
                 TypeEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 TypeEntry.COLUMN_TYPE_NAME + " TEXT NOT NULL" + " );";
 
+        // Create a table to hold the places data
+        final String SQL_CREATE_PLACES_TABLE = "CREATE TABLE " + PlaceEntry.TABLE_NAME + " (" +
+                PlaceEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                PlaceEntry.COLUMN_PLACE_ID + " TEXT NOT NULL, " +
+                "UNIQUE (" + PlaceEntry.COLUMN_PLACE_ID + ") ON CONFLICT REPLACE" +
+                "); ";
 
 
         db.execSQL(SQL_CREATE_TOPICS_TABLE);
         db.execSQL(SQL_CREATE_TYPES_TABLE);
         db.execSQL(SQL_CREATE_GATHERING_TABLE);
+        db.execSQL(SQL_CREATE_PLACES_TABLE);
 
 
     }
@@ -97,6 +105,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + GatheringEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TopicEntry.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + TypeEntry.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + PlaceEntry.TABLE_NAME);
 
 
         onCreate(db);

@@ -49,6 +49,7 @@ public class Activity_Gathering_Details extends AppCompatActivity implements Loa
     private TextView mStartDate;
     private TextView mEndDate;
     private TextView mDescription;
+    private TextView mNotes;
     private TextView mType;
     private TextView mTopic;
 
@@ -84,6 +85,7 @@ public class Activity_Gathering_Details extends AppCompatActivity implements Loa
         mCountry = (TextView) findViewById(R.id.tv_gathering_country);
 
         mDescription = (TextView) findViewById(R.id.tv_gathering_description);
+        mNotes = (TextView) findViewById((R.id.tv_gathering_notes));
         mType = (TextView) findViewById(R.id.tv_gathering_type);
         mTopic = (TextView) findViewById(R.id.tv_gathering_topic);
         mBanner = (ImageView) findViewById(R.id.iv_gathering_banner);
@@ -168,14 +170,13 @@ public class Activity_Gathering_Details extends AppCompatActivity implements Loa
         Log.i(Constants.TAG, "Gathering Returned in Details cursor:" + gathering.toString());
 
         mName.setText(gathering.getName());
+        mNotes.setText(gathering.getNotes());
 
         Date start_date = Utils_DateFormatting.convertUtcToLocal(gathering.getStart_date());
 
         String start = "Start: " + Utils_DateFormatting.getFormattedGatheringDate(start_date);
 
         mStartDate.setText(start);
-
-
 
         Date end_date = Utils_DateFormatting.convertUtcToLocal(gathering.getEnd_date());
 

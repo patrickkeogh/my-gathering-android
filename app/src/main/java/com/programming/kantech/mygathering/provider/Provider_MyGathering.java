@@ -48,6 +48,9 @@ public class Provider_MyGathering extends ContentProvider {
     public static final int GATHERINGS_ALL = 300;
     public static final int GATHERINGS_ID = 301;
 
+    public static final int PLACES = 400;
+    public static final int PLACE_WITH_ID = 401;
+
     private static final String sGatheringByIdSelection =
             Contract_MyGathering.GatheringEntry.TABLE_NAME + "." + GatheringEntry._ID + " = ? ";
 
@@ -74,6 +77,9 @@ public class Provider_MyGathering extends ContentProvider {
         uriMatcher.addURI(Constants.CONTENT_AUTHORITY, Contract_MyGathering.PATH_TOPIC + "/#", TOPICS_ID);
         uriMatcher.addURI(Constants.CONTENT_AUTHORITY, Contract_MyGathering.PATH_TYPE + "/#", TYPES_ID);
         uriMatcher.addURI(Constants.CONTENT_AUTHORITY, Contract_MyGathering.PATH_GATHERINGS + "/#", GATHERINGS_ID);
+
+        uriMatcher.addURI(Constants.CONTENT_AUTHORITY, Contract_MyGathering.PATH_PLACES, PLACES);
+        uriMatcher.addURI(Constants.CONTENT_AUTHORITY, Contract_MyGathering.PATH_PLACES + "/#", PLACE_WITH_ID);
 
         return uriMatcher;
     }
@@ -122,10 +128,20 @@ public class Provider_MyGathering extends ContentProvider {
         // Write URI match code and set a variable to return a Cursor
         int match = sUriMatcher.match(uri);
         Cursor retCursor;
+        String id;
 
         // Query for the tasks directory and write a default case
         switch (match) {
             // Query for the tasks directory
+            case PLACES:
+                retCursor = db.query(Contract_MyGathering.PlaceEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                break;
             case GATHERINGS_ALL:
                 retCursor = db.query(GatheringEntry.TABLE_NAME,
                         projection,
@@ -135,18 +151,26 @@ public class Provider_MyGathering extends ContentProvider {
                         null,
                         sortOrder);
                 break;
+            case PLACE_WITH_ID:
+                Log.i(Constants.TAG, "URI MATCH:PLACE_WITH_ID:" + uri);
+
+                id = uri.getLastPathSegment();
+
+                Log.i(Constants.TAG, "ID TO QUERY BY:" + id);
+
+                retCursor = db.query(Contract_MyGathering.PlaceEntry.TABLE_NAME,
+                        projection,
+                        "_id=?",
+                        new String[]{id},
+                        null,
+                        null,
+                        sortOrder);
+
+                break;
             case GATHERINGS_ID:
                 Log.i(Constants.TAG, "URI MATCH:GATHERINGS_ID:" + uri);
 
-                /*
-                 * In order to determine the date associated with this URI, we look at the last
-                 * path segment. In the comment above, the last path segment is 1472214172 and
-                 * represents the number of seconds since the epoch, or UTC time.
-                 */
-                // Get the task ID from the URI path
-                //String id = uri.getPathSegments().get(1);
-
-                String id = uri.getLastPathSegment();
+                id = uri.getLastPathSegment();
 
                 Log.i(Constants.TAG, "ID TO QUERY BY:" + id);
 
@@ -207,6 +231,15 @@ public class Provider_MyGathering extends ContentProvider {
         long id = 0;
 
         switch (match) {
+            case PLACES:
+                // Insert new values into the database
+                id = db.insert(Contract_MyGathering.PlaceEntry.TABLE_NAME, null, values);
+                if (id > 0) {
+                    returnUri = ContentUris.withAppendedId(Contract_MyGathering.PlaceEntry.CONTENT_URI, id);
+                } else {
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                }
+                break;
             case TOPICS_ALL:
                 //Log.i(Constants.TAG, "INSERT TOPICS_ALL called");
                 id = db.insert(TopicEntry.TABLE_NAME, null, values);
@@ -251,11 +284,18 @@ public class Provider_MyGathering extends ContentProvider {
 
         // Keep track of the number of deleted tasks
         int rowsDeleted = 0; // starts as 0
+        String id;
 
         // Write the code to delete a single row of data
         // [Hint] Use selections to delete an item by its row ID
         switch (match) {
             // Handle the single item case, recognized by the ID included in the URI path
+            case PLACE_WITH_ID:
+                // Get the place ID from the URI path
+                id = uri.getPathSegments().get(1);
+                // Use selections/selectionArgs to filter for this ID
+                rowsDeleted = db.delete(Contract_MyGathering.PlaceEntry.TABLE_NAME, "_id=?", new String[]{id});
+                break;
             case GATHERINGS_ALL:
                 Log.i(Constants.TAG, "Entered Delete: GATHERINGS ALL");
                 rowsDeleted = db.delete(GatheringEntry.TABLE_NAME, selection,
@@ -274,7 +314,7 @@ public class Provider_MyGathering extends ContentProvider {
             case TOPICS_ID:
 
                 // Get the task ID from the URI path
-                String id = uri.getPathSegments().get(1);
+                id = uri.getPathSegments().get(1);
                 // Use selections/selectionArgs to filter for this ID
                 rowsDeleted = db.delete(TopicEntry.TABLE_NAME, "_id=?", new String[]{id});
                 break;
@@ -297,7 +337,31 @@ public class Provider_MyGathering extends ContentProvider {
     public int update(@NonNull Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
 
-        throw new UnsupportedOperationException("Not yet implemented");
+        // Get access to underlying database
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        int match = sUriMatcher.match(uri);
+        // Keep track of the number of updated places
+        int placesUpdated;
+
+        switch (match) {
+            case PLACE_WITH_ID:
+                // Get the place ID from the URI path
+                String id = uri.getPathSegments().get(1);
+                // Use selections/selectionArgs to filter for this ID
+                placesUpdated = db.update(Contract_MyGathering.PlaceEntry.TABLE_NAME, values, "_id=?", new String[]{id});
+                break;
+            // Default exception
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+
+        // Notify the resolver of a change and return the number of items updated
+        if (placesUpdated != 0) {
+            // A place (or more) was updated, set notification
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        // Return the number of places deleted
+        return placesUpdated;
     }
 
     @NonNull
