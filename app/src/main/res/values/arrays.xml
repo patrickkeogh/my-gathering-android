@@ -12,4 +12,6 @@
         <item>@string/pref_search_freq_hour_value</item>
         <item>@string/pref_search_freq_day_value</item>
     </array>
+
+
 </resources>

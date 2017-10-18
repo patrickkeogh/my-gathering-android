@@ -3,8 +3,6 @@ package com.programming.kantech.mygathering.view.ui;
  * Created by patrick keogh on 2017-05-18.
  */
 
-//import com.example.android.sunshine.utilities.SunshineDateUtils;
-//import com.example.android.sunshine.utilities.SunshineWeatherUtils;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -31,7 +29,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * {@link Adapter_Gatherings} exposes a list of weather forecasts
+ * {@link Adapter_Gatherings} exposes a list of gatherings
  * from a {@link android.database.Cursor} to a {@link android.support.v7.widget.RecyclerView}.
  */
 public class Adapter_Gatherings extends RecyclerView.Adapter<Adapter_Gatherings.GatheringsAdapterViewHolder> {
@@ -41,7 +39,7 @@ public class Adapter_Gatherings extends RecyclerView.Adapter<Adapter_Gatherings.
 
     /*
      * Below, we've defined an interface to handle clicks on items within this Adapter. In the
-     * constructor of our ForecastAdapter, we receive an instance of a class that has implemented
+     * constructor of our Adapter_Gatherings, we receive an instance of a class that has implemented
      * said interface. We store that instance in this variable to call the onClick method whenever
      * an item is clicked in the list.
      */
@@ -197,19 +195,18 @@ public class Adapter_Gatherings extends RecyclerView.Adapter<Adapter_Gatherings.
     /**
      * Swaps the cursor used by the ForecastAdapter for its weather data. This method is called by
      * MainActivity after a load has finished, as well as when the Loader responsible for loading
-     * the weather data is reset. When this method is called, we assume we have a completely new
+     * the data is reset. When this method is called, we assume we have a completely new
      * set of data, so we call notifyDataSetChanged to tell the RecyclerView to update.
      *
      * @param newCursor the new cursor to use as ForecastAdapter's data source
      */
     public void swapCursor(Cursor newCursor) {
         mCursor = newCursor;
-//      COMPLETED (12) After the new Cursor is set, call notifyDataSetChanged
         notifyDataSetChanged();
     }
 
     /**
-     * Get the Patient object related to an item position.
+     * Get the object related to an item position.
      *
      * @param position the position of the cursor
      * @return Patient

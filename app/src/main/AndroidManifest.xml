@@ -21,19 +21,25 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC9g7DondEpw_OzTTJkWoG4z985fN0HgOM" />
 
+        <!--<activity-->
+            <!--android:name=".view.activities.Activity_Splash"-->
+            <!--android:launchMode="singleTop"-->
+            <!--android:theme="@style/AppTheme.NoActionBar">-->
+
+        <!--</activity>-->
+
         <activity
-            android:name=".view.activities.Activity_Splash"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".view.activities.Activity_Login"
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.activities.Activity_Login"
-            android:label="@string/app_name" />
+
         <activity
             android:name=".view.activities.Activity_Register"
             android:label="@string/app_name" />
@@ -62,11 +68,6 @@
             android:name=".provider.Provider_MyGathering"
             android:authorities="com.programming.kantech.mygathering"
             android:exported="false" />
-
-        <!--
-        COMPLETED (14) Add the WaterReminderFirebaseJobService here. It should not be exported and it
-        should have an intent filter for the action com.firebase.jobdispatcher.ACTION_EXECUTE
-        -->
         <!-- This is the Service declaration used in conjunction with FirebaseJobDispatcher -->
         <service
             android:name=".sync.JobService_SearchForNewGatherings"
@@ -86,8 +87,18 @@
         </activity>
         <activity
             android:name=".view.activities.Activity_Search_Filters"
-            android:label="@string/app_title_search_filters"></activity>
-        <activity android:name=".view.activities.Activity_Location_Select"></activity>
+            android:label="@string/app_title_search_filters" />
+        <activity android:name=".view.activities.Activity_Location_Select" />
+
+        <receiver android:name=".view.widgets.GatheringWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/gathering_widget_provider_info" />
+        </receiver>
     </application>
 
 </manifest>

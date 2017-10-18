@@ -55,8 +55,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Activity_Main extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
-        Adapter_Gatherings.GatheringsAdapterOnClickHandler {
+public class Activity_Main extends AppCompatActivity {
 
     /*
      * If we hold a reference to our Toast, we can cancel it (if it's showing)
@@ -94,13 +93,13 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
         apiService = ApiClient.getClient().create(ApiInterface.class);
         Log.i(Constants.TAG, "API Service Created");
 
-        getGatherings();
+        //getGatherings();
 
         /*
          * The ProgressBar that will indicate to the user that we are loading data. It will be
          * hidden when no data is loading.
          */
-        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
+        //mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
 
 //        progressDialog = new ProgressDialog(Activity_Main.this,
@@ -110,7 +109,7 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
          * Using findViewById, we get a reference to our RecyclerView from xml. This allows us to
          * do things like set the adapter of the RecyclerView and toggle the visibility.
          */
-        mGatheringsList = (RecyclerView) findViewById(R.id.rv_gatherings);
+        //mGatheringsList = (RecyclerView) findViewById(R.id.rv_gatherings);
 
         /*
          * A LinearLayoutManager is responsible for measuring and positioning item views within a
@@ -126,17 +125,17 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
          * layout. Generally, this is only true with horizontal lists that need to support a
          * right-to-left layout.
          */
-        LinearLayoutManager layoutManager =
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-
-        /* setLayoutManager associates the LayoutManager we created above with our RecyclerView */
-        mGatheringsList.setLayoutManager(layoutManager);
-
-        /*
-         * Use this setting to improve performance if you know that changes in content do not
-         * change the child layout size in the RecyclerView
-         */
-        mGatheringsList.setHasFixedSize(true);
+//        LinearLayoutManager layoutManager =
+//                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+//
+//        /* setLayoutManager associates the LayoutManager we created above with our RecyclerView */
+//        mGatheringsList.setLayoutManager(layoutManager);
+//
+//        /*
+//         * Use this setting to improve performance if you know that changes in content do not
+//         * change the child layout size in the RecyclerView
+//         */
+//        mGatheringsList.setHasFixedSize(true);
 
         /*
          * The Adapter_Gatherings is responsible for linking our data with the Views that
@@ -148,13 +147,13 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
          * MainActivity implements the Adapter_Gatherings GatheringOnClickHandler interface, "this"
          * is also an instance of that type of handler.
          */
-        mGatheringAdapter = new Adapter_Gatherings(this, this);
+        //mGatheringAdapter = new Adapter_Gatherings(this, this);
 
         /* Setting the adapter attaches it to the RecyclerView in our layout. */
-        mGatheringsList.setAdapter(mGatheringAdapter);
+        //mGatheringsList.setAdapter(mGatheringAdapter);
 
 
-        showLoading();
+        //showLoading();
 
 
 
@@ -163,7 +162,7 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
          * created and (if the activity/fragment is currently started) starts the loader. Otherwise
          * the last created loader is re-used.
          */
-        getSupportLoaderManager().initLoader(Constants.GATHERING_DETAIL_LOADER, null, this);
+        //getSupportLoaderManager().initLoader(Constants.GATHERING_DETAIL_LOADER, null, this);
 
         // Schedule the new gathering search job if notifications are allowed
         Boolean isAllowed = Utils_Preferences.isNotificationsAllowed(this);
@@ -260,226 +259,108 @@ public class Activity_Main extends AppCompatActivity implements LoaderManager.Lo
         finish();
     }
 
-    public void getGatherings() {
-
-        // Load the search preferences from preferences
-        float distance = Float.parseFloat(Utils_Preferences.getPreferredDistance(this));
-        distance = distance * 1000;
-        final String topic = Utils_Preferences.getPreferredTopic(this);
-        final String type = Utils_Preferences.getPreferredType(this);
-        Log.i(Constants.TAG, "Topic in Preferences:" + topic);
-
-        // test coords for Barrie ON CA
-        double lng = -79.691124;
-        double lat = 44.38760379999999;
-
-        // TODO: Load coords from prefs
-        List<Double> coords = Arrays.asList(lng, lat); //Reverse for mongo (lng, lat)
-
-        Query_Search query = new Query_Search();
-
-        query.setDistance(distance);
-        query.setCoordinates(coords);
-
-        if (!topic.equals("All")) query.setTopic(topic);
-        if (!type.equals("All")) query.setType(type);
-
-        Log.i(Constants.TAG, "query1:" + query);
-
-
-        //Query_Search query = new Query_Search(coords, distance, sdf.format(date), "NULL");
-
-        Call<List<Gathering>> call = apiService.getGatherings(query);
-
-        WeakReference<Context> mContext = new WeakReference<Context>(getApplicationContext());
-
-        new Task_getGatherings(mContext).execute(call);
-
-        //Call<List<Gathering>> call = apiService.getGatherings();
-
-//        call.enqueue(new Callback<List<Gathering>>() {
-//            @Override
-//            public void onResponse(Call<List<Gathering>> call, Response<List<Gathering>> response) {
+//    public void getGatherings() {
 //
-//                Log.i(Constants.TAG, "Response:" + response);
-//                List<Gathering> gatherings = response.body();
-//                Log.d(Constants.TAG, "Number of gatherings returned: " + gatherings.size());
+//        // Load the search preferences from preferences
+//        float distance = Float.parseFloat(Utils_Preferences.getPreferredDistance(this));
+//        distance = distance * 1000;
+//        final String topic = Utils_Preferences.getPreferredTopic(this);
+//        final String type = Utils_Preferences.getPreferredType(this);
+//        Log.i(Constants.TAG, "Topic in Preferences:" + topic);
 //
-//                if(gatherings != null){
+//        // test coords for Barrie ON CA
+//        double lng = -79.691124;
+//        double lat = 44.38760379999999;
+//
+//        // TODO: Load coords from prefs
+//        List<Double> coords = Arrays.asList(lng, lat); //Reverse for mongo (lng, lat)
+//
+//        Query_Search query = new Query_Search();
+//
+//        query.setDistance(distance);
+//        query.setCoordinates(coords);
+//
+//        if (!topic.equals("All")) query.setTopic(topic);
+//        if (!type.equals("All")) query.setType(type);
+//
+//        Log.i(Constants.TAG, "query1:" + query);
 //
 //
+//        //Query_Search query = new Query_Search(coords, distance, sdf.format(date), "NULL");
 //
+//        Call<List<Gathering>> call = apiService.getGatherings(query);
 //
-//                }
+//        WeakReference<Context> mContext = new WeakReference<Context>(getApplicationContext());
 //
-////                for (int i = 0; i < gatherings.size(); i++) {
-////                    //Log.i(Constants.TAG, "Gathering Mongo:" + gatherings.get(i).toString());
+//        new Task_getGatherings(mContext).execute(call);
+//
+//        //Call<List<Gathering>> call = apiService.getGatherings();
+//
+////        call.enqueue(new Callback<List<Gathering>>() {
+////            @Override
+////            public void onResponse(Call<List<Gathering>> call, Response<List<Gathering>> response) {
+////
+////                Log.i(Constants.TAG, "Response:" + response);
+////                List<Gathering> gatherings = response.body();
+////                Log.d(Constants.TAG, "Number of gatherings returned: " + gatherings.size());
+////
+////                if(gatherings != null){
+////
+////
+////
+////
 ////                }
+////
+//////                for (int i = 0; i < gatherings.size(); i++) {
+//////                    //Log.i(Constants.TAG, "Gathering Mongo:" + gatherings.get(i).toString());
+//////                }
+////
+////
+////
+////                List<ContentValues> values = new ArrayList<ContentValues>();
+////
+////                //loop over the returned values and convert them to pogos
+////                for (int i = 0; i < gatherings.size(); i++) {
+////                    // Convert mongo db doc to pojo and store in content provider
+////                    Gathering_Pojo gathering = Utils_ConvertToPojo.convertGatheringMongoToPojo(gatherings.get(i));
+////
+////                    //Log.i(Constants.TAG, "Gathering Pojo:" + gathering.toString());
+////
+////                    values.add(Utils_ContentValues.extractGatheringValues(gathering));
+////                }
+////
+////                /*
+////                 * Set the returned data to the adapter
+////                 */
+////                //mAdapter.setGatheringData(gatherings);
+////
+////                // Delete all patients and restore them in the provider
+////                ContentResolver resolver = getContentResolver();
+////                resolver.delete(Contract_MyGathering.GatheringEntry.CONTENT_URI, null, null);
+////
+////                // Bulk Insert our new weather data into Sunshine's Database
+////                getApplicationContext().getContentResolver().bulkInsert(
+////                        Contract_MyGathering.GatheringEntry.CONTENT_URI,
+////                        values.toArray(new ContentValues[gatherings.size()]));
+////
+////            }
+////
+////            @Override
+////            public void onFailure(Call<List<Gathering>> call, Throwable t) {
+////                // Log error here since request failed
+////                Log.i(Constants.TAG, "We got an error somewhere");
+////                Log.e(Constants.TAG, t.toString());
+////            }
+////        });
 //
-//
-//
-//                List<ContentValues> values = new ArrayList<ContentValues>();
-//
-//                //loop over the returned values and convert them to pogos
-//                for (int i = 0; i < gatherings.size(); i++) {
-//                    // Convert mongo db doc to pojo and store in content provider
-//                    Gathering_Pojo gathering = Utils_ConvertToPojo.convertGatheringMongoToPojo(gatherings.get(i));
-//
-//                    //Log.i(Constants.TAG, "Gathering Pojo:" + gathering.toString());
-//
-//                    values.add(Utils_ContentValues.extractGatheringValues(gathering));
-//                }
-//
-//                /*
-//                 * Set the returned data to the adapter
-//                 */
-//                //mAdapter.setGatheringData(gatherings);
-//
-//                // Delete all patients and restore them in the provider
-//                ContentResolver resolver = getContentResolver();
-//                resolver.delete(Contract_MyGathering.GatheringEntry.CONTENT_URI, null, null);
-//
-//                // Bulk Insert our new weather data into Sunshine's Database
-//                getApplicationContext().getContentResolver().bulkInsert(
-//                        Contract_MyGathering.GatheringEntry.CONTENT_URI,
-//                        values.toArray(new ContentValues[gatherings.size()]));
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Gathering>> call, Throwable t) {
-//                // Log error here since request failed
-//                Log.i(Constants.TAG, "We got an error somewhere");
-//                Log.e(Constants.TAG, t.toString());
-//            }
-//        });
-
-    }
-
-    /**
-     * Called by the {@link android.support.v4.app.LoaderManagerImpl} when a new Loader needs to be
-     * created. This Activity only uses one loader, so we don't necessarily NEED to check the
-     * loaderId, but this is certainly best practice.
-     *
-     * @param loaderId The loader ID for which we need to create a loader
-     * @param bundle   Any arguments supplied by the caller
-     * @return A new Loader instance that is ready to start loading.
-     */
-    @Override
-    public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
-
-        switch (loaderId) {
-            case Constants.GATHERING_DETAIL_LOADER:
-                /* URI for all rows of data in our gatherings table */
-                Uri uri = Contract_MyGathering.GatheringEntry.CONTENT_URI;
-                /* Sort order: Ascending by name */
-                String sortOrder = Contract_MyGathering.GatheringEntry.COLUMN_GATHERING_NAME + " ASC";
-                /*
-                 * A SELECTION in SQL declares which rows you'd like to return. In our case, we
-                 * want all weather data from today onwards that is stored in our weather table.
-                 * We created a handy method to do that in our WeatherEntry class.
-                 */
-                //String selection = WeatherContract.WeatherEntry.getSqlSelectForTodayOnwards();
-
-                return new CursorLoader(this,
-                        uri,
-                        Constants.LOADER_GATHERING_DETAIL_COLUMNS,
-                        null,
-                        null,
-                        sortOrder);
-
-            default:
-                throw new RuntimeException("Loader Not Implemented: " + loaderId);
-        }
-    }
-
-    /**
-     * Called when a Loader has finished loading its data.
-     * <p>
-     * NOTE: There is one small bug in this code. If no data is present in the cursor do to an
-     * initial load being performed with no access to internet, the loading indicator will show
-     * indefinitely, until data is present from the ContentProvider. This will be fixed in a
-     * future version of the course.
-     *
-     * @param loader The Loader that has finished.
-     * @param data   The data generated by the Loader.
-     */
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-        mGatheringAdapter.swapCursor(data);
-        if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
-
-        mGatheringsList.smoothScrollToPosition(mPosition);
-
-        //Log.v(Constants.TAG, "Cursor Object:" + DatabaseUtils.dumpCursorToString(data));
-        showDataView();
-    }
-
-    /**
-     * Called when a previously created loader is being reset, and thus making its data unavailable.
-     * The application should at this point remove any references it has to the Loader's data.
-     *
-     * @param loader The Loader that is being reset.
-     */
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        /*
-         * Since this Loader's data is now invalid, we need to clear the Adapter that is
-         * displaying the data.
-         */
-        mGatheringAdapter.swapCursor(null);
-    }
-
-    /**
-     * This method is for responding to clicks from our list.
-     *
-     * @param id The gathering id that was clicked in the list
-     */
-    @Override
-    public void onClick(long id) {
-
-        Intent intent = new Intent(Activity_Main.this, Activity_Gathering_Details.class);
-        Uri uri = Contract_MyGathering.GatheringEntry.buildGatheringUri(id);
-        intent.setData(uri);
-        startActivity(intent);
+//    }
 
 
-        /*
-         * Here, we create the Intent that will start the Gathering Details Activity
-         */
-        //Intent intent = new Intent(this, Activity_Gathering_Details.class);
-        //intent.putExtra(Intent.EXTRA_EMAIL, gathering);
-        //startActivity(intent);
-    }
 
-    /**
-     * This method will make the View for the weather data visible and hide the error message and
-     * loading indicator.
-     * <p>
-     * Since it is okay to redundantly set the visibility of a View, we don't need to check whether
-     * each view is currently visible or invisible.
-     */
-    private void showDataView() {
-        /* First, hide the loading indicator */
-        mLoadingIndicator.setVisibility(View.INVISIBLE);
-        /* Finally, make sure the weather data is visible */
-        mGatheringsList.setVisibility(View.VISIBLE);
-    }
 
-    /**
-     * This method will make the loading indicator visible and hide the weather View and error
-     * message.
-     * <p>
-     * Since it is okay to redundantly set the visibility of a View, we don't need to check whether
-     * each view is currently visible or invisible.
-     */
-    private void showLoading() {
-        /* Then, hide the weather data */
-        mGatheringsList.setVisibility(View.INVISIBLE);
-        /* Finally, show the loading indicator */
-        mLoadingIndicator.setVisibility(View.VISIBLE);
-    }
+
+
+
 
 
 }

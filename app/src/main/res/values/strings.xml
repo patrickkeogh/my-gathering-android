@@ -138,6 +138,14 @@
     <string name="title_search_filter_distance">Max Distance (km)</string>
     <string name="title_search_filter_location">Location</string>
     <string name="btn_search_for_gatherings">Search</string>
+    <string name="search_results_msg">1 match found</string>
+    <string name="search_results_msg_multiple"> matches found</string>
+    <string name="select_a_location_default">Select a location</string>
+    <string name="title_topics">Topic</string>
+    <string name="title_search_filter_topic">Topic</string>
+    <string name="title_search_filter_type">Type</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 
 </resources>

@@ -41,7 +41,6 @@ import retrofit2.Call;
 
 public class Activity_Search extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, Adapter_Gatherings.GatheringsAdapterOnClickHandler {
 
-    private Query_Search mQuery;
     private int mPosition = RecyclerView.NO_POSITION;
 
     private ApiInterface apiService;
@@ -51,6 +50,8 @@ public class Activity_Search extends AppCompatActivity implements LoaderManager.
     private ProgressBar mLoadingIndicator;
 
     private TextView tv_search_msg;
+
+    private boolean isloadedFromPrefs = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,7 @@ public class Activity_Search extends AppCompatActivity implements LoaderManager.
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        mQuery = createSearchQueryFromPrefs();
+        Query_Search query = createSearchQueryFromPrefs();
 
         mGatheringsList = (RecyclerView) findViewById(R.id.rv_gatherings);
 
@@ -96,7 +97,9 @@ public class Activity_Search extends AppCompatActivity implements LoaderManager.
 
         showLoading();
 
-        getGatherings();
+        isloadedFromPrefs = true;
+
+        getGatherings(query);
 
         /*
          * Ensures a loader is initialized and active. If the loader doesn't already exist, one is
@@ -106,7 +109,6 @@ public class Activity_Search extends AppCompatActivity implements LoaderManager.
         getSupportLoaderManager().initLoader(Constants.GATHERING_DETAIL_LOADER, null, this);
 
 
-
         // Open the search filters activity automatically when the activity is loaded
         //Intent intent = new Intent(this, Activity_Search_Filters.class);
         //startActivity(intent);
@@ -114,14 +116,13 @@ public class Activity_Search extends AppCompatActivity implements LoaderManager.
 
     }
 
-    private void getGatherings() {
+    private void getGatherings(Query_Search query) {
 
-        Call<List<Gathering>> call = apiService.getGatherings(mQuery);
+        Call<List<Gathering>> call = apiService.getGatherings(query);
 
         WeakReference<Context> mContext = new WeakReference<Context>(getApplicationContext());
 
         new Task_getGatherings(mContext).execute(call);
-
 
     }
 
@@ -132,6 +133,7 @@ public class Activity_Search extends AppCompatActivity implements LoaderManager.
         // Load the search preferences from preferences
         float distance = Float.parseFloat(Utils_Preferences.getPreferredDistance(this));
         distance = distance * 1000;
+
         final String topic = Utils_Preferences.getPreferredTopic(this);
         final String type = Utils_Preferences.getPreferredType(this);
         Log.i(Constants.TAG, "Topic in Preferences:" + topic);
@@ -190,7 +192,6 @@ public class Activity_Search extends AppCompatActivity implements LoaderManager.
         startActivityForResult(intent, Constants.REQUEST_GET_QUERY);
 
 
-
     }
 
     /**
@@ -209,26 +210,36 @@ public class Activity_Search extends AppCompatActivity implements LoaderManager.
         // Check if this is the result for the Location Select Activity request
         if (requestCode == Constants.REQUEST_GET_QUERY && resultCode == RESULT_OK) {
 
-            mQuery = (Query_Search) data.getSerializableExtra(Constants.EXTRA_SEARCH_QUERY);
-            Log.i(Constants.TAG, "Query:" + mQuery);
+            Query_Search query = (Query_Search) data.getSerializableExtra(Constants.EXTRA_SEARCH_QUERY);
+            Log.i(Constants.TAG, "Query:" + query);
 
-            getGatherings();
+            isloadedFromPrefs = false;
+
+            getGatherings(query);
 
 
         }
     }
 
+    /**
+     * This method is for responding to clicks from our list.
+     *
+     * @param id The gathering id that was clicked in the list
+     */
     @Override
     public void onClick(long id) {
 
-
+        Intent intent = new Intent(Activity_Search.this, Activity_Gathering_Details.class);
+        Uri uri = Contract_MyGathering.GatheringEntry.buildGatheringUri(id);
+        intent.setData(uri);
+        startActivity(intent);
     }
 
     /**
      * Instantiate and return a new Loader for the given ID.
      *
-     * @param loaderId   The ID whose loader is to be created.
-     * @param args Any arguments supplied by the caller.
+     * @param loaderId The ID whose loader is to be created.
+     * @param args     Any arguments supplied by the caller.
      * @return Return a new Loader instance that is ready to start loading.
      */
     @Override
@@ -239,12 +250,6 @@ public class Activity_Search extends AppCompatActivity implements LoaderManager.
                 Uri uri = Contract_MyGathering.GatheringEntry.CONTENT_URI;
                 /* Sort order: Ascending by name */
                 String sortOrder = Contract_MyGathering.GatheringEntry.COLUMN_GATHERING_NAME + " ASC";
-                /*
-                 * A SELECTION in SQL declares which rows you'd like to return. In our case, we
-                 * want all weather data from today onwards that is stored in our weather table.
-                 * We created a handy method to do that in our WeatherEntry class.
-                 */
-                //String selection = WeatherContract.WeatherEntry.getSqlSelectForTodayOnwards();
 
                 return new android.support.v4.content.CursorLoader(this,
                         uri,
@@ -272,15 +277,12 @@ public class Activity_Search extends AppCompatActivity implements LoaderManager.
         //Log.v(Constants.TAG, "Cursor Object:" + DatabaseUtils.dumpCursorToString(data));
         showDataView();
 
-        if(mGatheringAdapter.getItemCount() == 1){
-            tv_search_msg.setText("1 match found");
+        if (mGatheringAdapter.getItemCount() == 1) {
+            tv_search_msg.setText(R.string.search_results_msg);
 
-        }else{
-            tv_search_msg.setText(mGatheringAdapter.getItemCount() + " matches found");
+        } else {
+            tv_search_msg.setText(mGatheringAdapter.getItemCount() + " " + getString(R.string.search_results_msg_multiple));
         }
-
-
-
     }
 
     /**
