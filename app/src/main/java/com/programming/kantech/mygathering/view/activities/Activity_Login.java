@@ -11,8 +11,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-
 import com.programming.kantech.mygathering.R;
+import com.programming.kantech.mygathering.application.Application_MyGathering;
+import com.programming.kantech.mygathering.data.model.mongo.Owner;
 import com.programming.kantech.mygathering.data.model.mongo.Result_Login;
 import com.programming.kantech.mygathering.data.model.mongo.UserCredentials;
 import com.programming.kantech.mygathering.data.retrofit.ApiClient;
@@ -21,8 +22,8 @@ import com.programming.kantech.mygathering.utils.Constants;
 import com.programming.kantech.mygathering.utils.Utils_General;
 import com.programming.kantech.mygathering.utils.Utils_Preferences;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,16 +40,16 @@ public class Activity_Login extends AppCompatActivity {
     private static final int REQUEST_LOGIN = 0;
     private ProgressDialog progressDialog;
 
-    @InjectView(R.id.input_email)
+    @BindView(R.id.input_email)
     EditText mEmailText;
-    @InjectView(R.id.input_password)
+    @BindView(R.id.input_password)
     EditText mPasswordText;
-    @InjectView(R.id.link_signup)
+    @BindView(R.id.link_signup)
     TextView mSignupLink;
-    @InjectView(R.id.btn_login)
+    @BindView(R.id.btn_login)
     Button mLoginButton;
 
-    @InjectView(R.id.saveLoginCheckBox)
+    @BindView(R.id.saveLoginCheckBox)
     CheckBox mSaveLoginCheckBox;
 
     // create media player to play sound when login button is clicked
@@ -65,7 +66,7 @@ public class Activity_Login extends AppCompatActivity {
         progressDialog  = new ProgressDialog(Activity_Login.this,
                 R.style.Theme_AppCompat_Light_Dialog);
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         //mp = MediaPlayer.create(this, R.raw.bubble_pop);
 
@@ -183,8 +184,18 @@ public class Activity_Login extends AppCompatActivity {
     // Hook method called when login is complete and succeeded
     public void login_ok(Result_Login result) {
 
+        Application_MyGathering app = (Application_MyGathering) getApplication();
+
+        Owner owner = new Owner();
+        owner.setOwnerId(result.get_id());
+        owner.setUsername(mEmailText.getText().toString());
+        owner.setName(result.getName());
+
+        app.setCurrentUser(owner);
+        app.setToken(result.getToken());
+
         progressDialog.dismiss();
-        Log.i(Constants.TAG, "Redsult:" + result.toString());
+        Log.i(Constants.TAG, "Login Result:" + result.toString());
 
 
 

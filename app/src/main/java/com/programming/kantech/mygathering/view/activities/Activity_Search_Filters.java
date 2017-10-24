@@ -98,8 +98,8 @@ public class Activity_Search_Filters extends AppCompatActivity {
         // Get the list of topics from Constants
         // TODO: Load topics from Resources so they can be translated
 
-        String[] topics = Constants.GATHERING_TOPICS;
-        String[] types = Constants.GATHERING_TYPES;
+        String[] topics = Constants.GATHERING_TOPICS_FILTER;
+        String[] types = Constants.GATHERING_TYPES_FILTER;
 
         final String prefTopic = Utils_Preferences.getPreferredTopic(this);
         final String prefType = Utils_Preferences.getPreferredType(this);
@@ -138,7 +138,7 @@ public class Activity_Search_Filters extends AppCompatActivity {
         Log.i(Constants.TAG, "onActivityResult");
 
         // Check if this is the result for the Location Select Activity request
-        if (requestCode == Constants.REQUEST_GET_LOCATION && resultCode == RESULT_OK) {
+        if (requestCode == Constants.REQUEST_CODE_GET_LOCATION && resultCode == RESULT_OK) {
 
             String mLocationAddress = data.getStringExtra(Constants.EXTRA_LOCATION_ADDRESS);
             String mLocationName = data.getStringExtra(Constants.EXTRA_LOCATION_NAME);
@@ -183,7 +183,7 @@ public class Activity_Search_Filters extends AppCompatActivity {
      */
     public void onSelectLocationClicked(View view) {
         Intent intent = new Intent(this, Activity_Location_Select.class);
-        startActivityForResult(intent, Constants.REQUEST_GET_LOCATION);
+        startActivityForResult(intent, Constants.REQUEST_CODE_GET_LOCATION);
     }
 
     /***

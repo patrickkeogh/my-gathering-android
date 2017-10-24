@@ -1,5 +1,8 @@
 package com.programming.kantech.mygathering.data.model.mongo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -8,17 +11,19 @@ import java.util.List;
 
 /**
  * Created by patrick keogh on 2017-05-19.
+ * A Pojo representing a gathering in the MongoDB on the server
  */
 
-public class Gathering implements Serializable
-{
+public class Gathering implements Parcelable {
 
     @SerializedName("_id")
     @Expose
     private String gathering_id;
+
     @SerializedName("name")
     @Expose
     private String name;
+
     @SerializedName("description")
     @Expose
     private String description;
@@ -55,9 +60,11 @@ public class Gathering implements Serializable
     @SerializedName("location")
     @Expose
     private Location location;
+
     @SerializedName("topic")
     @Expose
     private List<GatheringTopic> topic = null;
+
     @SerializedName("type")
     @Expose
     private List<GatheringType> type = null;
@@ -65,13 +72,11 @@ public class Gathering implements Serializable
 
     /**
      * No args constructor for use in serialization
-     *
      */
     public Gathering() {
     }
 
     /**
-     *
      * @param topic
      * @param location
      * @param status
@@ -108,6 +113,31 @@ public class Gathering implements Serializable
         this.topic = topic;
         this.type = type;
     }
+
+    protected Gathering(Parcel in) {
+        gathering_id = in.readString();
+        name = in.readString();
+        description = in.readString();
+        gatheringStartDateTime = in.readString();
+        gatheringEndDateTime = in.readString();
+        directions = in.readString();
+        notes = in.readString();
+        status = in.readString();
+        createdAt = in.readString();
+        access = in.readString();
+    }
+
+    public static final Creator<Gathering> CREATOR = new Creator<Gathering>() {
+        @Override
+        public Gathering createFromParcel(Parcel in) {
+            return new Gathering(in);
+        }
+
+        @Override
+        public Gathering[] newArray(int size) {
+            return new Gathering[size];
+        }
+    };
 
     public String getGathering_id() {
         return gathering_id;
@@ -248,7 +278,33 @@ public class Gathering implements Serializable
                 ", directions='" + directions + '\'' +
                 ", notes='" + notes + '\'' +
                 ", status='" + status + '\'' +
+                ", v=" + v +
+                ", banner=" + banner +
+                ", owner=" + owner +
+                ", createdAt='" + createdAt + '\'' +
                 ", access='" + access + '\'' +
+                ", location=" + location +
+                ", topic=" + topic +
+                ", type=" + type +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(gathering_id);
+        parcel.writeString(name);
+        parcel.writeString(description);
+        parcel.writeString(gatheringStartDateTime);
+        parcel.writeString(gatheringEndDateTime);
+        parcel.writeString(directions);
+        parcel.writeString(notes);
+        parcel.writeString(status);
+        parcel.writeString(createdAt);
+        parcel.writeString(access);
     }
 }

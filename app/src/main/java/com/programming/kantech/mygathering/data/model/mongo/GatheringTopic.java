@@ -39,4 +39,11 @@ public class GatheringTopic implements Serializable{
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "GatheringTopic{" +
+                "id='" + id + '\'' +
+                '}';
+    }
 }

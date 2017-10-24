@@ -82,7 +82,7 @@ public class Adapter_Gatherings extends RecyclerView.Adapter<Adapter_Gatherings.
 
         View view = LayoutInflater
                 .from(mContext)
-                .inflate(R.layout.gathering_list_item, viewGroup, false);
+                .inflate(R.layout.item_gathering, viewGroup, false);
 
         view.setFocusable(true);
 

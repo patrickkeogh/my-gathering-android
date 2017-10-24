@@ -9,9 +9,12 @@
     <color name="colorDarkGrey">#454545</color>
 
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorWhiteFade">#80FAFAFA</color>
+
     <color name="colorGrey">#B6B6B6</color>
 
     <color name="colorLightGrey">#F5F5F5</color>
+    <color name="colorTextGrey">#9E9E9E</color>
 
     <color name="colorBlack">#000000</color>
 

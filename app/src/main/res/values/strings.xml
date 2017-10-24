@@ -141,11 +141,45 @@
     <string name="search_results_msg">1 match found</string>
     <string name="search_results_msg_multiple"> matches found</string>
     <string name="select_a_location_default">Select a location</string>
-    <string name="title_topics">Topic</string>
+    <string name="title_topics">Topics</string>
+    <string name="title_types">Types</string>
     <string name="title_search_filter_topic">Topic</string>
     <string name="title_search_filter_type">Type</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="action_add_gathering">Create Gathering</string>
+
+    <string name="hint_name">Title</string>
+    <string name="hint_description">Description</string>
+    <string name="content_description_gathering_details_icon">Gathering Details Icon</string>
+
+    <string name="nav_title_details">DETAILS</string>
+    <string name="nav_title_location">LOCATION</string>
+    <string name="nav_title_dates">DATE | TIME</string>
+    <string name="nav_title_banner">BANNER</string>
+    <string name="nav_title_save">SAVE</string>
+    <string name="form_footer_banner">Tap the icon to select an image.</string>
+    <string name="title_title">Title</string>
+    <string name="hint_title">Enter a title for your Gathering.</string>
+    <string name="title_topic">Topic</string>
+    <string name="title_type">Type</string>
+    <string name="title_description">Description</string>
+    <string name="btn_next_to_location">NEXT - SELECT LOCATION</string>
+    <string name="title_location">Location</string>
+    <string name="title_directions">Directions</string>
+    <string name="btn_next_to_dates">NEXT - SELECT START AND END DATE</string>
+    <string name="title_access">Access</string>
+    <string name="title_status">Status</string>
+    <string name="title_publish_later">Publish Later</string>
+    <string name="title_published_now">Published Now</string>
+    <string name="title_public">Public</string>
+    <string name="title_private">Private</string>
+    <string name="msg_access_public">Public gatherings can be found in searches and viewed by the world.</string>
+    <string name="msg_access_private">Private gatherings can only be viewed with an invitation.</string>
+    <string name="msg_status_publish">Published gatherings can be found by the world.</string>
+    <string name="msg_status_notpublish">Wait to publish your gathering when the time is right.</string>
+    <string name="btn_save_new_gathering">SAVE NEW GATHERING</string>
+    <string name="title_banner">Promotional Banner</string>
 
 
 </resources>

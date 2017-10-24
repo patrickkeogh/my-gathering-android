@@ -1,56 +1,32 @@
 package com.programming.kantech.mygathering.view.activities;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import com.programming.kantech.mygathering.R;
-import com.programming.kantech.mygathering.data.model.mongo.Gathering;
 import com.programming.kantech.mygathering.data.model.mongo.Result_Logout;
-import com.programming.kantech.mygathering.data.model.pojo.Gathering_Pojo;
-import com.programming.kantech.mygathering.data.model.pojo.Query_Search;
 import com.programming.kantech.mygathering.data.retrofit.ApiClient;
 import com.programming.kantech.mygathering.data.retrofit.ApiInterface;
-import com.programming.kantech.mygathering.provider.Contract_MyGathering;
 import com.programming.kantech.mygathering.sync.ReminderUtilities;
-import com.programming.kantech.mygathering.sync.tasks.Task_getGatherings;
 import com.programming.kantech.mygathering.utils.Constants;
-import com.programming.kantech.mygathering.utils.Utils_ContentValues;
-import com.programming.kantech.mygathering.utils.Utils_ConvertToPojo;
-import com.programming.kantech.mygathering.utils.Utils_DateFormatting;
 import com.programming.kantech.mygathering.utils.Utils_General;
 import com.programming.kantech.mygathering.utils.Utils_Preferences;
 import com.programming.kantech.mygathering.view.ui.Adapter_Gatherings;
 
-import java.lang.ref.WeakReference;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,23 +45,37 @@ public class Activity_Main extends AppCompatActivity {
      * "pretty" state when the reset menu item is clicked.
      */
     private Adapter_Gatherings mGatheringAdapter;
-    private RecyclerView mGatheringsList;
+    private ActionBar mActionBar;
     private int mPosition = RecyclerView.NO_POSITION;
-
-    private ProgressBar mLoadingIndicator;
-
 
     private static final int NUM_LIST_ITEMS = 100;
 
     private ApiInterface apiService;
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.gv_gatherings)
+    GridView gv_gatherings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().setElevation(0f);
+        ButterKnife.bind(this);
+
+        // Set the support action bar
+        setSupportActionBar(mToolbar);
+
+        // Set the action bar back button to look like an up button
+        mActionBar = this.getSupportActionBar();
+
+        if (mActionBar != null) {
+            mActionBar.setDisplayHomeAsUpEnabled(false);
+            mActionBar.setTitle("Select A Customer");
+        }
+
 
         //setupSharedPreferences();
 
@@ -93,7 +83,23 @@ public class Activity_Main extends AppCompatActivity {
         apiService = ApiClient.getClient().create(ApiInterface.class);
         Log.i(Constants.TAG, "API Service Created");
 
-        //getGatherings();
+        gv_gatherings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+//                Movie movie = mImageAdapter.getItem(position);
+//
+//                Log.i(Constants.LOG_TAG, "Movie:" + movie.toString());
+//
+//                Intent intent = new Intent(Activity_Main.this, Activity_Details.class);
+//                intent.putExtra(Constants.EXTRA_MOVIE_DETAILS, movie);
+//                startActivity(intent);
+            }
+        });
+
+
+
+        getGatherings();
 
         /*
          * The ProgressBar that will indicate to the user that we are loading data. It will be
@@ -192,7 +198,13 @@ public class Activity_Main extends AppCompatActivity {
             Intent intent = new Intent(this, Activity_Settings.class);
             startActivity(intent);
             return true; // we handle it
-        } else if (id == R.id.action_logout) {
+        } else if (id == R.id.action_add_gathering) {
+            Log.i(Constants.TAG, "id=addGathering" + id);
+            Intent intent = new Intent(this, Activity_AddGathering.class);
+            startActivity(intent);
+            return true;
+
+        }else if (id == R.id.action_logout) {
             Log.i(Constants.TAG, "id=logout" + id);
 
             logout();
@@ -259,18 +271,21 @@ public class Activity_Main extends AppCompatActivity {
         finish();
     }
 
-//    public void getGatherings() {
-//
-//        // Load the search preferences from preferences
-//        float distance = Float.parseFloat(Utils_Preferences.getPreferredDistance(this));
-//        distance = distance * 1000;
-//        final String topic = Utils_Preferences.getPreferredTopic(this);
-//        final String type = Utils_Preferences.getPreferredType(this);
-//        Log.i(Constants.TAG, "Topic in Preferences:" + topic);
-//
-//        // test coords for Barrie ON CA
-//        double lng = -79.691124;
-//        double lat = 44.38760379999999;
+    public void getGatherings() {
+
+        // Load the search preferences from preferences
+        float distance = Float.parseFloat(Utils_Preferences.getPreferredDistance(this));
+        distance = distance * 1000;
+        final String topic = Utils_Preferences.getPreferredTopic(this);
+        final String type = Utils_Preferences.getPreferredType(this);
+        Log.i(Constants.TAG, "Topic in Preferences:" + topic);
+
+        // test coords for Barrie ON CA
+        double lng = -79.691124;
+        double lat = 44.38760379999999;
+
+        // For now just get all the gatherings and add them to the grid view
+    }
 //
 //        // TODO: Load coords from prefs
 //        List<Double> coords = Arrays.asList(lng, lat); //Reverse for mongo (lng, lat)

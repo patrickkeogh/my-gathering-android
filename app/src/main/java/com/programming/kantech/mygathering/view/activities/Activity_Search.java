@@ -164,7 +164,6 @@ public class Activity_Search extends AppCompatActivity implements LoaderManager.
         return true; //true means been handled
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -173,7 +172,7 @@ public class Activity_Search extends AppCompatActivity implements LoaderManager.
         if (id == R.id.action_filter_list) {
             Log.i(Constants.TAG, "id=settings" + id);
             Intent intent = new Intent(this, Activity_Search_Filters.class);
-            startActivityForResult(intent, Constants.REQUEST_GET_QUERY);
+            startActivityForResult(intent, Constants.REQUEST_CODE_GET_QUERY);
             return true; // we handle it
         }
 
@@ -189,7 +188,7 @@ public class Activity_Search extends AppCompatActivity implements LoaderManager.
 
         // Open the search filters activity automatically when the activity is loaded
         Intent intent = new Intent(this, Activity_Search_Filters.class);
-        startActivityForResult(intent, Constants.REQUEST_GET_QUERY);
+        startActivityForResult(intent, Constants.REQUEST_CODE_GET_QUERY);
 
 
     }
@@ -208,7 +207,7 @@ public class Activity_Search extends AppCompatActivity implements LoaderManager.
         Log.i(Constants.TAG, "ResultCode:" + resultCode);
 
         // Check if this is the result for the Location Select Activity request
-        if (requestCode == Constants.REQUEST_GET_QUERY && resultCode == RESULT_OK) {
+        if (requestCode == Constants.REQUEST_CODE_GET_QUERY && resultCode == RESULT_OK) {
 
             Query_Search query = (Query_Search) data.getSerializableExtra(Constants.EXTRA_SEARCH_QUERY);
             Log.i(Constants.TAG, "Query:" + query);

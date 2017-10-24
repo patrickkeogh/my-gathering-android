@@ -30,10 +30,12 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="8dp"
             android:text="@string/title_login_email"
-            android:textSize="12sp" />
+            android:textColor="@color/colorPrimaryDark"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <EditText
             android:id="@+id/input_email"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -46,39 +48,43 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="8dp"
             android:text="@string/title_login_password"
-            android:textSize="12sp" />
+            android:textColor="@color/colorPrimaryDark"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <EditText
             android:id="@+id/input_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:inputType="textPassword" />
 
         <CheckBox
             android:id="@+id/saveLoginCheckBox"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:text="@string/login_save_credentials" />
 
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/colorWhite"
-            android:padding="12dp"
-            android:text="@string/btn_signin" />
+            android:layout_marginTop="16dp"
+            android:background="@color/colorPrimaryLight"
+            android:text="@string/btn_signin"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorWhite" />
 
         <TextView android:id="@+id/text_password_message"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="24dp"
             android:textColor="@color/colorAccent"
             android:text="@string/login_password_msg"
             android:gravity="center"
-            android:textSize="18sp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView android:id="@+id/link_signup"
             android:layout_width="fill_parent"
@@ -86,7 +92,7 @@
             android:layout_marginBottom="24dp"
             android:text="@string/login_register_msg"
             android:gravity="center"
-            android:textSize="16sp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     </LinearLayout>
 </ScrollView>

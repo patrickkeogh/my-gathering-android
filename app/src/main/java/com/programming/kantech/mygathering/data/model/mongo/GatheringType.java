@@ -40,4 +40,10 @@ public class GatheringType implements Serializable {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "GatheringType{" +
+                "id='" + id + '\'' +
+                '}';
+    }
 }

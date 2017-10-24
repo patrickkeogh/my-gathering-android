@@ -13,6 +13,21 @@
     @retrofit2.http.* <methods>;
 }
 
+-keepattributes *Annotation*, Signature
+
+##== Filepicker ==
+-keep class io.filepicker.** { *; }
+
+##== Retrofit ==
+-keep class retrofit.** { *; }
+-keepclassmembernames interface * {
+    @retrofit.http.* <methods>;
+}
+
+##== Gson ==
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.stream.** { *; }
+
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
 # class:

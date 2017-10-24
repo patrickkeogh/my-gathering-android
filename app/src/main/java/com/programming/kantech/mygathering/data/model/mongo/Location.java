@@ -1,5 +1,7 @@
 package com.programming.kantech.mygathering.data.model.mongo;
 
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -9,37 +11,44 @@ import java.io.Serializable;
  * Created by patrick keogh on 2017-05-19.
  */
 
-public class Location implements Serializable
+public class Location
 {
 
     @SerializedName("country")
     @Expose
     private String country;
+
     @SerializedName("country_short")
     @Expose
     private String countryShort;
+
     @SerializedName("formatted_address")
     @Expose
     private String formattedAddress;
+
     @SerializedName("locality")
     @Expose
     private String locality;
+
     @SerializedName("postal_code")
     @Expose
     private String postalCode;
+
     @SerializedName("state_prov")
     @Expose
     private String stateProv;
+
     @SerializedName("name")
     @Expose
     private String name;
+
     @SerializedName("notes")
     @Expose
     private String notes;
+
     @SerializedName("location")
     @Expose
     private Location_Coords location_coords;
-    private final static long serialVersionUID = 152059590157352799L;
 
     /**
      * No args constructor for use in serialization

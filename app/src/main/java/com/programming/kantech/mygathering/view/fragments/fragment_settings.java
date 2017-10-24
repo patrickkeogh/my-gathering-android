@@ -1,6 +1,5 @@
 package com.programming.kantech.mygathering.view.fragments;
 
-import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.preference.CheckBoxPreference;
@@ -11,10 +10,8 @@ import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.programming.kantech.mygathering.R;
-import com.programming.kantech.mygathering.data.model.mongo.GatheringTopic;
 import com.programming.kantech.mygathering.sync.ReminderUtilities;
 import com.programming.kantech.mygathering.utils.Constants;
 import com.programming.kantech.mygathering.utils.Utils_General;
@@ -73,7 +70,7 @@ public class fragment_settings extends PreferenceFragmentCompat implements Share
                         // Load the entries and entry values from Constants
                         // since we are not supporting multiple languages
                         if (pref.getKey().equals(topicKey)) {
-                            String[] topics = Constants.GATHERING_TOPICS;
+                            String[] topics = Constants.GATHERING_TOPICS_FILTER;
                             CharSequence[] entries = topics;
                             CharSequence[] entryValues = topics;
                             ListPreference lp = (ListPreference)findPreference(topicKey);
@@ -82,7 +79,7 @@ public class fragment_settings extends PreferenceFragmentCompat implements Share
                         }
 
                         if (pref.getKey().equals(typeKey)) {
-                            String[] types = Constants.GATHERING_TYPES;
+                            String[] types = Constants.GATHERING_TYPES_FILTER;
                             CharSequence[] entries = types;
                             CharSequence[] entryValues = types;
                             ListPreference lp = (ListPreference)findPreference(typeKey);

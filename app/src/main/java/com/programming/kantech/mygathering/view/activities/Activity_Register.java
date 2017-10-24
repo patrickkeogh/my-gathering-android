@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-
 import com.programming.kantech.mygathering.R;
 import com.programming.kantech.mygathering.data.model.mongo.Result_Register;
 import com.programming.kantech.mygathering.data.model.mongo.UserCredentials;
@@ -20,8 +19,8 @@ import com.programming.kantech.mygathering.data.retrofit.ApiInterface;
 import com.programming.kantech.mygathering.utils.Constants;
 import com.programming.kantech.mygathering.utils.Utils_General;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,13 +38,13 @@ public class Activity_Register extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-    @InjectView(R.id.input_name)
+    @BindView(R.id.input_name)
     EditText mNameText;
-    @InjectView(R.id.input_email)
+    @BindView(R.id.input_email)
     EditText mEmailText;
-    @InjectView(R.id.btn_register)
+    @BindView(R.id.btn_register)
     Button mRegisterButton;
-    @InjectView(R.id.link_login)
+    @BindView(R.id.link_login)
     TextView mLoginLink;
 
     // create media player to play sound when login button is clicked
@@ -61,7 +60,7 @@ public class Activity_Register extends AppCompatActivity {
         progressDialog = new ProgressDialog(Activity_Register.this,
                 R.style.Theme_AppCompat_Light_Dialog);
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
     }
 

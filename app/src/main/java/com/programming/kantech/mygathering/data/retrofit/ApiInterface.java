@@ -14,6 +14,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -75,6 +76,12 @@ public interface ApiInterface {
 
     @POST(GATHERING_GET_NEW_COUNT_PATH)
     Call<List<Gathering>> getNewGatherings(@Body Query_Search q);
+
+    @POST(SERVICE_GATHERING_PATH)
+    Call<Gathering> createGathering(@Header("x-access-token") String token,
+                                          @Body Gathering gathering);
+
+
 
 
     //@GET("movie/top_rated")
