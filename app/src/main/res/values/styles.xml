@@ -10,6 +10,7 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="colorControlHighlight">@color/colorPrimary</item>
         <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
     <style name="AppTheme.ActionBar" parent="AppTheme">

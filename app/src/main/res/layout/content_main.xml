@@ -1,26 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/gv_gatherings"
+    <!--
+    This layout is a one-pane layout for the master/detail flow.
+    -->
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/container_master"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:gravity="center"
-        android:horizontalSpacing="10dp"
-        android:numColumns="2"
-        tools:listitem="@layout/item_gathering"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp" />
+        android:scaleType="centerInside" />
 
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/container_master_fullscreen"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerInside" />
 
-
-
-
-
+    <FrameLayout
+        android:id="@+id/container_details"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorWhite"
+        android:scaleType="centerInside" />
 
 </LinearLayout>
+
+
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:layout_marginTop="?attr/actionBarSize"--><!--android:orientation="vertical">-->
+
+    <!--<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:id="@+id/swiperefresh"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent">-->
+
+    <!--<GridView xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:id="@+id/gv_gatherings"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:background="@color/colorPrimaryLight"--><!--android:gravity="center"--><!--android:horizontalSpacing="8dp"--><!--android:numColumns="4"--><!--android:padding="8dp"--><!--android:stretchMode="columnWidth"--><!--android:verticalSpacing="8dp" />-->
+
+    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+
+
+    <!--</LinearLayout>-->

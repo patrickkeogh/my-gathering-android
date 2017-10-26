@@ -181,5 +181,12 @@
     <string name="btn_save_new_gathering">SAVE NEW GATHERING</string>
     <string name="title_banner">Promotional Banner</string>
 
+    <string name="toast_not_connected_to_internet">You are not connected to the internet!</string>
+    <string name="content_description_gathering_banner">Gathering Banner</string>
+    <string name="details_title_notes">Notes</string>
+
+    <string name="toast_fav_added">Gathering added to favorites.  Favorites can be viewed offline.</string>
+    <string name="toast_fav_removed">Gathering removed from favorites</string>
+
 
 </resources>

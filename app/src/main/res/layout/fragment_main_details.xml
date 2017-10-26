@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:background="@color/colorLightGrey"
+    android:orientation="horizontal">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_gathering_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/barbeque" />
+
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Title"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/colorAccent"
+                        android:paddingEnd="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingTop="1dp"
+                        android:text="Free"
+                        android:textColor="@color/colorWhite" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:background="@color/colorPrimary"
+                        android:weightSum="3"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/iv_fav"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginEnd="1dp"
+                            android:background="@color/colorPrimaryLight"
+                            app:srcCompat="@drawable/ic_email_primary_24dp" />
+
+                        <ImageView
+                            android:id="@+id/iv_request_invite"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="1dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginEnd="1dp"
+                            android:background="@color/colorPrimaryLight"
+                            app:srcCompat="@drawable/ic_attach_money_primary_24dp" />
+
+                        <ImageView
+                            android:id="@+id/iv_favorite"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="1dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:background="@color/colorPrimaryLight"
+                            app:srcCompat="@drawable/ic_favorite_border_primary_24dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_gathering_name"
+                        style="@style/TextAppearance.AppCompat.Title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:paddingEnd="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingStart="16dp"
+                        android:textColor="@color/colorAccent"
+                        tools:text="Gathering Name" />
+
+                    <TextView
+                        android:id="@+id/tv_gathering_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingTop="8dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/colorBlack"
+                        tools:text="Barrie Molson Centre" />
+
+                    <TextView
+                        android:id="@+id/tv_gathering_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingTop="8dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/colorBlack"
+                        tools:text="Barrie, ON" />
+
+                    <TextView
+                        android:id="@+id/tv_gathering_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="8dp"
+                        android:paddingEnd="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingTop="8dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/colorBlack"
+                        tools:text="L4N3E2, Canada" />
+
+                    <TextView
+                        android:id="@+id/tv_gathering_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="8dp"
+                        android:paddingEnd="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingTop="8dp"
+                        android:textColor="@color/colorBlack"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        tools:text="Something" />
+
+                    <TextView
+                        android:id="@+id/tv_gathering_topic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="8dp"
+                        android:paddingEnd="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingTop="8dp"
+                        android:textColor="@color/colorBlack"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        tools:text="Something" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="Date"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/colorPrimaryDark" />
+
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dip"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tv_gathering_start_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    tools:text="Start: 12:00 AM JUL 23rd, 2017"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <TextView
+                    android:id="@+id/tv_gathering_end_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    tools:text="Start: 12:00 AM JUL 23rd, 2017"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="Description"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/colorPrimaryDark" />
+
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dip"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:background="@color/colorPrimary" />
+
+
+                <TextView
+                    android:id="@+id/tv_gathering_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/gathering_description_test_"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="@string/details_title_notes"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dip"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tv_gathering_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:text="Notes"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

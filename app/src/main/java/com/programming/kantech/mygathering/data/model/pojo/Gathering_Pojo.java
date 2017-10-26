@@ -271,4 +271,32 @@ public class Gathering_Pojo implements Serializable {
     public void setCreatedAt_date(String createdAt_date) {
         this.createdAt_date = createdAt_date;
     }
+
+    @Override
+    public String toString() {
+        return "Gathering_Pojo{" +
+                "id=" + id +
+                ", gathering_id='" + gathering_id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", start_date='" + start_date + '\'' +
+                ", end_date='" + end_date + '\'' +
+                ", createdAt_date='" + createdAt_date + '\'' +
+                ", directions='" + directions + '\'' +
+                ", notes='" + notes + '\'' +
+                ", status='" + status + '\'' +
+                ", banner_url='" + banner_url + '\'' +
+                ", access='" + access + '\'' +
+                ", location_name='" + location_name + '\'' +
+                ", location_city='" + location_city + '\'' +
+                ", location_prov='" + location_prov + '\'' +
+                ", location_postal='" + location_postal + '\'' +
+                ", location_country='" + location_country + '\'' +
+                ", location_notes='" + location_notes + '\'' +
+                ", topic='" + topic + '\'' +
+                ", type='" + type + '\'' +
+                ", owner_id='" + owner_id + '\'' +
+                ", owner_username='" + owner_username + '\'' +
+                '}';
+    }
 }

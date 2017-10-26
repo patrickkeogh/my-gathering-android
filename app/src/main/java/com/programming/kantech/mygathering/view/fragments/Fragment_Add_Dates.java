@@ -131,7 +131,7 @@ public class Fragment_Add_Dates extends Fragment {
 
         //new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
 
-        String start_date = new SimpleDateFormat(Constants.DATE_TIME_FROM_MONGODB, Locale.getDefault()).format(start);
+        String start_date = new SimpleDateFormat(Constants.DATE_TIME_UTC_MONGODB, Locale.getDefault()).format(start);
 
         cal.setTimeInMillis(mEndTime);
 
@@ -147,7 +147,7 @@ public class Fragment_Add_Dates extends Fragment {
 
         //new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
 
-        String end_date = new SimpleDateFormat(Constants.DATE_TIME_FROM_MONGODB, Locale.getDefault()).format(end);
+        String end_date = new SimpleDateFormat(Constants.DATE_TIME_UTC_MONGODB, Locale.getDefault()).format(end);
 
         mCallback.addDateInfo(Constants.TAG_FRAGMENT_ADD_BANNER, start_date, end_date);
 

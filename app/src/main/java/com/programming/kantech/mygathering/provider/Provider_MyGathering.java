@@ -48,8 +48,11 @@ public class Provider_MyGathering extends ContentProvider {
     public static final int GATHERINGS_ALL = 300;
     public static final int GATHERINGS_ID = 301;
 
-    public static final int PLACES = 400;
-    public static final int PLACE_WITH_ID = 401;
+    public static final int FAVORITES_ALL = 400;
+    public static final int FAVORITES_ID = 401;
+
+    public static final int PLACES = 500;
+    public static final int PLACE_WITH_ID = 501;
 
     private static final String sGatheringByIdSelection =
             Contract_MyGathering.GatheringEntry.TABLE_NAME + "." + GatheringEntry._ID + " = ? ";
@@ -72,6 +75,9 @@ public class Provider_MyGathering extends ContentProvider {
         uriMatcher.addURI(Constants.CONTENT_AUTHORITY, Contract_MyGathering.PATH_TOPIC, TOPICS_ALL);
         uriMatcher.addURI(Constants.CONTENT_AUTHORITY, Contract_MyGathering.PATH_TYPE, TYPES_ALL);
         uriMatcher.addURI(Constants.CONTENT_AUTHORITY, Contract_MyGathering.PATH_GATHERINGS, GATHERINGS_ALL);
+
+        uriMatcher.addURI(Constants.CONTENT_AUTHORITY, Contract_MyGathering.PATH_FAVORITES, FAVORITES_ALL);
+        uriMatcher.addURI(Constants.CONTENT_AUTHORITY, Contract_MyGathering.PATH_FAVORITES + "/#", FAVORITES_ID);
 
         // replaces # with int id
         uriMatcher.addURI(Constants.CONTENT_AUTHORITY, Contract_MyGathering.PATH_TOPIC + "/#", TOPICS_ID);
@@ -133,6 +139,49 @@ public class Provider_MyGathering extends ContentProvider {
         // Query for the tasks directory and write a default case
         switch (match) {
             // Query for the tasks directory
+            case FAVORITES_ALL:
+
+                Log.i(Constants.TAG, "QUERY URI MATCH:FAVORITES_ALL:" + uri);
+
+                Log.i(Constants.TAG, "Selection:" + selection);
+
+                if (selectionArgs != null) {
+                    for(String arg:selectionArgs){
+                        Log.i(Constants.TAG, "Arg;" + arg);
+
+                    }
+                }
+
+
+                retCursor = db.query(Contract_MyGathering.FavoriteEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+
+                Log.i(Constants.TAG, "Count found:" + retCursor.getCount());
+
+
+
+                break;
+            case FAVORITES_ID:
+                Log.i(Constants.TAG, "QUERY URI MATCH:FAVORITES_ID:" + uri);
+
+                id = uri.getLastPathSegment();
+
+                Log.i(Constants.TAG, "ID TO QUERY BY:" + id);
+
+                retCursor = db.query(Contract_MyGathering.FavoriteEntry.TABLE_NAME,
+                        projection,
+                        "_id=?",
+                        new String[]{id},
+                        null,
+                        null,
+                        sortOrder);
+
+                break;
             case PLACES:
                 retCursor = db.query(Contract_MyGathering.PlaceEntry.TABLE_NAME,
                         projection,
@@ -227,10 +276,23 @@ public class Provider_MyGathering extends ContentProvider {
 
         // Write URI matching code to identify the match for the tasks directory
         int match = sUriMatcher.match(uri);
+        Log.i(Constants.TAG, "int match:" + match);
         Uri returnUri = null; // URI to be returned
-        long id = 0;
+        long id;
 
         switch (match) {
+            case FAVORITES_ALL:
+                Log.i(Constants.TAG, "INSERT FAVORITES_ALL called");
+                id = db.insert(Contract_MyGathering.FavoriteEntry.TABLE_NAME, null, values);
+
+                if ( id > 0 ) {
+                    returnUri = ContentUris.withAppendedId(Contract_MyGathering.FavoriteEntry.CONTENT_URI, id);
+                } else {
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
+                }
+                break;
+
+
             case PLACES:
                 // Insert new values into the database
                 id = db.insert(Contract_MyGathering.PlaceEntry.TABLE_NAME, null, values);
@@ -275,7 +337,7 @@ public class Provider_MyGathering extends ContentProvider {
 
     // Implement delete to delete a single row of data
     @Override
-    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] args) {
 
         // Get access to the database and write URI matching code to recognize a single item
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
@@ -290,26 +352,24 @@ public class Provider_MyGathering extends ContentProvider {
         // [Hint] Use selections to delete an item by its row ID
         switch (match) {
             // Handle the single item case, recognized by the ID included in the URI path
-            case PLACE_WITH_ID:
-                // Get the place ID from the URI path
-                id = uri.getPathSegments().get(1);
-                // Use selections/selectionArgs to filter for this ID
-                rowsDeleted = db.delete(Contract_MyGathering.PlaceEntry.TABLE_NAME, "_id=?", new String[]{id});
+            case FAVORITES_ALL:
+                // Use selections/selectionArgs to filter
+                rowsDeleted = db.delete(Contract_MyGathering.FavoriteEntry.TABLE_NAME, selection, args);
                 break;
             case GATHERINGS_ALL:
                 Log.i(Constants.TAG, "Entered Delete: GATHERINGS ALL");
                 rowsDeleted = db.delete(GatheringEntry.TABLE_NAME, selection,
-                        selectionArgs);
+                        args);
 
                 Log.i(Constants.TAG, "Rows Deleted:" + rowsDeleted);
                 break;
             case TOPICS_ALL:
                 rowsDeleted = db.delete(TopicEntry.TABLE_NAME, selection,
-                        selectionArgs);
+                        args);
                 break;
             case TYPES_ALL:
                 rowsDeleted = db.delete(TypeEntry.TABLE_NAME, selection,
-                        selectionArgs);
+                        args);
                 break;
             case TOPICS_ID:
 

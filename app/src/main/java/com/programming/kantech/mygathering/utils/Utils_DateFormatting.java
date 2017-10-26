@@ -121,6 +121,47 @@ public class Utils_DateFormatting {
 
     }
 
+    public static String getFormattedLongDateAndTimeStringFromLongDate(long dateIn) {
+
+        // create a calendar
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTimeInMillis(dateIn);
+
+        String[] suffixes =
+                //    0     1     2     3     4     5     6     7     8     9
+                {"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th",
+                        //    10    11    12    13    14    15    16    17    18    19
+                        "th", "th", "th", "th", "th", "th", "th", "th", "th", "th",
+                        //    20    21    22    23    24    25    26    27    28    29
+                        "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th",
+                        //    30    31
+                        "th", "st"};
+
+        SimpleDateFormat formatDayOfMonth = new SimpleDateFormat("d", Locale.getDefault());
+        int day = Integer.parseInt(formatDayOfMonth.format(cal.getTime()));
+        String strDay = day + suffixes[day];
+
+
+        SimpleDateFormat dayOfWeek = new SimpleDateFormat("EEEE", Locale.getDefault());
+        String strDayOfWeek = dayOfWeek.format(cal.getTime());
+
+        SimpleDateFormat monthOfYear = new SimpleDateFormat("MMMM", Locale.getDefault());
+        String strMonthOfYear = monthOfYear.format(cal.getTime());
+
+        SimpleDateFormat year = new SimpleDateFormat("yyyy", Locale.getDefault());
+        String strYear = year.format(cal.getTime());
+
+        SimpleDateFormat time = new SimpleDateFormat("hh:mm a");
+        String strTime = time.format(cal.getTime());
+
+
+        return strDayOfWeek + " " + strMonthOfYear + " " + strDay + ", " + strYear + " " + strTime;
+
+    }
+
+
+
 
 
     /**

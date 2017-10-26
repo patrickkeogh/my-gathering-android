@@ -20,7 +20,7 @@ import com.programming.kantech.mygathering.utils.Utils_General;
  * Created by patrick keogh on 2017-05-22.
  */
 
-public class fragment_settings extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener,
+public class Fragment_Settings extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener,
         Preference.OnPreferenceChangeListener {
     /**
      * Called during {@link #onCreate(Bundle)} to supply the preferences for this fragment.

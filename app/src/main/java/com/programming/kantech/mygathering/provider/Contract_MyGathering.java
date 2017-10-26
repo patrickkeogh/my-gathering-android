@@ -29,6 +29,7 @@ public class Contract_MyGathering {
     public static final String PATH_TYPE = TypeEntry.TABLE_NAME;
     public static final String PATH_GATHERINGS = GatheringEntry.TABLE_NAME;
     public static final String PATH_PLACES = PlaceEntry.TABLE_NAME;
+    public static final String PATH_FAVORITES = FavoriteEntry.TABLE_NAME;
 
     public static final class PlaceEntry implements BaseColumns {
 
@@ -189,6 +190,99 @@ public class Contract_MyGathering {
          */
         public static Uri buildTypeUri(Long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+    }
+
+    /* Inner class that defines the table contents of the favorites table */
+    public static final class FavoriteEntry implements BaseColumns {
+
+        /**
+         * Use BASE_CONTENT_URI to create the unique URI for Topics Table that
+         * apps will use to contact the content provider.
+         */
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_FAVORITES).build();
+
+        /**
+         * Name of the database table.
+         */
+        public static final String TABLE_NAME = "favorites_table";
+
+        //public static final String _ID = "_id";
+        public static final String COLUMN_GATHERING_ID = "gathering_id";
+        public static final String COLUMN_GATHERING_NAME = "gathering_name";
+        public static final String COLUMN_GATHERING_DESC = "gathering_description";
+        public static final String COLUMN_GATHERING_TYPE = "gathering_type";
+        public static final String COLUMN_GATHERING_TOPIC = "gathering_topic";
+        public static final String COLUMN_GATHERING_START_DATE = "gathering_start_date";
+        public static final String COLUMN_GATHERING_END_DATE = "gathering_end_date";
+
+        public static final String COLUMN_GATHERING_CREATED_DATE = "gathering_created_date";
+
+        public static final String COLUMN_GATHERING_LOCATION_COUNTRY = "gathering_location_country";
+        public static final String COLUMN_GATHERING_LOCATION_LOCALITY = "gathering_location_locality";
+        public static final String COLUMN_GATHERING_LOCATION_POSTAL = "gathering_location_postal";
+        public static final String COLUMN_GATHERING_LOCATION_PROV = "gathering_location_prov";
+        public static final String COLUMN_GATHERING_LOCATION_NAME = "gathering_location_name";
+        public static final String COLUMN_GATHERING_LOCATION_NOTES = "gathering_location_notes";
+        public static final String COLUMN_GATHERING_STATUS = "gathering_status";
+        public static final String COLUMN_GATHERING_ACCESS = "gathering_access";
+        public static final String COLUMN_GATHERING_OWNER_ID = "gathering_owner_id";
+        public static final String COLUMN_GATHERING_OWNER_USERNAME = "gathering_owner_username";
+
+        public static final String COLUMN_GATHERING_BANNER_URL = "gathering_banner_url";
+
+        /**
+         * Return a Uri that points to the row containing a given id.
+         *
+         * @param id
+         * @return Uri
+         */
+        public static Uri buildFavoriteUri(Long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        /**
+         * Create a Favorite object with the data from a cursor.
+         *
+         * @param cursor
+         * @return Gathering_Pojo
+         */
+        public static Gathering_Pojo getFavoriteFromCursor(Cursor cursor) {
+            //Log.i(Constants.TAG, "Entered getGatheringFromCursor() in Contract_Gathering");
+
+            Gathering_Pojo g = new Gathering_Pojo();
+
+            g.setId(cursor.getLong(cursor.getColumnIndexOrThrow(_ID)));
+
+            g.setGathering_id(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_ID)));
+            g.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_NAME)));
+            g.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_DESC)));
+            g.setTopic(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_TOPIC)));
+            g.setType(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_TYPE)));
+            //Log.i(Constants.TAG, "Type in Cursor:" + g.getType());
+            g.setStart_date(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_START_DATE)));
+            g.setEnd_date(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_END_DATE)));
+            g.setCreatedAt_date(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_CREATED_DATE)));
+
+
+            g.setStatus(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_STATUS)));
+            g.setAccess(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_ACCESS)));
+
+            g.setLocation_name(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_LOCATION_NAME)));
+            g.setLocation_city(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_LOCATION_LOCALITY)));
+            g.setLocation_prov(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_LOCATION_PROV)));
+            g.setLocation_postal(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_LOCATION_POSTAL)));
+            g.setLocation_country(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_LOCATION_COUNTRY)));
+            g.setLocation_notes(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_LOCATION_NOTES)));
+
+            g.setOwner_id(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_OWNER_ID)));
+            g.setOwner_username(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_OWNER_USERNAME)));
+
+            g.setBanner_url(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GATHERING_BANNER_URL)));
+
+
+            return g;
         }
     }
 

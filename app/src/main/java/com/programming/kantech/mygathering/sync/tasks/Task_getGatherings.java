@@ -23,6 +23,7 @@ import retrofit2.Response;
 
 /**
  * Created by patrick keogh on 2017-06-04.
+ *
  */
 
 public class Task_getGatherings extends AsyncTask<Call, Void, List<Gathering>> {
@@ -39,11 +40,7 @@ public class Task_getGatherings extends AsyncTask<Call, Void, List<Gathering>> {
             Call<List<Gathering>> call = params[0];
             Response<List<Gathering>> response = call.execute();
 
-            List<Gathering> gatherings = response.body();
-
-
-
-            return gatherings;
+            return response.body();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -89,17 +86,3 @@ public class Task_getGatherings extends AsyncTask<Call, Void, List<Gathering>> {
     }
 }
 
-//
-//public class MyCustomTask extends AsyncTask<Void, Void, Long> {
-//
-//    private Context mContext;
-//
-//    public MyCustomTask (Context context){
-//        mContext = context;
-//    }
-//
-//    //other methods like onPreExecute etc.
-//    protected void onPostExecute(Long result) {
-//        Toast.makeText(mContext,"Subiendo la foto. ¡Tras ser moderada empezara a ser votada!: ", Toast.LENGTH_LONG).show();
-//    }
-//}

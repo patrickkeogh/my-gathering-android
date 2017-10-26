@@ -52,7 +52,7 @@ public class Constants {
     public static final String DATE_FORMAT = "EEEE, MMMM dd, yyyy";
     public static final String TIME_FORMAT = "hh:mm a";
     public static final String DATE_TIME_FORMAT = "MMM-dd-yyyy HH:mm:ss";
-    public static final String DATE_TIME_FROM_MONGODB = "yyyy-MM-dd'T'HH:mm:ssZ";
+    public static final String DATE_TIME_UTC_MONGODB = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
 
     // The loader's unique id. Loader ids are specific to the Activity or
@@ -173,6 +173,7 @@ public class Constants {
      * The Constants used for state objects
      */
     public static final String STATE_FRAGMENT_TAG = "com.programming.kantech.mygathering.app.state.fragment_tag";
+    public static final String STATE_DETAILS_URI = "com.programming.kantech.mygathering.app.state.details_uri";
 
     /**
      * The Constants used for data added as extras to intents
@@ -182,6 +183,7 @@ public class Constants {
     public static final String EXTRA_LOCATION_LAT = "location_lat";
     public static final String EXTRA_LOCATION_LONG = "location_long";
     public static final String EXTRA_SEARCH_QUERY = "search_query";
+    public static final String EXTRA_DETAILS_URI = "details_uri";
 
     public static final String EXTRA_FRAGMENT_TAG = "com.programming.kantech.mygathering.app.extra.fragment_tag";
 
@@ -205,6 +207,16 @@ public class Constants {
 
     public static final String TAG_FRAGMENT_ADD_SAVE =
             "com.programming.kantech.mygathering.app.views.ui.fragment_add_save";
+
+    public static final String TAG_FRAGMENT_MAIN =
+            "com.programming.kantech.mygathering.app.views.ui.fragment_main";
+
+    public static final String TAG_FRAGMENT_MAIN_LIST =
+            "com.programming.kantech.mygathering.app.views.ui.fragment_gathering_list";
+
+    public static final String TAG_FRAGMENT_MAIN_DETAILS =
+            "com.programming.kantech.mygathering.app.views.ui.fragment_gathering_list";
+
 
 
 

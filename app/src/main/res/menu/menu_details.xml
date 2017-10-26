@@ -4,7 +4,7 @@
 
     <item android:id="@+id/action_fav_add"
         android:title="@string/action_fav_add"
-        android:icon="@drawable/ic_favorite_black_18dp"
+        android:icon="@drawable/ic_favorite_primary_24dp"
         android:orderInCategory="100"
         app:showAsAction="always" />
 
