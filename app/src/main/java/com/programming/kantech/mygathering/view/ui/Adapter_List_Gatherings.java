@@ -6,7 +6,9 @@ package com.programming.kantech.mygathering.view.ui;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,12 +29,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 
 public class Adapter_List_Gatherings extends RecyclerView.Adapter<Adapter_List_Gatherings.GatheringsAdapterViewHolder> {
 
     /* The context we use to utility methods, app resources and layout inflaters */
     private final Context mContext;
+
+    private int mSelectedPosition = -1;
+    private long mSelectedId;
 
     /*
      * Below, we've defined an interface to handle clicks on items within this Adapter. In the
@@ -41,6 +47,13 @@ public class Adapter_List_Gatherings extends RecyclerView.Adapter<Adapter_List_G
      * an item is clicked in the list.
      */
     final private GatheringsAdapterOnClickHandler mClickHandler;
+
+    public void setSelectedItem(int id) {
+        mSelectedId = id;
+        notifyDataSetChanged();
+
+
+    }
 
     /**
      * The interface that receives onClick messages.
@@ -53,10 +66,8 @@ public class Adapter_List_Gatherings extends RecyclerView.Adapter<Adapter_List_G
 
     /**
      * Creates an Adapter_Gatherings.
-     *
-     * @param context      Used to talk to the UI and app resources
+     *  @param context      Used to talk to the UI and app resources
      * @param clickHandler The on-click handler for this adapter. This single handler is called
-     *                     when an item is clicked.
      */
     public Adapter_List_Gatherings(@NonNull Context context, GatheringsAdapterOnClickHandler clickHandler) {
         mContext = context;
@@ -98,10 +109,26 @@ public class Adapter_List_Gatherings extends RecyclerView.Adapter<Adapter_List_G
      */
     @Override
     public void onBindViewHolder(GatheringsAdapterViewHolder viewHolder, int position) {
+
         mCursor.moveToPosition(position);
 
         /* Read date from the cursor */
         Gathering_Pojo gathering = Contract_MyGathering.GatheringEntry.getGatheringFromCursor(mCursor);
+
+        Log.i(Constants.TAG, "SelectedId:" + mSelectedId);
+
+        if(gathering.getId() == mSelectedId){
+            Log.i(Constants.TAG, "This one is selected:" + gathering.getId() + " AND " + mSelectedId);
+            mSelectedPosition = position;
+            mSelectedId = -1;
+            viewHolder.itemView
+                    .setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryLight));
+
+        }else{
+            viewHolder.itemView
+                    .setBackgroundColor(Color.TRANSPARENT);
+
+        }
 
         viewHolder.itemView.setTag(position);
 
@@ -228,12 +255,16 @@ public class Adapter_List_Gatherings extends RecyclerView.Adapter<Adapter_List_G
         public void onClick(View v) {
 
             Log.i(Constants.TAG, "Onclick Called");
-            int adapterPosition = getAdapterPosition();
+            mSelectedPosition = getAdapterPosition();
 
-            mCursor.moveToPosition(adapterPosition);
+            Log.i(Constants.TAG, "selected position:" + mSelectedPosition);
+
+            mCursor.moveToPosition(mSelectedPosition);
             long id = mCursor.getLong(Constants.COL_ID);
             Log.i(Constants.TAG, "id returned:" + id);
+            mSelectedId = id;
 
+            notifyDataSetChanged();
 
             //int position = (int) v.getTag();
             //Log.i(Constants.TAG, "Position:" + position);

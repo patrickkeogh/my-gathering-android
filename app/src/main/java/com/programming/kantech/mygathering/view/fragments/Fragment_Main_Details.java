@@ -123,9 +123,9 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
 
         // Load the saved state if there is one
         if (savedInstanceState != null) {
-            Log.i(Constants.TAG, "Fragment_Step savedInstanceState is not null");
+            //Log.i(Constants.TAG, "Fragment_Step savedInstanceState is not null");
             if (savedInstanceState.containsKey(Constants.STATE_DETAILS_URI)) {
-                Log.i(Constants.TAG, "we found the step key in savedInstanceState");
+                //Log.i(Constants.TAG, "we found the step key in savedInstanceState");
                 mSelectedUri = Uri.parse(savedInstanceState.getString(Constants.STATE_DETAILS_URI));
             }
 
@@ -133,7 +133,7 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
 
             Bundle args = getArguments();
             mSelectedUri = Uri.parse(args.getString(Constants.EXTRA_DETAILS_URI));
-            Log.i(Constants.TAG, "Fragment_Step savedInstanceState is null, get data from intent:" + mSelectedUri.toString());
+            //Log.i(Constants.TAG, "Fragment_Step savedInstanceState is null, get data from intent:" + mSelectedUri.toString());
         }
 
         if (mSelectedUri == null) {
@@ -185,12 +185,12 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
 
-        Log.i(Constants.TAG, "onCreateLoader() called in Details");
+        //Log.i(Constants.TAG, "onCreateLoader() called in Details");
 
         switch (loaderId) {
             case Constants.GATHERING_DETAIL_LOADER:
 
-                Log.i(Constants.TAG, "mUri to use:" + mSelectedUri);
+                //Log.i(Constants.TAG, "mUri to use:" + mSelectedUri);
 
                 return new CursorLoader(getContext(),
                         mSelectedUri,
@@ -210,21 +210,21 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
-        Log.i(Constants.TAG, "onLoadFinished() called in Details");
+        //Log.i(Constants.TAG, "onLoadFinished() called in Details");
 
 
 
         boolean cursorHasValidData = false;
 
         if (data != null && data.moveToFirst()) {
-            Log.i(Constants.TAG, "We have good data");
+            //Log.i(Constants.TAG, "We have good data");
             /* We have valid data, continue on to bind the data to the UI */
             cursorHasValidData = true;
         }
 
         if (!cursorHasValidData) {
             /* No data to display, simply return and do nothing */
-            Log.i(Constants.TAG, "No data to display");
+            //Log.i(Constants.TAG, "No data to display");
             return;
         }
 
@@ -234,7 +234,7 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
         // Check if the movie is in the favorites collection
         new Task_CheckIfGatheringIsInFavorites().execute(mGathering);
 
-        Log.i(Constants.TAG, "Gathering Returned in Details cursor:" + mGathering.toString());
+        //Log.i(Constants.TAG, "Gathering Returned in Details cursor:" + mGathering.toString());
 
         tv_gathering_name.setText(mGathering.getName());
         tv_gathering_notes.setText(mGathering.getNotes());
@@ -349,7 +349,7 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
             ContentResolver resolver = getActivity().getContentResolver();
 
             long gathering_id = date[0].getId();
-            Log.i(Constants.TAG, "Gathering_Id in background:" + gathering_id);
+            //Log.i(Constants.TAG, "Gathering_Id in background:" + gathering_id);
 
             String selection = Contract_MyGathering.FavoriteEntry.COLUMN_GATHERING_ID + "=?";
             String[] args = {String.valueOf(gathering_id)};
@@ -399,7 +399,7 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
 
         if (cursor != null) {
 
-            Log.i(Constants.TAG, "Count:" + cursor.getCount());
+            //Log.i(Constants.TAG, "Count:" + cursor.getCount());
 
             if (cursor.getCount() == 1) {
                 iv_favorite.setImageResource(R.drawable.ic_favorite_primary_24dp);

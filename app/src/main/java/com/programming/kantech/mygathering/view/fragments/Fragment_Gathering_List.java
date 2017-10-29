@@ -24,7 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by patri on 2017-10-24.
+ * Created by patrick keogh on 2017-10-24.
+ *
  */
 
 public class Fragment_Gathering_List extends Fragment implements
@@ -34,6 +35,8 @@ public class Fragment_Gathering_List extends Fragment implements
     private Adapter_List_Gatherings mGatheringAdapter;
 
     private int mPosition = RecyclerView.NO_POSITION;
+
+    private int mSelected_id;
 
 
     @BindView(R.id.rv_gatherings)
@@ -46,8 +49,10 @@ public class Fragment_Gathering_List extends Fragment implements
 
     public void notifyDataChange() {
 
-        Log.i(Constants.TAG, "notifyDataChange");
+        Log.i(Constants.TAG, "notifyDataChange in Fragment_gathering_List");
         getLoaderManager().restartLoader(Constants.GATHERING_DETAIL_LOADER, null, this);
+        mSelected_id = -1;
+        //mCallback.removeDetailsFrag();
 
     }
 
@@ -70,6 +75,7 @@ public class Fragment_Gathering_List extends Fragment implements
     // after a callback has been triggered
     public interface SelectListener {
         void onGatheringSelected(Uri uri);
+        void removeDetailsFrag();
 
         //void refreshGatherings();
     }
@@ -79,8 +85,15 @@ public class Fragment_Gathering_List extends Fragment implements
      * initializes the fragment's arguments, and returns the
      * new fragment to the client.
      */
-    public static Fragment_Gathering_List newInstance() {
-        return new Fragment_Gathering_List();
+    public static Fragment_Gathering_List newInstance(int id) {
+
+        Fragment_Gathering_List f = new Fragment_Gathering_List();
+        Bundle args = new Bundle();
+
+        // Add any required arguments for start up - None needed right now
+        args.putInt(Constants.EXTRA_SELECTED_ID, id);
+        f.setArguments(args);
+        return f;
     }
 
     @Nullable
@@ -92,6 +105,20 @@ public class Fragment_Gathering_List extends Fragment implements
         final View rootView = inflater.inflate(R.layout.fragment_main_list, container, false);
 
         ButterKnife.bind(this, rootView);
+
+        // Load the saved state if there is one
+        if (savedInstanceState != null) {
+            Log.i(Constants.TAG, "Fragment_Main savedInstanceState is not null");
+            if (savedInstanceState.containsKey(Constants.STATE_SELECTED_ID)) {
+                mSelected_id = savedInstanceState.getInt(Constants.STATE_SELECTED_ID);
+            }
+
+        } else {
+
+            Bundle args = getArguments();
+            mSelected_id = args.getInt(Constants.EXTRA_SELECTED_ID);
+            //Log.i(Constants.TAG, "Fragment_Step savedInstanceState is null, get data from intent:" +mSelected_id);
+        }
 
         return rootView;
 
@@ -114,6 +141,7 @@ public class Fragment_Gathering_List extends Fragment implements
         rv_gatherings.setHasFixedSize(true);
 
         mGatheringAdapter = new Adapter_List_Gatherings(getContext(), this);
+        mGatheringAdapter.setSelectedItem(mSelected_id);
 
         /* Setting the adapter attaches it to the RecyclerView in our layout. */
         rv_gatherings.setAdapter(mGatheringAdapter);
@@ -169,9 +197,17 @@ public class Fragment_Gathering_List extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        Log.i(Constants.TAG, "onLoadFinished in Fragement_Gathering List");
+
+        //mGatheringAdapter.setSelectedItem(mSelected_id);
 
         mGatheringAdapter.swapCursor(data);
+        //mCallback.removeDetailsFrag();
+
+
         if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
+
+        //mGatheringAdapter.setSelectedItem(mPosition);
 
         rv_gatherings.smoothScrollToPosition(mPosition);
 

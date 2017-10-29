@@ -2,6 +2,8 @@ package com.programming.kantech.mygathering.utils;
 
 import com.programming.kantech.mygathering.provider.Contract_MyGathering;
 
+import java.util.HashMap;
+
 /**
  * Created by patrick keogh on 2017-05-18.
  */
@@ -174,6 +176,7 @@ public class Constants {
      */
     public static final String STATE_FRAGMENT_TAG = "com.programming.kantech.mygathering.app.state.fragment_tag";
     public static final String STATE_DETAILS_URI = "com.programming.kantech.mygathering.app.state.details_uri";
+    public static final String STATE_SELECTED_ID = "com.programming.kantech.mygathering.app.state.selected_id";
 
     /**
      * The Constants used for data added as extras to intents
@@ -184,6 +187,7 @@ public class Constants {
     public static final String EXTRA_LOCATION_LONG = "location_long";
     public static final String EXTRA_SEARCH_QUERY = "search_query";
     public static final String EXTRA_DETAILS_URI = "details_uri";
+    public static final String EXTRA_SELECTED_ID = "selected_id";
 
     public static final String EXTRA_FRAGMENT_TAG = "com.programming.kantech.mygathering.app.extra.fragment_tag";
 
@@ -217,6 +221,9 @@ public class Constants {
     public static final String TAG_FRAGMENT_MAIN_DETAILS =
             "com.programming.kantech.mygathering.app.views.ui.fragment_gathering_list";
 
+    public static final String TAG_FRAGMENT_SEARCH_DIALOG =
+            "com.programming.kantech.mygathering.app.views.ui.fragment_search_dialog";
+
 
 
 
@@ -226,9 +233,20 @@ public class Constants {
     public static final String COMPONENT_TYPE_POSTAL = "postal_code";
     public static final String COMPONENT_TYPE_PROV = "administrative_area_level_1";
 
+    //public static final String[]
 
 
 
+//    private Object[][] array = {["String", 1],[],[]};
+//
+//    <array name="distance_filters">
+//    <item>No distance limit</item>
+//        <item>Within 5 km of ...</item>
+//        <item>Within 10 km of ...</item>
+//        <item>Within 25 km of ...</item>
+//        <item>Within 50 km of ...</item>
+//        <item>Within 100 km of ...</item>
+//    </array>
 
 
 }

@@ -141,16 +141,16 @@ public class Provider_MyGathering extends ContentProvider {
             // Query for the tasks directory
             case FAVORITES_ALL:
 
-                Log.i(Constants.TAG, "QUERY URI MATCH:FAVORITES_ALL:" + uri);
+                //Log.i(Constants.TAG, "QUERY URI MATCH:FAVORITES_ALL:" + uri);
 
-                Log.i(Constants.TAG, "Selection:" + selection);
-
-                if (selectionArgs != null) {
-                    for(String arg:selectionArgs){
-                        Log.i(Constants.TAG, "Arg;" + arg);
-
-                    }
-                }
+                //Log.i(Constants.TAG, "Selection:" + selection);
+//
+//                if (selectionArgs != null) {
+//                    for(String arg:selectionArgs){
+//                        Log.i(Constants.TAG, "Arg;" + arg);
+//
+//                    }
+//                }
 
 
                 retCursor = db.query(Contract_MyGathering.FavoriteEntry.TABLE_NAME,
@@ -167,11 +167,11 @@ public class Provider_MyGathering extends ContentProvider {
 
                 break;
             case FAVORITES_ID:
-                Log.i(Constants.TAG, "QUERY URI MATCH:FAVORITES_ID:" + uri);
+                //Log.i(Constants.TAG, "QUERY URI MATCH:FAVORITES_ID:" + uri);
 
                 id = uri.getLastPathSegment();
 
-                Log.i(Constants.TAG, "ID TO QUERY BY:" + id);
+                //Log.i(Constants.TAG, "ID TO QUERY BY:" + id);
 
                 retCursor = db.query(Contract_MyGathering.FavoriteEntry.TABLE_NAME,
                         projection,
@@ -201,11 +201,11 @@ public class Provider_MyGathering extends ContentProvider {
                         sortOrder);
                 break;
             case PLACE_WITH_ID:
-                Log.i(Constants.TAG, "URI MATCH:PLACE_WITH_ID:" + uri);
+                //Log.i(Constants.TAG, "URI MATCH:PLACE_WITH_ID:" + uri);
 
                 id = uri.getLastPathSegment();
 
-                Log.i(Constants.TAG, "ID TO QUERY BY:" + id);
+                //Log.i(Constants.TAG, "ID TO QUERY BY:" + id);
 
                 retCursor = db.query(Contract_MyGathering.PlaceEntry.TABLE_NAME,
                         projection,
@@ -217,11 +217,11 @@ public class Provider_MyGathering extends ContentProvider {
 
                 break;
             case GATHERINGS_ID:
-                Log.i(Constants.TAG, "URI MATCH:GATHERINGS_ID:" + uri);
+                //Log.i(Constants.TAG, "URI MATCH:GATHERINGS_ID:" + uri);
 
                 id = uri.getLastPathSegment();
 
-                Log.i(Constants.TAG, "ID TO QUERY BY:" + id);
+                //Log.i(Constants.TAG, "ID TO QUERY BY:" + id);
 
 
 
@@ -276,13 +276,13 @@ public class Provider_MyGathering extends ContentProvider {
 
         // Write URI matching code to identify the match for the tasks directory
         int match = sUriMatcher.match(uri);
-        Log.i(Constants.TAG, "int match:" + match);
+        //Log.i(Constants.TAG, "int match:" + match);
         Uri returnUri = null; // URI to be returned
         long id;
 
         switch (match) {
             case FAVORITES_ALL:
-                Log.i(Constants.TAG, "INSERT FAVORITES_ALL called");
+                //Log.i(Constants.TAG, "INSERT FAVORITES_ALL called");
                 id = db.insert(Contract_MyGathering.FavoriteEntry.TABLE_NAME, null, values);
 
                 if ( id > 0 ) {
@@ -357,11 +357,11 @@ public class Provider_MyGathering extends ContentProvider {
                 rowsDeleted = db.delete(Contract_MyGathering.FavoriteEntry.TABLE_NAME, selection, args);
                 break;
             case GATHERINGS_ALL:
-                Log.i(Constants.TAG, "Entered Delete: GATHERINGS ALL");
+                //Log.i(Constants.TAG, "Entered Delete: GATHERINGS ALL");
                 rowsDeleted = db.delete(GatheringEntry.TABLE_NAME, selection,
                         args);
 
-                Log.i(Constants.TAG, "Rows Deleted:" + rowsDeleted);
+                //Log.i(Constants.TAG, "Rows Deleted:" + rowsDeleted);
                 break;
             case TOPICS_ALL:
                 rowsDeleted = db.delete(TopicEntry.TABLE_NAME, selection,

@@ -1,20 +1,19 @@
 package com.programming.kantech.mygathering.view.activities;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.LoginFilter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +23,7 @@ import android.widget.FrameLayout;
 
 import com.programming.kantech.mygathering.R;
 import com.programming.kantech.mygathering.data.model.mongo.Gathering;
+import com.programming.kantech.mygathering.data.model.mongo.Result_Count;
 import com.programming.kantech.mygathering.data.model.pojo.Gathering_Pojo;
 import com.programming.kantech.mygathering.data.model.pojo.Query_Search;
 import com.programming.kantech.mygathering.data.retrofit.ApiClient;
@@ -31,11 +31,10 @@ import com.programming.kantech.mygathering.data.retrofit.ApiInterface;
 import com.programming.kantech.mygathering.provider.Contract_MyGathering;
 import com.programming.kantech.mygathering.sync.tasks.Task_getGatherings;
 import com.programming.kantech.mygathering.utils.Constants;
-import com.programming.kantech.mygathering.utils.Utils_ContentValues;
 import com.programming.kantech.mygathering.view.fragments.Fragment_Gathering_List;
 import com.programming.kantech.mygathering.view.fragments.Fragment_Main;
 import com.programming.kantech.mygathering.view.fragments.Fragment_Main_Details;
-import com.programming.kantech.mygathering.view.ui.ImageAdapter;
+import com.programming.kantech.mygathering.view.fragments.Fragment_SearchFiltersDialog;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -45,36 +44,23 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Activity_Main extends AppCompatActivity implements
         Fragment_Main.MainListener,
-Fragment_Gathering_List.SelectListener,
+        Fragment_Gathering_List.SelectListener,
+        Fragment_SearchFiltersDialog.DialogListener,
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    /*
-     * If we hold a reference to our Toast, we can cancel it (if it's showing)
-     * to display a new Toast. If we didn't do this, Toasts would be delayed
-     * in showing up if you clicked many list items in quick succession.
-     */
-    //private Toast mToast;
-
-    /*
-     * References to RecyclerView and Adapter to reset the list to its
-     * "pretty" state when the reset menu item is clicked.
-     */
-    //private Adapter_Gatherings mGatheringAdapter;
-    private ImageAdapter mImageAdapter;
 
     private ArrayList<Gathering_Pojo> mGatherings;
+    private ActionBar mActionBar;
 
     private Query_Search mQuery;
 
     // Track the orientation mode
     private boolean mLandscapeView;
-
-    //private int mPosition = RecyclerView.NO_POSITION;
-
-    //private static final int NUM_LIST_ITEMS = 100;
 
     private ApiInterface apiService;
 
@@ -90,12 +76,6 @@ Fragment_Gathering_List.SelectListener,
     @BindView(R.id.container_master_fullscreen)
     FrameLayout container_master_fullscreen;
 
-//    @BindView(R.id.gv_gatherings)
-//    GridView gv_gatherings;
-//
-//    @BindView(R.id.swiperefresh)
-//    SwipeRefreshLayout mySwipeRefreshLayout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,37 +84,35 @@ Fragment_Gathering_List.SelectListener,
         ButterKnife.bind(this);
 
         apiService = ApiClient.getClient().create(ApiInterface.class);
-        Log.i(Constants.TAG, "API Service Created");
+        //Log.i(Constants.TAG, "API Service Created");
 
         // Set the support action bar
         setSupportActionBar(mToolbar);
 
         // Set the action bar back button to look like an up button
-        ActionBar mActionBar = this.getSupportActionBar();
+        mActionBar = this.getSupportActionBar();
 
-        if (mActionBar != null) {
-            mActionBar.setDisplayHomeAsUpEnabled(false);
-            mActionBar.setTitle("My Gatherings");
-        }
+        setThisActionBar(false, "My Gatherings");
+
 
         // Determine if you're in portrait or landscape mode
         mLandscapeView = (findViewById(R.id.layout_for_two_cols) != null);
 
         if (mLandscapeView) {
-            Log.i(Constants.TAG, "we are in landscape mode");
+            //Log.i(Constants.TAG, "we are in landscape mode");
 
             // Hide the details column so grid loads full screen on start
             container_details.setVisibility(View.GONE);
             container_master.setVisibility(View.GONE);
 
             Fragment_Main fragment_main = Fragment_Main.newInstance();
-            replaceFragment(R.id.container_master_fullscreen, Constants.TAG_FRAGMENT_MAIN, fragment_main);
+            replaceFragment(R.id.container_master_fullscreen, Constants.TAG_FRAGMENT_MAIN, fragment_main, true);
 
 
         } else {
 
             Fragment_Main fragment_main = Fragment_Main.newInstance();
-            replaceFragment(R.id.container_master, Constants.TAG_FRAGMENT_MAIN, fragment_main);
+            replaceFragment(R.id.container_master, Constants.TAG_FRAGMENT_MAIN, fragment_main, true);
 
         }
 
@@ -156,17 +134,43 @@ Fragment_Gathering_List.SelectListener,
 
     }
 
+    private void setThisActionBar(boolean showHomeButton, String title) {
+
+        if (mActionBar != null) {
+            mActionBar.setDisplayHomeAsUpEnabled(showHomeButton);
+            mActionBar.setTitle(title);
+        }
+
+    }
+
     private void getGatherings(Query_Search query) {
+
+        removeDetailsFrag();
+
+        // Replace the Gathering List with unselected item
+        if (mLandscapeView) {
+
+            Fragment frag = getSupportFragmentManager()
+                    .findFragmentByTag(Constants.TAG_FRAGMENT_MAIN_LIST);
+
+            if(frag != null && frag instanceof Fragment_Gathering_List) {
+                Log.i(Constants.TAG, "Fragment List is loaded so replace it");
+
+                //Log.i(Constants.TAG, "we are in landscape mode");
+                Fragment_Gathering_List fragment_list = Fragment_Gathering_List.newInstance(-1);
+                replaceFragment(R.id.container_master, Constants.TAG_FRAGMENT_MAIN_LIST, fragment_list, false);
+            }
+        }
 
         Call<List<Gathering>> call = apiService.getGatherings(query);
 
-        WeakReference<Context> mContext = new WeakReference<Context>(getApplicationContext());
+        WeakReference<Context> mContext = new WeakReference<>(getApplicationContext());
 
         new Task_getGatherings(mContext).execute(call);
 
     }
 
-    private void replaceFragment(int container, String fragment_tag, Fragment fragment_in) {
+    private void replaceFragment(int container, String fragment_tag, Fragment fragment_in, boolean addToBackStack) {
 
         // Get a fragment transaction to replace fragments
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -176,6 +180,7 @@ Fragment_Gathering_List.SelectListener,
 
         } else {
             transaction.replace(container, fragment_in, fragment_tag);
+            //if(addToBackStack) transaction.addToBackStack(null);
         }
 
         // Commit the transaction
@@ -248,38 +253,74 @@ Fragment_Gathering_List.SelectListener,
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        Log.i(Constants.TAG, "id=" + id);
         if (id == R.id.action_settings) {
-            Log.i(Constants.TAG, "id=settings" + id);
+            //Log.i(Constants.TAG, "id=settings" + id);
             Intent intent = new Intent(this, Activity_Settings.class);
             startActivity(intent);
             return true; // we handle it
         } else if (id == R.id.action_add_gathering) {
-            Log.i(Constants.TAG, "id=addGathering" + id);
+            //Log.i(Constants.TAG, "id=addGathering" + id);
             Intent intent = new Intent(this, Activity_AddGathering.class);
             startActivity(intent);
             return true;
 
         } else if (id == R.id.action_logout) {
-            Log.i(Constants.TAG, "id=logout" + id);
+            //Log.i(Constants.TAG, "id=logout" + id);
 
             //logout();
             return true;
 
         } else if (id == R.id.action_search) {
-            Log.i(Constants.TAG, "id=search" + id);
-            Intent intent = new Intent(this, Activity_Search.class);
-            startActivity(intent);
+            FragmentManager fm = getSupportFragmentManager();
+            Fragment_SearchFiltersDialog dialog = Fragment_SearchFiltersDialog.newInstance();
+            dialog.show(fm, Constants.TAG_FRAGMENT_SEARCH_DIALOG);
+
             return true;
 
-        }else if (id == R.id.action_dump_favs) {
-            Log.i(Constants.TAG, "id=search" + id);
+        } else if (id == R.id.action_dump_favs) {
+            //Log.i(Constants.TAG, "id=search" + id);
 
             // Check if the movie is in the favorites collection
-            new Task_GetFavorites().execute();
+            //new Task_GetFavorites().execute();
+            return true;
+
+        }else if(id == android.R.id.home) {
+            Log.i(Constants.TAG, "Home called()");
+
+            setThisActionBar(false, "My Gatherings");
+
+            if (mLandscapeView) {
+                //Log.i(Constants.TAG, "we are in landscape mode");
+
+                // Hide the details column so grid loads full screen on start
+                container_details.setVisibility(View.GONE);
+                container_master.setVisibility(View.GONE);
+                container_master_fullscreen.setVisibility(View.VISIBLE);
+
+                Fragment_Main fragment_main = Fragment_Main.newInstance();
+                replaceFragment(R.id.container_master_fullscreen, Constants.TAG_FRAGMENT_MAIN, fragment_main, true);
+
+                //fragment_main.notifyDataChange(mGatherings);
+
+
+            } else {
+
+                Fragment_Main fragment_main = Fragment_Main.newInstance();
+                replaceFragment(R.id.container_master, Constants.TAG_FRAGMENT_MAIN, fragment_main, true);
+                //fragment_main.notifyDataChange(mGatherings);
+
+            }
+
+            getSupportLoaderManager().restartLoader(Constants.GATHERING_DETAIL_LOADER, null, this);
+
+//            FragmentManager fm = getSupportFragmentManager();
+//            if (fm.getBackStackEntryCount() > 0) {
+//                fm.popBackStack();
+//            }
             return true;
 
         }
+
 
         return super.onOptionsItemSelected(item); // let app handle it
     }
@@ -287,20 +328,25 @@ Fragment_Gathering_List.SelectListener,
     @Override
     public void onBannerClick(Gathering_Pojo gathering) {
 
+        setThisActionBar(true, "Details");
 
-
+        Uri uri = Contract_MyGathering.GatheringEntry.buildGatheringUri(gathering.getId());
 
 
         if (mLandscapeView) {
-            Log.i(Constants.TAG, "we are in landscape mode");
+            //Log.i(Constants.TAG, "we are in landscape mode");
 
             // Hide the details column so grid loads full screen on start
             container_details.setVisibility(View.VISIBLE);
             container_master.setVisibility(View.VISIBLE);
             container_master_fullscreen.setVisibility(View.GONE);
 
-            //Fragment_Gathering_List fragment_list = Fragment_Gathering_List.newInstance();
-            //replaceFragment(R.id.container_details, Constants.TAG_FRAGMENT_GATHERING_LIST, fragment_list);
+
+            Fragment_Gathering_List fragment_list = Fragment_Gathering_List.newInstance((int) gathering.getId());
+            replaceFragment(R.id.container_master, Constants.TAG_FRAGMENT_MAIN_LIST, fragment_list, false);
+
+            Fragment_Main_Details fragment_details = Fragment_Main_Details.newInstance(uri);
+            replaceFragment(R.id.container_details, Constants.TAG_FRAGMENT_MAIN_DETAILS, fragment_details, false);
 
 
         } else {
@@ -310,15 +356,13 @@ Fragment_Gathering_List.SelectListener,
             container_master.setVisibility(View.VISIBLE);
             container_master_fullscreen.setVisibility(View.GONE);
 
+            Fragment_Main_Details fragment_details = Fragment_Main_Details.newInstance(uri);
+            replaceFragment(R.id.container_master, Constants.TAG_FRAGMENT_MAIN_DETAILS, fragment_details, false);
+
             //Fragment_Gathering_List fragment_list = Fragment_Gathering_List.newInstance();
             //replaceFragment(R.id.container_master, Constants.TAG_FRAGMENT_GATHERING_LIST, fragment_list);
 
         }
-
-        Fragment_Gathering_List fragment_list = Fragment_Gathering_List.newInstance();
-        replaceFragment(R.id.container_master, Constants.TAG_FRAGMENT_MAIN_LIST, fragment_list);
-
-
 
 
     }
@@ -328,22 +372,42 @@ Fragment_Gathering_List.SelectListener,
 
         Fragment_Main_Details fragment = Fragment_Main_Details.newInstance(uri);
 
-        if(mLandscapeView){
+        if (mLandscapeView) {
 
             container_details.setVisibility(View.VISIBLE);
             container_master.setVisibility(View.VISIBLE);
             container_master_fullscreen.setVisibility(View.GONE);
 
-            replaceFragment(R.id.container_details, Constants.TAG_FRAGMENT_MAIN_DETAILS, fragment);
+            replaceFragment(R.id.container_details, Constants.TAG_FRAGMENT_MAIN_DETAILS, fragment, false);
 
-        }else {
+        } else {
 
             // Hide the details column so grid loads full screen on start
             container_details.setVisibility(View.GONE);
             container_master.setVisibility(View.VISIBLE);
             container_master_fullscreen.setVisibility(View.GONE);
 
-            replaceFragment(R.id.container_master, Constants.TAG_FRAGMENT_MAIN_DETAILS, fragment);
+            replaceFragment(R.id.container_master, Constants.TAG_FRAGMENT_MAIN_DETAILS, fragment, false);
+
+        }
+
+    }
+
+    @Override
+    public void removeDetailsFrag() {
+        Log.i(Constants.TAG, "removeDetailsFrag called");
+
+        Fragment fragment_details = getSupportFragmentManager()
+                .findFragmentByTag(Constants.TAG_FRAGMENT_MAIN_DETAILS);
+
+        if(fragment_details != null && fragment_details instanceof Fragment_Main_Details) {
+            Fragment_Main_Details frag = (Fragment_Main_Details) fragment_details;
+
+            if(frag.isResumed()){
+                getSupportFragmentManager().beginTransaction().remove(fragment_details).commit();
+                Log.i(Constants.TAG, "Details removed");
+
+            }
 
         }
 
@@ -385,11 +449,11 @@ Fragment_Gathering_List.SelectListener,
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.i(Constants.TAG, "onLoadFinished");
+        Log.i(Constants.TAG, "onLoadFinished in Activity main called");
 
         mGatherings = new ArrayList<>();
 
-        for(data.moveToFirst(); !data.isAfterLast(); data.moveToNext()) {
+        for (data.moveToFirst(); !data.isAfterLast(); data.moveToNext()) {
 
             /* Read date from the cursor */
             Gathering_Pojo gathering = Contract_MyGathering.GatheringEntry.getGatheringFromCursor(data);
@@ -410,72 +474,97 @@ Fragment_Gathering_List.SelectListener,
 
     private void notifyLoadedFragmentsDataHasChanged() {
 
-        Fragment_Main fragment_main = (Fragment_Main) getSupportFragmentManager()
-                .findFragmentByTag(Constants.TAG_FRAGMENT_MAIN);
+//        Fragment_Main fragment_main = (Fragment_Main) getSupportFragmentManager()
+//                .findFragmentByTag(Constants.TAG_FRAGMENT_MAIN);
+//
+//        if (fragment_main != null) {
+//            fragment_main.notifyDataChange(mGatherings);
+//        }
 
-        if (fragment_main != null){
-            fragment_main.notifyDataChange(mGatherings);
-        }
-
-        Fragment_Gathering_List fragment_list = (Fragment_Gathering_List) getSupportFragmentManager()
+        Fragment fragment_list = getSupportFragmentManager()
                 .findFragmentByTag(Constants.TAG_FRAGMENT_MAIN_LIST);
 
-        if (fragment_list != null){
-            fragment_list.notifyDataChange();
+        if(fragment_list != null && fragment_list instanceof Fragment_Gathering_List) {
+            Log.i(Constants.TAG, "Fragment List is loaded");
+
+            Fragment_Gathering_List frag = (Fragment_Gathering_List) fragment_list;
+            frag.notifyDataChange();
         }
+
+        Fragment fragment_main = getSupportFragmentManager()
+                .findFragmentByTag(Constants.TAG_FRAGMENT_MAIN);
+
+        if(fragment_main != null && fragment_main instanceof Fragment_Main) {
+            Log.i(Constants.TAG, "Fragment Main is loaded");
+
+            Fragment_Main frag = (Fragment_Main) fragment_main;
+            frag.notifyDataChange(mGatherings);
+        }
+
+
+
+
+
+//        Fragment_Gathering_List fragment_list = (Fragment_Gathering_List) getSupportFragmentManager()
+//                .findFragmentByTag(Constants.TAG_FRAGMENT_MAIN_LIST);
+//
+//        if (fragment_list != null) {
+//            fragment_list.notifyDataChange();
+//        }
     }
 
-    // Use an async task to add the movie to the db off of the main thread.
-    private class Task_GetFavorites extends AsyncTask<Void, Void, Cursor> {
+    @Override
+    public void onFinish(Query_Search query) {
+        //Log.i(Constants.TAG, "onFinish called in activity");
 
-        @Override
-        protected Cursor doInBackground(Void... voids) {
-            // Get the content resolver
-            ContentResolver resolver = getContentResolver();
+        getGatherings(query);
 
-            return resolver.query(Contract_MyGathering.FavoriteEntry.CONTENT_URI, null, null, null, null);
-        }
 
-        @Override
-        protected void onPostExecute(Cursor cursor) {
 
-            dumpFavs(cursor);
-        }
     }
 
-    private void dumpFavs(Cursor cursor) {
+    @Override
+    public void getQueryCount(Query_Search query) {
+        //Log.i(Constants.TAG, "onFinish called in activity");
+        //Log.i(Constants.TAG, "Query:" + query.toString());
 
-        Log.i(Constants.TAG, "dumpFavs");
+        Call<Result_Count> call = apiService.getQueryCount(query);
 
-        if (cursor != null) {
-            Log.i(Constants.TAG, "Count:" + cursor.getCount());
+        call.enqueue(new Callback<Result_Count>() {
+            @Override
+            public void onResponse(@NonNull Call<Result_Count> call, @NonNull Response<Result_Count> response) {
 
-            ContentResolver resolver = getContentResolver();
+                //Log.i(Constants.TAG, "Response:" + response);
+                Result_Count count = response.body();
 
-            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                if (count != null) {
 
-            /* Read date from the cursor */
-                Gathering_Pojo gathering = Contract_MyGathering.GatheringEntry.getGatheringFromCursor(cursor);
+                    finishGetCount(count.getRecCount());
 
-                Log.i(Constants.TAG, "Favorite:" + gathering.toString());
+                    // Return the count to the Dialog Fragment
+                    //Log.d(Constants.TAG, "Number of gatherings returned: " + count.getRecCount());
+                } else {
+                    finishGetCount(0);
+                }
             }
 
-
-            int count = resolver.delete(Contract_MyGathering.FavoriteEntry.CONTENT_URI, null, null);
-            Log.i(Constants.TAG, "Count:" + count);
-
-
-
-            if (cursor.getCount() == 1) {
-
-            } else {
-
+            @Override
+            public void onFailure(@NonNull Call<Result_Count> call, @NonNull Throwable t) {
+                // Log error here since request failed
+                Log.i(Constants.TAG, "We got an error somewhere");
+                Log.e(Constants.TAG, t.toString());
             }
-        } else {
-
-        }
+        });
 
 
+    }
+
+    private void finishGetCount(int size) {
+
+        Fragment_SearchFiltersDialog fragment = (Fragment_SearchFiltersDialog) getSupportFragmentManager()
+                .findFragmentByTag(Constants.TAG_FRAGMENT_SEARCH_DIALOG);
+
+        fragment.setCount(size);
     }
 
 

@@ -127,7 +127,7 @@ public class Activity_Login extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Result_Login>call, Response<Result_Login> response) {
 
-                    Log.i(Constants.TAG, "Response:" + response);
+                    //Log.i(Constants.TAG, "Response:" + response);
 
                     if(response.isSuccessful()){
                         // Code 200, 201
@@ -195,12 +195,11 @@ public class Activity_Login extends AppCompatActivity {
         app.setToken(result.getToken());
 
         progressDialog.dismiss();
-        Log.i(Constants.TAG, "Login Result:" + result.toString());
-
+        //Log.i(Constants.TAG, "Login Result:" + result.toString());
 
 
         if (mSaveLoginCheckBox.isChecked()) {
-            Log.i(Constants.TAG, "Save Credentials in Prefs");
+            //Log.i(Constants.TAG, "Save Credentials in Prefs");
 
             // Store the preferred email address in preferences
             Utils_Preferences.savePreferredEmail(getApplicationContext(), mEmailText.getText().toString());
@@ -212,7 +211,8 @@ public class Activity_Login extends AppCompatActivity {
             Utils_Preferences.saveCredentials(getApplicationContext(), true);
 
         } else {
-            Log.i(Constants.TAG, "Remove Credentials in Prefs");
+            //
+            // Log.i(Constants.TAG, "Remove Credentials in Prefs");
 
             // Remove the preferred email address in preferences
             Utils_Preferences.savePreferredEmail(getApplicationContext(), this.getString(R.string.pref_preferred_email_default));

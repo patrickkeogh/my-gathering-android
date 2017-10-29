@@ -44,7 +44,7 @@ public class Fragment_Main extends Fragment {
     MainListener mCallback;
 
     public void notifyDataChange(ArrayList<Gathering_Pojo> gatherings) {
-        Log.i(Constants.TAG, "notifyDataChange");
+        //Log.i(Constants.TAG, "notifyDataChange in Frament_Main");
         mGatherings = gatherings;
 
         mImageAdapter = new ImageAdapter(getContext(), gatherings);
@@ -98,7 +98,7 @@ public class Fragment_Main extends Fragment {
 
                 Gathering_Pojo gathering = mImageAdapter.getItem(position);
 
-                Log.i(Constants.TAG, "Gathering:" + gathering.toString());
+                //Log.i(Constants.TAG, "Gathering:" + gathering.toString());
 
                 mCallback.onBannerClick(gathering);
 
@@ -114,7 +114,7 @@ public class Fragment_Main extends Fragment {
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        Log.i(Constants.TAG, "onRefresh called from SwipeRefreshLayout");
+                        //Log.i(Constants.TAG, "onRefresh called from SwipeRefreshLayout");
 
                         // This method performs the actual data-refresh operation.
                         // The method calls setRefreshing(false) when it's finished.

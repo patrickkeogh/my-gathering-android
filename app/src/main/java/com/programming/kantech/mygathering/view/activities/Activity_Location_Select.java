@@ -122,17 +122,6 @@ public class Activity_Location_Select extends AppCompatActivity implements
             locationPermissions.setChecked(true);
             locationPermissions.setEnabled(false);
         }
-
-        // Initialize ringer permissions checkbox
-//        CheckBox ringerPermissions = (CheckBox) findViewById(R.id.ringer_permissions_checkbox);
-//        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//        // Check if the API supports such permission change and check if permission is granted
-//        if (android.os.Build.VERSION.SDK_INT >= 24 && !nm.isNotificationPolicyAccessGranted()) {
-//            ringerPermissions.setChecked(false);
-//        } else {
-//            ringerPermissions.setChecked(true);
-//            ringerPermissions.setEnabled(false);
-//        }
     }
 
     /***

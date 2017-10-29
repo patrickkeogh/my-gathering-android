@@ -58,6 +58,10 @@ public class Query_Search implements Serializable {
         this.start_date = start_date;
     }
 
+    public void setEnd_date(String end_date) {
+        this.end_date = end_date;
+    }
+
     public String getTopic() {
         return topic;
     }

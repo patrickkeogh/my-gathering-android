@@ -3,6 +3,7 @@ package com.programming.kantech.mygathering.data.retrofit;
 import com.programming.kantech.mygathering.data.model.mongo.Gathering;
 import com.programming.kantech.mygathering.data.model.mongo.GatheringTopic;
 import com.programming.kantech.mygathering.data.model.mongo.GatheringType;
+import com.programming.kantech.mygathering.data.model.mongo.Result_Count;
 import com.programming.kantech.mygathering.data.model.mongo.Result_Login;
 import com.programming.kantech.mygathering.data.model.mongo.Result_Logout;
 import com.programming.kantech.mygathering.data.model.mongo.Result_Register;
@@ -31,6 +32,7 @@ public interface ApiInterface {
     // Root paths for the server
     public static final String SERVICE_ROOT_PATH = "/api";
     public static final String GATHERING_ROOT_PATH = "/api/mobile/android/gathering";
+    public static final String GATHERING_COUNT_PATH = "/api/mobile/android/gathering/count";
 
     public static final String GATHERING_GET_PATH = GATHERING_ROOT_PATH
             + "/{" + PARAM_ID + "}";
@@ -76,6 +78,9 @@ public interface ApiInterface {
 
     @POST(GATHERING_GET_NEW_COUNT_PATH)
     Call<List<Gathering>> getNewGatherings(@Body Query_Search q);
+
+    @POST(GATHERING_COUNT_PATH)
+    Call<Result_Count> getQueryCount(@Body Query_Search q);
 
     @POST(SERVICE_GATHERING_PATH)
     Call<Gathering> createGathering(@Header("x-access-token") String token,

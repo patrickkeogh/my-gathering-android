@@ -22,6 +22,12 @@
 
     <color name="primaryText">#212121</color>
 
+    <color name="colorButtonSuccess">#5cb85c</color>
+    <color name="colorButtonDanger">#d9534f</color>
+
+
+
+
     <!--Material Greens-->
     <!--In between colors were created with this tool:-->
     <!-- http://meyerweb.com/eric/tools/color-blend/#339999::1:hex -->

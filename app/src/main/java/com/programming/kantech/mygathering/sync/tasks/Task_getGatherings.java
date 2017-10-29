@@ -53,7 +53,7 @@ public class Task_getGatherings extends AsyncTask<Call, Void, List<Gathering>> {
 
         if(gatherings != null) {
 
-            Log.i(Constants.TAG, "Entered onPostExecute() in Task getGatherings: " + gatherings.size());
+            //Log.i(Constants.TAG, "Entered onPostExecute() in Task getGatherings: " + gatherings.size());
 
             List<ContentValues> values = new ArrayList<ContentValues>();
 
@@ -62,7 +62,7 @@ public class Task_getGatherings extends AsyncTask<Call, Void, List<Gathering>> {
                 // Convert mongo db doc to pojo and store in content provider
                 Gathering_Pojo gathering = Utils_ConvertToPojo.convertGatheringMongoToPojo(gatherings.get(i));
 
-                Log.i(Constants.TAG, "Gathering Pojo:" + gathering.toString());
+                //Log.i(Constants.TAG, "Gathering Pojo:" + gathering.toString());
 
                 values.add(Utils_ContentValues.extractGatheringValues(gathering));
             }

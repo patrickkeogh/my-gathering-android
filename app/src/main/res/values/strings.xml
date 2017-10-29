@@ -187,6 +187,60 @@
 
     <string name="toast_fav_added">Gathering added to favorites.  Favorites can be viewed offline.</string>
     <string name="toast_fav_removed">Gathering removed from favorites</string>
+    <string name="content_date_filter">Select date filter icon</string>
+    <string name="content_location_filter">Location Select Icon</string>
+    <string name="content_topic_filter">Topic filter icon</string>
+    <string name="content_type_filter">Type filter icon</string>
+
+    <!-- Labels for Gathering Types [CHAR LIMIT=30] -->
+    <string name="label_type_1">All Gathering Types</string>
+    <string name="label_type_2">Appearance or Signing</string>
+    <string name="label_type_3">Attraction</string>
+    <string name="label_type_4">Camp, Trip, or Retreat</string>
+    <string name="label_type_5">Class, Training, or Workshop</string>
+    <string name="label_type_6">Concert or Performance</string>
+    <string name="label_type_7">Conference</string>
+    <string name="label_type_8">Convention</string>
+    <string name="label_type_9">Dinner or Gala</string>
+    <string name="label_type_10">Festival or Fair</string>
+    <string name="label_type_11">Game or Competition</string>
+    <string name="label_type_12">Meeting or Networking Event</string>
+    <string name="label_type_13">Other</string>
+    <string name="label_type_14">Party or Social Gathering</string>
+    <string name="label_type_15">Race or Endurance Event</string>
+    <string name="label_type_16">Rally, Protest, or Demonstration</string>
+    <string name="label_type_17">Reunion</string>
+    <string name="label_type_18">Screening or Rehearsal</string>
+    <string name="label_type_19">Seminar or Talk</string>
+    <string name="label_type_20">Tour</string>
+    <string name="label_type_21">Tournament</string>
+
+
+    <!-- Labels for Gathering Topics [CHAR LIMIT=30] -->
+    <string name="label_topic_1">All Gathering Topics</string>
+    <string name="label_topic_2">Air, Boat, &amp; Auto</string>
+    <string name="label_topic_3">Animals &amp; Nature</string>
+    <string name="label_topic_4">Business &amp; Professional</string>
+    <string name="label_topic_5">Charity &amp; Causes</string>
+    <string name="label_topic_6">Community &amp; Culture</string>
+    <string name="label_topic_7">Criminal or Justice</string>
+    <string name="label_topic_8">Education</string>
+    <string name="label_topic_9">Fashion &amp; Beauty</string>
+    <string name="label_topic_10">Film, Media, &amp; Entertainment</string>
+
+    <string name="label_topic_11">Food &amp; Drink</string>
+    <string name="label_topic_12">Government &amp; Politics</string>
+    <string name="label_topic_13">Health &amp; Wellness</string>
+    <string name="label_topic_14">Hobbies &amp; Games</string>
+    <string name="label_topic_15">Home &amp; Lifestyle</string>
+    <string name="label_topic_16">Music</string>
+    <string name="label_topic_17">Other</string>
+    <string name="label_topic_18">Performing &amp; Visual Arts</string>
+    <string name="label_topic_19">Religion &amp; Spirituality</string>
+    <string name="label_topic_20">Science &amp; Technology</string>
+
+    <string name="label_topic_21">Seasonal &amp; Holidays</string>
+    <string name="label_topic_22">Sports &amp; Fitness</string>
 
 
 </resources>

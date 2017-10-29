@@ -13,5 +13,83 @@
         <item>@string/pref_search_freq_day_value</item>
     </array>
 
+    <array name="gathering_types">
+        <item>@string/label_type_1</item>
+        <item>@string/label_type_2</item>
+        <item>@string/label_type_3</item>
+        <item>@string/label_type_4</item>
+        <item>@string/label_type_5</item>
+        <item>@string/label_type_6</item>
+        <item>@string/label_type_7</item>
+        <item>@string/label_type_8</item>
+        <item>@string/label_type_9</item>
+        <item>@string/label_type_10</item>
+        <item>@string/label_type_11</item>
+        <item>@string/label_type_12</item>
+        <item>@string/label_type_13</item>
+        <item>@string/label_type_14</item>
+        <item>@string/label_type_15</item>
+        <item>@string/label_type_16</item>
+        <item>@string/label_type_17</item>
+        <item>@string/label_type_18</item>
+        <item>@string/label_type_19</item>
+        <item>@string/label_type_20</item>
+        <item>@string/label_type_21</item>
+    </array>
+
+    <array name="gathering_topics">
+        <item>@string/label_topic_1</item>
+        <item>@string/label_topic_2</item>
+        <item>@string/label_topic_3</item>
+        <item>@string/label_topic_4</item>
+        <item>@string/label_topic_5</item>
+        <item>@string/label_topic_6</item>
+        <item>@string/label_topic_7</item>
+        <item>@string/label_topic_8</item>
+        <item>@string/label_topic_9</item>
+        <item>@string/label_topic_10</item>
+        <item>@string/label_topic_11</item>
+        <item>@string/label_topic_12</item>
+        <item>@string/label_topic_13</item>
+        <item>@string/label_topic_14</item>
+        <item>@string/label_topic_15</item>
+        <item>@string/label_topic_16</item>
+        <item>@string/label_topic_17</item>
+        <item>@string/label_topic_18</item>
+        <item>@string/label_topic_19</item>
+        <item>@string/label_topic_20</item>
+        <item>@string/label_topic_21</item>
+        <item>@string/label_topic_22</item>
+    </array>
+
+
+
+    <array name="date_filters">
+        <item>No Date Filter</item>
+        <item>Today</item>
+        <item>Tomorrow</item>
+        <item>One week starting ...</item>
+        <item>One month starting ...</item>
+        <item>One year starting ...</item>
+    </array>
+
+    <array name="distance_filters">
+        <item>No distance limit</item>
+        <item>Within 5 km of ...</item>
+        <item>Within 10 km of ...</item>
+        <item>Within 25 km of ...</item>
+        <item>Within 50 km of ...</item>
+        <item>Within 100 km of ...</item>
+    </array>
+
+    <array name="distance_values">
+        <item>1000000000</item>
+        <item>5000</item>
+        <item>10000</item>
+        <item>25000</item>
+        <item>50000</item>
+        <item>100000</item>
+    </array>
+
 
 </resources>
