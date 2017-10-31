@@ -1,9 +1,11 @@
 package com.programming.kantech.mygathering.view.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+
+import static android.support.v7.appcompat.R.styleable.AlertDialog;
 
 /**
  * Created by patri on 2017-10-19.
@@ -44,7 +48,8 @@ public class Fragment_Add_Save extends Fragment {
     // AddBannerListener interface, calls a method in the host activity
     // after a callback has been triggered
     public interface SaveListener {
-        void createNewGathering(String access, String status);
+        void createNewGathering(String nextFrag, String access, String status);
+        void cancelNewGathering(String nextFrag);
     }
 
     /**
@@ -96,9 +101,50 @@ public class Fragment_Add_Save extends Fragment {
         }
     }
 
+    @OnClick(R.id.btn_cancel_new_gathering)
+    public void cancelNewGathering() {
+
+        new AlertDialog.Builder(getContext())
+                .setTitle("Confirmation Required")
+                .setMessage("Please confirm you want to cancel this new gathering?")
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mCallback.cancelNewGathering(Constants.TAG_FRAGMENT_ADD_DETAILS);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        //Utils_General.showToast(Activity_Checkout.this, getString(R.string.order_cancelled));
+                    }
+                })
+                .show();
+
+
+    }
+
     @OnClick(R.id.btn_save_new_gathering)
     public void saveNewGathering() {
-        mCallback.createNewGathering(mAccess, mStatus);
+
+        new AlertDialog.Builder(getContext())
+                .setTitle("Confirmation Required")
+                .setMessage("Please confirm your new gathering?")
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mCallback.createNewGathering(Constants.TAG_FRAGMENT_ADD_DETAILS, mAccess, mStatus);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        //Utils_General.showToast(Activity_Checkout.this, getString(R.string.order_cancelled));
+                    }
+                })
+                .show();
 
     }
 

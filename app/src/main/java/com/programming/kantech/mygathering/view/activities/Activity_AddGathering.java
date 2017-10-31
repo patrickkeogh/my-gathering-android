@@ -21,6 +21,7 @@ import com.programming.kantech.mygathering.data.model.mongo.Owner;
 import com.programming.kantech.mygathering.data.retrofit.ApiClient;
 import com.programming.kantech.mygathering.data.retrofit.ApiInterface;
 import com.programming.kantech.mygathering.utils.Constants;
+import com.programming.kantech.mygathering.utils.Utils_General;
 import com.programming.kantech.mygathering.view.fragments.Fragment_Add_Banner;
 import com.programming.kantech.mygathering.view.fragments.Fragment_Add_Dates;
 import com.programming.kantech.mygathering.view.fragments.Fragment_Add_Details;
@@ -43,7 +44,6 @@ import retrofit2.Response;
 
 /**
  * Created by patri on 2017-10-18.
- *
  */
 
 public class Activity_AddGathering extends AppCompatActivity implements
@@ -54,6 +54,7 @@ public class Activity_AddGathering extends AppCompatActivity implements
         Fragment_Add_Save.SaveListener {
 
     // Member variables
+    private ActionBar mActionBar;
 
     private ApiInterface apiService;
 
@@ -80,12 +81,9 @@ public class Activity_AddGathering extends AppCompatActivity implements
         setSupportActionBar(mToolbar);
 
         // Set the action bar back button to look like an up button
-        ActionBar mActionBar = this.getSupportActionBar();
+        mActionBar = this.getSupportActionBar();
 
-        if (mActionBar != null) {
-            mActionBar.setDisplayHomeAsUpEnabled(false);
-            mActionBar.setTitle("Create gathering");
-        }
+        setThisActionBar(true, "Add Gathering");
 
         // first load the header fragment and the details fragment
         Fragment_Nav_Header fragment_header = Fragment_Nav_Header.newInstance(Constants.TAG_FRAGMENT_ADD_DETAILS);
@@ -93,6 +91,15 @@ public class Activity_AddGathering extends AppCompatActivity implements
 
         Fragment_Add_Details fragment_details = Fragment_Add_Details.newInstance();
         replaceFragment(R.id.container_details, Constants.TAG_FRAGMENT_ADD_DETAILS, fragment_details);
+
+    }
+
+    private void setThisActionBar(boolean showHomeButton, String title) {
+
+        if (mActionBar != null) {
+            mActionBar.setDisplayHomeAsUpEnabled(showHomeButton);
+            mActionBar.setTitle(title);
+        }
 
     }
 
@@ -193,7 +200,7 @@ public class Activity_AddGathering extends AppCompatActivity implements
     }
 
     @Override
-    public void createNewGathering(String access, String status) {
+    public void createNewGathering(final String nextFrag, String access, String status) {
 
         Application_MyGathering app = (Application_MyGathering) getApplication();
 
@@ -217,15 +224,16 @@ public class Activity_AddGathering extends AppCompatActivity implements
                     // Code 200, 201
                     //Result_Login result = response.body();
 
-                    //Gathering gathering = response.body();
+                    Gathering gathering = response.body();
 
                     // TODO: Notify user the gathering was crteated and send them to the details screen
 
 //                    Log.i(Constants.TAG, "We got a gathering back:" + gathering.toString());
+                    newGatheringAdded(nextFrag);
 
 
                     // Notify the activity login was successfull
-                    //login_ok(result);
+
                 } else {
                     // code 400, 401, etc
 //                    switch (response.code()){
@@ -244,6 +252,39 @@ public class Activity_AddGathering extends AppCompatActivity implements
                 //onLoginFailed(t.toString());
             }
         });
+    }
+
+    @Override
+    public void cancelNewGathering(String nextFrag) {
+
+        mGathering = new Gathering();
+
+        Fragment_Nav_Header fragment = (Fragment_Nav_Header) getSupportFragmentManager()
+                .findFragmentByTag(Constants.TAG_FRAGMENT_HEADER);
+
+        fragment.setForm(nextFrag);
+
+        Fragment_Add_Details fragment_details = Fragment_Add_Details.newInstance();
+
+        replaceFragment(R.id.container_details, nextFrag, fragment_details);
+
+    }
+
+    private void newGatheringAdded(String nextFrag){
+
+        Utils_General.showToast(this, "Your new Gathering was successfully created.");
+
+        mGathering = new Gathering();
+
+        Fragment_Nav_Header fragment = (Fragment_Nav_Header) getSupportFragmentManager()
+                .findFragmentByTag(Constants.TAG_FRAGMENT_HEADER);
+
+        fragment.setForm(nextFrag);
+
+        Fragment_Add_Details fragment_details = Fragment_Add_Details.newInstance();
+
+        replaceFragment(R.id.container_details, nextFrag, fragment_details);
+
     }
 
     private void createDummyGathering() {

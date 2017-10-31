@@ -1,9 +1,11 @@
 package com.programming.kantech.mygathering.view.activities;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -24,13 +26,17 @@ import android.widget.FrameLayout;
 import com.programming.kantech.mygathering.R;
 import com.programming.kantech.mygathering.data.model.mongo.Gathering;
 import com.programming.kantech.mygathering.data.model.mongo.Result_Count;
+import com.programming.kantech.mygathering.data.model.mongo.Result_Logout;
 import com.programming.kantech.mygathering.data.model.pojo.Gathering_Pojo;
 import com.programming.kantech.mygathering.data.model.pojo.Query_Search;
 import com.programming.kantech.mygathering.data.retrofit.ApiClient;
 import com.programming.kantech.mygathering.data.retrofit.ApiInterface;
 import com.programming.kantech.mygathering.provider.Contract_MyGathering;
+import com.programming.kantech.mygathering.sync.ReminderUtilities;
 import com.programming.kantech.mygathering.sync.tasks.Task_getGatherings;
 import com.programming.kantech.mygathering.utils.Constants;
+import com.programming.kantech.mygathering.utils.Utils_General;
+import com.programming.kantech.mygathering.utils.Utils_Preferences;
 import com.programming.kantech.mygathering.view.fragments.Fragment_Gathering_List;
 import com.programming.kantech.mygathering.view.fragments.Fragment_Main;
 import com.programming.kantech.mygathering.view.fragments.Fragment_Main_Details;
@@ -49,6 +55,7 @@ import retrofit2.Response;
 
 public class Activity_Main extends AppCompatActivity implements
         Fragment_Main.MainListener,
+Fragment_Main_Details.DetailsListener,
         Fragment_Gathering_List.SelectListener,
         Fragment_SearchFiltersDialog.DialogListener,
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -56,6 +63,7 @@ public class Activity_Main extends AppCompatActivity implements
 
     private ArrayList<Gathering_Pojo> mGatherings;
     private ActionBar mActionBar;
+    private int mLoaderId;
 
     private Query_Search mQuery;
 
@@ -123,14 +131,26 @@ public class Activity_Main extends AppCompatActivity implements
         //Query_Search query = createSearchQueryFromPrefs();
         mQuery = new Query_Search();
 
+        mLoaderId = Constants.GATHERING_DETAIL_LOADER;
+
         getGatherings(mQuery);
+
+        // Schedule the new gathering search job if notifications are allowed
+        Boolean isAllowed = Utils_Preferences.isNotificationsAllowed(this);
+        if (isAllowed) {
+            Log.i(Constants.TAG, "Notifications are allowed");
+
+            ReminderUtilities.scheduleNewGatheringSearch(this);
+        }
+
+
 
         /*
          * Ensures a loader is initialized and active. If the loader doesn't already exist, one is
          * created and (if the activity/fragment is currently started) starts the loader. Otherwise
          * the last created loader is re-used.
          */
-        getSupportLoaderManager().initLoader(Constants.GATHERING_DETAIL_LOADER, null, this);
+        getSupportLoaderManager().initLoader(mLoaderId, null, this);
 
     }
 
@@ -153,11 +173,11 @@ public class Activity_Main extends AppCompatActivity implements
             Fragment frag = getSupportFragmentManager()
                     .findFragmentByTag(Constants.TAG_FRAGMENT_MAIN_LIST);
 
-            if(frag != null && frag instanceof Fragment_Gathering_List) {
+            if (frag != null && frag instanceof Fragment_Gathering_List) {
                 Log.i(Constants.TAG, "Fragment List is loaded so replace it");
 
                 //Log.i(Constants.TAG, "we are in landscape mode");
-                Fragment_Gathering_List fragment_list = Fragment_Gathering_List.newInstance(-1);
+                Fragment_Gathering_List fragment_list = Fragment_Gathering_List.newInstance(-1, Constants.GATHERING_DETAIL_LOADER);
                 replaceFragment(R.id.container_master, Constants.TAG_FRAGMENT_MAIN_LIST, fragment_list, false);
             }
         }
@@ -267,7 +287,7 @@ public class Activity_Main extends AppCompatActivity implements
         } else if (id == R.id.action_logout) {
             //Log.i(Constants.TAG, "id=logout" + id);
 
-            //logout();
+            logout();
             return true;
 
         } else if (id == R.id.action_search) {
@@ -277,17 +297,25 @@ public class Activity_Main extends AppCompatActivity implements
 
             return true;
 
+        } else if (id == R.id.action_show_favs) {
+            //Log.i(Constants.TAG, "id=favs" + id);
+
+            // Get all the favorites from Storage
+            getFavorites();
+            setThisActionBar(true, getString(R.string.app_title_favorites));
+            return true;
+
         } else if (id == R.id.action_dump_favs) {
             //Log.i(Constants.TAG, "id=search" + id);
 
             // Check if the movie is in the favorites collection
-            //new Task_GetFavorites().execute();
+            new Task_GetFavorites().execute();
             return true;
 
-        }else if(id == android.R.id.home) {
-            Log.i(Constants.TAG, "Home called()");
+        } else if (id == android.R.id.home) {
+            //Log.i(Constants.TAG, "Home called()");
 
-            setThisActionBar(false, "My Gatherings");
+            setThisActionBar(false, getString(R.string.app_title_live));
 
             if (mLandscapeView) {
                 //Log.i(Constants.TAG, "we are in landscape mode");
@@ -311,7 +339,7 @@ public class Activity_Main extends AppCompatActivity implements
 
             }
 
-            getSupportLoaderManager().restartLoader(Constants.GATHERING_DETAIL_LOADER, null, this);
+            getSupportLoaderManager().restartLoader(mLoaderId, null, this);
 
 //            FragmentManager fm = getSupportFragmentManager();
 //            if (fm.getBackStackEntryCount() > 0) {
@@ -325,12 +353,30 @@ public class Activity_Main extends AppCompatActivity implements
         return super.onOptionsItemSelected(item); // let app handle it
     }
 
+    private void getFavorites() {
+        mLoaderId = Constants.GATHERING_FAVORITE_LOADER;
+
+        /*
+         * Ensures a loader is initialized and active. If the loader doesn't already exist, one is
+         * created and (if the activity/fragment is currently started) starts the loader. Otherwise
+         * the last created loader is re-used.
+         */
+        getSupportLoaderManager().restartLoader(mLoaderId, null, this);
+
+    }
+
     @Override
     public void onBannerClick(Gathering_Pojo gathering) {
 
         setThisActionBar(true, "Details");
 
-        Uri uri = Contract_MyGathering.GatheringEntry.buildGatheringUri(gathering.getId());
+        Uri uri;
+
+        if (mLoaderId == Constants.GATHERING_DETAIL_LOADER) {
+            uri = Contract_MyGathering.GatheringEntry.buildGatheringUri(gathering.getId());
+        } else {
+            uri = Contract_MyGathering.FavoriteEntry.buildFavoriteUri(gathering.getId());
+        }
 
 
         if (mLandscapeView) {
@@ -342,10 +388,10 @@ public class Activity_Main extends AppCompatActivity implements
             container_master_fullscreen.setVisibility(View.GONE);
 
 
-            Fragment_Gathering_List fragment_list = Fragment_Gathering_List.newInstance((int) gathering.getId());
+            Fragment_Gathering_List fragment_list = Fragment_Gathering_List.newInstance((int) gathering.getId(), mLoaderId);
             replaceFragment(R.id.container_master, Constants.TAG_FRAGMENT_MAIN_LIST, fragment_list, false);
 
-            Fragment_Main_Details fragment_details = Fragment_Main_Details.newInstance(uri);
+            Fragment_Main_Details fragment_details = Fragment_Main_Details.newInstance(uri, mLoaderId);
             replaceFragment(R.id.container_details, Constants.TAG_FRAGMENT_MAIN_DETAILS, fragment_details, false);
 
 
@@ -356,7 +402,7 @@ public class Activity_Main extends AppCompatActivity implements
             container_master.setVisibility(View.VISIBLE);
             container_master_fullscreen.setVisibility(View.GONE);
 
-            Fragment_Main_Details fragment_details = Fragment_Main_Details.newInstance(uri);
+            Fragment_Main_Details fragment_details = Fragment_Main_Details.newInstance(uri, mLoaderId);
             replaceFragment(R.id.container_master, Constants.TAG_FRAGMENT_MAIN_DETAILS, fragment_details, false);
 
             //Fragment_Gathering_List fragment_list = Fragment_Gathering_List.newInstance();
@@ -370,7 +416,7 @@ public class Activity_Main extends AppCompatActivity implements
     @Override
     public void onGatheringSelected(Uri uri) {
 
-        Fragment_Main_Details fragment = Fragment_Main_Details.newInstance(uri);
+        Fragment_Main_Details fragment = Fragment_Main_Details.newInstance(uri, mLoaderId);
 
         if (mLandscapeView) {
 
@@ -400,10 +446,10 @@ public class Activity_Main extends AppCompatActivity implements
         Fragment fragment_details = getSupportFragmentManager()
                 .findFragmentByTag(Constants.TAG_FRAGMENT_MAIN_DETAILS);
 
-        if(fragment_details != null && fragment_details instanceof Fragment_Main_Details) {
+        if (fragment_details != null && fragment_details instanceof Fragment_Main_Details) {
             Fragment_Main_Details frag = (Fragment_Main_Details) fragment_details;
 
-            if(frag.isResumed()){
+            if (frag.isResumed()) {
                 getSupportFragmentManager().beginTransaction().remove(fragment_details).commit();
                 Log.i(Constants.TAG, "Details removed");
 
@@ -442,6 +488,19 @@ public class Activity_Main extends AppCompatActivity implements
                         null,
                         sortOrder);
 
+            case Constants.GATHERING_FAVORITE_LOADER:
+                /* URI for all rows of data in our gatherings table */
+                Uri uri_favs = Contract_MyGathering.FavoriteEntry.CONTENT_URI;
+                /* Sort order: Ascending by name */
+                String fav_sort = Contract_MyGathering.FavoriteEntry.COLUMN_GATHERING_NAME + " ASC";
+
+                return new android.support.v4.content.CursorLoader(this,
+                        uri_favs,
+                        Constants.LOADER_GATHERING_DETAIL_COLUMNS,
+                        null,
+                        null,
+                        fav_sort);
+
             default:
                 throw new RuntimeException("Loader Not Implemented: " + loaderId);
         }
@@ -451,17 +510,45 @@ public class Activity_Main extends AppCompatActivity implements
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         Log.i(Constants.TAG, "onLoadFinished in Activity main called");
 
-        mGatherings = new ArrayList<>();
+        int loaderId = loader.getId();
 
-        for (data.moveToFirst(); !data.isAfterLast(); data.moveToNext()) {
+        switch (loaderId) {
 
-            /* Read date from the cursor */
-            Gathering_Pojo gathering = Contract_MyGathering.GatheringEntry.getGatheringFromCursor(data);
+            case Constants.GATHERING_DETAIL_LOADER:
+                Log.i(Constants.TAG, "Gatherings are loaded");
+                mGatherings = new ArrayList<>();
 
-            mGatherings.add(gathering);
+                for (data.moveToFirst(); !data.isAfterLast(); data.moveToNext()) {
+
+                    /* Read date from the cursor */
+                    Gathering_Pojo gathering = Contract_MyGathering.GatheringEntry.getGatheringFromCursor(data);
+
+                    mGatherings.add(gathering);
+                }
+
+                notifyLoadedFragmentsDataHasChanged(loaderId);
+
+                break;
+            case Constants.GATHERING_FAVORITE_LOADER:
+                Log.i(Constants.TAG, "Favorites are loaded");
+                mGatherings = new ArrayList<>();
+
+                for (data.moveToFirst(); !data.isAfterLast(); data.moveToNext()) {
+
+
+                    /* Read date from the cursor */
+                    Gathering_Pojo favorite = Contract_MyGathering.FavoriteEntry.getFavoriteFromCursor(data);
+                    Log.i(Constants.TAG, "add favorite:" + favorite.getName());
+                    mGatherings.add(favorite);
+                }
+
+                Log.i(Constants.TAG, "Count:" + mGatherings.size());
+
+
+                notifyLoadedFragmentsDataHasChanged(loaderId);
+
+                break;
         }
-
-        notifyLoadedFragmentsDataHasChanged();
 
         // Notify fragments we have new data
 
@@ -472,7 +559,7 @@ public class Activity_Main extends AppCompatActivity implements
 
     }
 
-    private void notifyLoadedFragmentsDataHasChanged() {
+    private void notifyLoadedFragmentsDataHasChanged(int loader) {
 
 //        Fragment_Main fragment_main = (Fragment_Main) getSupportFragmentManager()
 //                .findFragmentByTag(Constants.TAG_FRAGMENT_MAIN);
@@ -484,25 +571,23 @@ public class Activity_Main extends AppCompatActivity implements
         Fragment fragment_list = getSupportFragmentManager()
                 .findFragmentByTag(Constants.TAG_FRAGMENT_MAIN_LIST);
 
-        if(fragment_list != null && fragment_list instanceof Fragment_Gathering_List) {
+        if (fragment_list != null && fragment_list instanceof Fragment_Gathering_List) {
             Log.i(Constants.TAG, "Fragment List is loaded");
 
             Fragment_Gathering_List frag = (Fragment_Gathering_List) fragment_list;
-            frag.notifyDataChange();
+            frag.notifyDataChange(loader);
         }
 
         Fragment fragment_main = getSupportFragmentManager()
                 .findFragmentByTag(Constants.TAG_FRAGMENT_MAIN);
 
-        if(fragment_main != null && fragment_main instanceof Fragment_Main) {
+        if (fragment_main != null && fragment_main instanceof Fragment_Main) {
             Log.i(Constants.TAG, "Fragment Main is loaded");
+            Log.i(Constants.TAG, "GatheringCount:" + mGatherings.size());
 
             Fragment_Main frag = (Fragment_Main) fragment_main;
             frag.notifyDataChange(mGatherings);
         }
-
-
-
 
 
 //        Fragment_Gathering_List fragment_list = (Fragment_Gathering_List) getSupportFragmentManager()
@@ -517,8 +602,11 @@ public class Activity_Main extends AppCompatActivity implements
     public void onFinish(Query_Search query) {
         //Log.i(Constants.TAG, "onFinish called in activity");
 
-        getGatherings(query);
+        setThisActionBar(true, getString(R.string.app_title_live));
 
+        mLoaderId = Constants.GATHERING_DETAIL_LOADER;
+
+        getGatherings(query);
 
 
     }
@@ -567,146 +655,106 @@ public class Activity_Main extends AppCompatActivity implements
         fragment.setCount(size);
     }
 
+    private void dumpFavs(Cursor cursor) {
 
+        Log.i(Constants.TAG, "dumpFavs");
+
+        if (cursor != null) {
+            Log.i(Constants.TAG, "Count:" + cursor.getCount());
+
+
+
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+
+            /* Read date from the cursor */
+                Gathering_Pojo gathering = Contract_MyGathering.GatheringEntry.getGatheringFromCursor(cursor);
+
+                Log.i(Constants.TAG, "Favorite:" + gathering.toString());
+            }
+
+            ContentResolver resolver = getContentResolver();
+            int count = resolver.delete(Contract_MyGathering.FavoriteEntry.CONTENT_URI, null, null);
+            //Log.i(Constants.TAG, "Count:" + count);
+
+        }
+    }
+
+    @Override
+    public void refreshFavsList() {
+        removeDetailsFrag();
+        getFavorites();
+
+    }
+
+    // Use an async task to add the movie to the db off of the main thread.
+    private class Task_GetFavorites extends AsyncTask<Void, Void, Cursor> {
+
+        @Override
+        protected Cursor doInBackground(Void... voids) {
+            // Get the content resolver
+            ContentResolver resolver = getContentResolver();
+
+            return resolver.query(Contract_MyGathering.FavoriteEntry.CONTENT_URI, null, null, null, null);
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+
+            dumpFavs(cursor);
+        }
+    }
+
+
+    private void logout() {
+
+        //ToDo removed logged user info from prefs
+        //ToDo call server.log oput
+        // send user back to login screen
+
+        ///progressDialog.setIndeterminate(true);
+        //progressDialog.setMessage("Signing out...");
+        //progressDialog.show();
+
+        Call<Result_Logout> call = apiService.logout();
+
+        call.enqueue(new Callback<Result_Logout>() {
+            @Override
+            public void onResponse(@NonNull Call<Result_Logout> call, @NonNull Response<Result_Logout> response) {
+
+                Log.i(Constants.TAG, "Response:" + response);
+
+                Result_Logout result = response.body();
+
+                if (result != null) {
+                    Log.i(Constants.TAG, "Logout Results:" + result.getStatus());
+
+                    // Notify the activity login was successfull
+                    onLogoutOk(result);
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Result_Logout> call, @NonNull Throwable t) {
+                // Log error here since request failed
+                Log.e(Constants.TAG, t.toString());
+                onLogoutFailed(t.toString());
+            }
+        });
+
+
+    }
+
+    private void onLogoutFailed(String reason) {
+        Utils_General.showToast(this, reason);
+    }
+
+    private void onLogoutOk(Result_Logout result) {
+        Utils_General.showToast(this, result.getStatus());
+
+        startActivity(new Intent(this, Activity_Login.class));
+
+        finish();
+    }
 }
-
-//    private void logout() {
-//
-//        //ToDo removed logged user info from prefs
-//        //ToDo call server.log oput
-//        // send user back to login screen
-//
-//        ///progressDialog.setIndeterminate(true);
-//        //progressDialog.setMessage("Signing out...");
-//        //progressDialog.show();
-//
-//        Call<Result_Logout> call = apiService.logout();
-//
-//        call.enqueue(new Callback<Result_Logout>() {
-//            @Override
-//            public void onResponse(@NonNull Call<Result_Logout> call, @NonNull Response<Result_Logout> response) {
-//
-//                Log.i(Constants.TAG, "Response:" + response);
-//
-//                Result_Logout result = response.body();
-//
-//                if (result != null) {
-//                    Log.i(Constants.TAG, "Logout Results:" + result.getStatus());
-//
-//                    // Notify the activity login was successfull
-//                    onLogoutOk(result);
-//                }
-//
-//
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<Result_Logout> call, @NonNull Throwable t) {
-//                // Log error here since request failed
-//                Log.e(Constants.TAG, t.toString());
-//                onLogoutFailed(t.toString());
-//            }
-//        });
-//
-//
-//    }
-
-//    private void onLogoutFailed(String reason) {
-//        Utils_General.showToast(this, reason);
-//    }
-//
-//    private void onLogoutOk(Result_Logout result) {
-//        Utils_General.showToast(this, result.getStatus());
-//
-//        startActivity(new Intent(this, Activity_Login.class));
-//
-//        finish();
-//    }
-//
-//    public void getGatheringsForDB() {
-//
-//        if (Utils_General.isNetworkAvailable(this)) {
-//
-//            Query_Search query = new Query_Search();
-//
-//            //Query_Search query = new Query_Search(coords, distance, sdf.format(date), "NULL");
-//
-//            Call<List<Gathering>> call = apiService.getGatherings(query);
-//
-//            WeakReference<Context> mContext = new WeakReference<Context>(getApplicationContext());
-//
-//            new Task_getGatherings(mContext).execute(call);
-//
-//        }else{
-//
-//        }
-//
-//
-//
-//
-//
-//    }
-//
-//    public void getGatherings() {
-//
-//        // For now just get all the gatherings and add them to the grid view
-//
-//        if (Utils_General.isNetworkAvailable(this)) {
-//
-//            Query_Search query = new Query_Search();
-//
-//            Call<List<Gathering>> call = apiService.getGatherings(query);
-//
-//            call.enqueue(new Callback<List<Gathering>>() {
-//                @Override
-//                public void onResponse(@NonNull Call<List<Gathering>> call, @NonNull Response<List<Gathering>> response) {
-//
-//                    Log.i(Constants.TAG, "Response:" + response);
-//
-//                    if (response.isSuccessful()) {
-//                        // Code 200, 201
-//                        List<Gathering> gatherings = response.body();
-//
-//                        if (gatherings != null) {
-//                            for (int i = 0; i < gatherings.size(); i++) {
-//                                Log.i(Constants.TAG, "Gathering From Server:" + gatherings.get(i).toString());
-//                            }
-//                        }
-//
-//                        // Notify the activity gathering fetch was successfull
-//                        gathering_fetch_ok(gatherings);
-//                        //movies_ok(fetchResults);
-//                    } else {
-//                        Log.i(Constants.TAG, "Gatherings Fetch was unsuccessful");
-//                        //movies_failed(response.message());
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(@NonNull Call<List<Gathering>> call, @NonNull Throwable t) {
-//                    // Log error here since request failed
-//                    Log.e(Constants.TAG, t.toString());
-//                    //movies_failed(t.toString());
-//                }
-//            });
-//
-//        } else {
-//            Utils_General.showToast(this, getString(R.string.toast_not_connected_to_internet));
-//        }
-//
-//
-//    }
-//
-//
-//    private void gathering_fetch_ok(List<Gathering> gatherings) {
-//
-//        mImageAdapter = new ImageAdapter(this, gatherings);
-//
-//        gv_gatherings.setAdapter(mImageAdapter);
-//
-//        // Signal SwipeRefreshLayout to end the progress indicator
-//        mySwipeRefreshLayout.setRefreshing(false);
-//    }
-//
-
-

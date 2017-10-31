@@ -44,8 +44,10 @@ public class Fragment_Main extends Fragment {
     MainListener mCallback;
 
     public void notifyDataChange(ArrayList<Gathering_Pojo> gatherings) {
-        //Log.i(Constants.TAG, "notifyDataChange in Frament_Main");
+        Log.i(Constants.TAG, "notifyDataChange in Fragment_Main");
         mGatherings = gatherings;
+
+        Log.i(Constants.TAG, "GatheringCount:" + mGatherings.size());
 
         mImageAdapter = new ImageAdapter(getContext(), gatherings);
 

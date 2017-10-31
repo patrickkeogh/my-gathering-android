@@ -60,6 +60,7 @@ public class Constants {
     // The loader's unique id. Loader ids are specific to the Activity or
     // Fragment in which they reside.
     public static final int GATHERING_DETAIL_LOADER = 1;
+    public static final int GATHERING_FAVORITE_LOADER = 2;
 
     // Constants used for the MyGathering REST api
     public static final String GATHERING_ACCESS_PUBLIC = "Public";
@@ -177,17 +178,20 @@ public class Constants {
     public static final String STATE_FRAGMENT_TAG = "com.programming.kantech.mygathering.app.state.fragment_tag";
     public static final String STATE_DETAILS_URI = "com.programming.kantech.mygathering.app.state.details_uri";
     public static final String STATE_SELECTED_ID = "com.programming.kantech.mygathering.app.state.selected_id";
+    public static final String STATE_LOADER_ID = "com.programming.kantech.mygathering.app.state.loader_id";
 
     /**
      * The Constants used for data added as extras to intents
      */
-    public static final String EXTRA_LOCATION_NAME = "location_name";
-    public static final String EXTRA_LOCATION_ADDRESS = "location_address";
-    public static final String EXTRA_LOCATION_LAT = "location_lat";
-    public static final String EXTRA_LOCATION_LONG = "location_long";
-    public static final String EXTRA_SEARCH_QUERY = "search_query";
-    public static final String EXTRA_DETAILS_URI = "details_uri";
-    public static final String EXTRA_SELECTED_ID = "selected_id";
+    public static final String EXTRA_LOCATION_NAME = "com.programming.kantech.mygathering.app.extra.location_name";
+    public static final String EXTRA_LOCATION_ADDRESS = "com.programming.kantech.mygathering.app.extra.location_address";
+    public static final String EXTRA_LOCATION_LAT = "com.programming.kantech.mygathering.app.extra.location_lat";
+    public static final String EXTRA_LOCATION_LONG = "com.programming.kantech.mygathering.app.extra.location_long";
+    public static final String EXTRA_SEARCH_QUERY = "com.programming.kantech.mygathering.app.extra.search_query";
+    public static final String EXTRA_DETAILS_URI = "com.programming.kantech.mygathering.app.extra.details_uri";
+    public static final String EXTRA_SELECTED_ID = "com.programming.kantech.mygathering.app.extra.selected_id";
+    public static final String EXTRA_SELECTED_PLACE = "com.programming.kantech.mygathering.app.extra.selected_place";
+    public static final String EXTRA_LOADER_ID = "com.programming.kantech.mygathering.app.extra.loader_id";
 
     public static final String EXTRA_FRAGMENT_TAG = "com.programming.kantech.mygathering.app.extra.fragment_tag";
 

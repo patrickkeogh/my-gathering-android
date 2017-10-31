@@ -17,20 +17,26 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_show_favs"
         android:orderInCategory="300"
+        android:title="@string/action_show_favs"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="400"
         android:title="@string/action_settings"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_logout"
-        android:orderInCategory="400"
+        android:orderInCategory="500"
         android:title="@string/action_logout"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_dump_favs"
-        android:orderInCategory="500"
+        android:orderInCategory="600"
         android:title="dump favs"
         app:showAsAction="never" />
 

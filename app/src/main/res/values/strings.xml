@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyGathering</string>
+    <string name="app_name">My Gathering</string>
     <string name="app_description">A Full Stack Application</string>
     <string name="app_year">May 2017</string>
 
@@ -28,13 +28,15 @@
     <!-- Default username for username preference [CHAR LIMIT=NONE] -->
     <string name="pref_preferred_email_default" translatable="false">preferred email not set</string>
 
+    <string name="pref_remove_preferred_gathering_location_key" translatable="false">remove preferred gathering location</string>
+
 
     <!-- Label for the location preference [CHAR LIMIT=30] -->
     <string name="pref_preferred_gathering_location_label">Location</string>
     <!-- Key name for storing location in SharedPreferences [CHAR LIMIT=NONE] -->
     <string name="pref_preferred_gathering_location_key" translatable="false">preferred gathering location</string>
     <!-- Default location preference [CHAR LIMIT=NONE] -->
-    <string name="pref_preferred_gathering_location_default" translatable="false">preferred location not set</string>
+    <string name="pref_preferred_gathering_location_default" translatable="false">Please provide your preferred search location</string>
 
     <!-- Label for the location distance preference [CHAR LIMIT=30] -->
     <string name="pref_preferred_gathering_distance_label">Max Distance (km)</string>
@@ -241,6 +243,12 @@
 
     <string name="label_topic_21">Seasonal &amp; Holidays</string>
     <string name="label_topic_22">Sports &amp; Fitness</string>
+    <string name="btn_cancel_new_gathering">CANCEL</string>
+    <string name="display_matches"> matches found</string>
+    <string name="display_match"> match found</string>
+    <string name="action_show_favs">Show Favorites</string>
+    <string name="app_title_live">My Gathering - Live</string>
+    <string name="app_title_favorites">My Gathering - Favorites</string>
 
 
 </resources>

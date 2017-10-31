@@ -37,9 +37,7 @@
                         android:id="@+id/iv_gathering_banner"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/barbeque" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
                         style="@style/TextAppearance.AppCompat.Title"

@@ -54,6 +54,7 @@ public class Activity_Location_Select extends AppCompatActivity implements
     private boolean mIsEnabled;
     private GoogleApiClient mClient;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

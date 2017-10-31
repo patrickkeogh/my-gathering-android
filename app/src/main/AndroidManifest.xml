@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- Used for notifications -->
@@ -19,19 +19,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        tools:replace="android:theme"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:theme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            tools:replace="android:value"
-            android:value="AIzaSyC9g7DondEpw_OzTTJkWoG4z985fN0HgOM" />
-
-        <!--<activity-->
-            <!--android:name=".view.activities.Activity_Splash"-->
-            <!--android:launchMode="singleTop"-->
-            <!--android:theme="@style/AppTheme.NoActionBar">-->
-
-        <!--</activity>-->
+            android:value="AIzaSyC9g7DondEpw_OzTTJkWoG4z985fN0HgOM"
+            tools:replace="android:value" />
 
         <activity
             android:name=".view.activities.Activity_Login"
@@ -50,16 +43,22 @@
             android:label="@string/app_name" />
 
 
-
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
 
         <activity
             android:name=".view.activities.Activity_Main"
             android:label="@string/app_name" />
         <activity
             android:name=".view.activities.Activity_AddGathering"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:parentActivityName=".view.activities.Activity_Main">
+            <meta-data
+                android:name="andriod.support.PARENT_ACTIVITY"
+                android:value=".Activity_Main" />
+
+        </activity>
         <activity
             android:name=".view.activities.Activity_Gathering_Details"
             android:label="@string/app_title_details"

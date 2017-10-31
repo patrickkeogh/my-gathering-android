@@ -55,6 +55,13 @@ public class Utils_Preferences {
         return prefs.getString(context.getString(R.string.pref_preferred_gathering_location_key),"");
     }
 
+    public static void savePreferredLocation(Context context, String place_id) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putString(context.getString(R.string.pref_preferred_gathering_location_key), place_id);
+        spe.apply();
+    }
+
     public static String getPreferredDistance(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getString(context.getString(R.string.pref_preferred_gathering_distance_key),

@@ -37,6 +37,7 @@ public class Fragment_Gathering_List extends Fragment implements
     private int mPosition = RecyclerView.NO_POSITION;
 
     private int mSelected_id;
+    private int mLoaderId;
 
 
     @BindView(R.id.rv_gatherings)
@@ -47,11 +48,13 @@ public class Fragment_Gathering_List extends Fragment implements
     // Define a new interface MainListener that triggers a callback in the host activity
     SelectListener mCallback;
 
-    public void notifyDataChange() {
+    public void notifyDataChange(int loaderId) {
 
-        Log.i(Constants.TAG, "notifyDataChange in Fragment_gathering_List");
-        getLoaderManager().restartLoader(Constants.GATHERING_DETAIL_LOADER, null, this);
+        Log.i(Constants.TAG, "notifyDataChange in Fragment_gathering_List:" + loaderId);
+        getLoaderManager().restartLoader(loaderId, null, this);
         mSelected_id = -1;
+        mLoaderId = loaderId;
+
         //mCallback.removeDetailsFrag();
 
     }
@@ -65,7 +68,18 @@ public class Fragment_Gathering_List extends Fragment implements
     public void onClick(long id) {
 
         // Return a uri to the main activity and use it to load the proper details record
-        Uri uri = Contract_MyGathering.GatheringEntry.buildGatheringUri(id);
+        Uri uri = null;
+        switch(mLoaderId){
+            case Constants.GATHERING_DETAIL_LOADER:
+                uri = Contract_MyGathering.GatheringEntry.buildGatheringUri(id);
+                break;
+
+            case Constants.GATHERING_FAVORITE_LOADER:
+                uri = Contract_MyGathering.FavoriteEntry.buildFavoriteUri(id);
+                break;
+
+        }
+
         mCallback.onGatheringSelected(uri);
 
     }
@@ -85,13 +99,14 @@ public class Fragment_Gathering_List extends Fragment implements
      * initializes the fragment's arguments, and returns the
      * new fragment to the client.
      */
-    public static Fragment_Gathering_List newInstance(int id) {
+    public static Fragment_Gathering_List newInstance(int id, int loader) {
 
         Fragment_Gathering_List f = new Fragment_Gathering_List();
         Bundle args = new Bundle();
 
         // Add any required arguments for start up - None needed right now
         args.putInt(Constants.EXTRA_SELECTED_ID, id);
+        args.putInt(Constants.EXTRA_LOADER_ID, loader);
         f.setArguments(args);
         return f;
     }
@@ -112,12 +127,15 @@ public class Fragment_Gathering_List extends Fragment implements
             if (savedInstanceState.containsKey(Constants.STATE_SELECTED_ID)) {
                 mSelected_id = savedInstanceState.getInt(Constants.STATE_SELECTED_ID);
             }
+            if (savedInstanceState.containsKey(Constants.STATE_LOADER_ID)) {
+                mLoaderId = savedInstanceState.getInt(Constants.STATE_LOADER_ID);
+            }
 
         } else {
 
             Bundle args = getArguments();
+            mLoaderId = args.getInt(Constants.EXTRA_LOADER_ID);
             mSelected_id = args.getInt(Constants.EXTRA_SELECTED_ID);
-            //Log.i(Constants.TAG, "Fragment_Step savedInstanceState is null, get data from intent:" +mSelected_id);
         }
 
         return rootView;
@@ -148,7 +166,7 @@ public class Fragment_Gathering_List extends Fragment implements
 
         // Prepare the loader.  Either re-connect with an existing one,
         // or start a new one.
-        getLoaderManager().initLoader(Constants.GATHERING_DETAIL_LOADER, null, this);
+        getLoaderManager().initLoader(mLoaderId, null, this);
 
     }
 
@@ -178,6 +196,7 @@ public class Fragment_Gathering_List extends Fragment implements
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
         switch (loaderId) {
             case Constants.GATHERING_DETAIL_LOADER:
+                Log.i(Constants.TAG, "Create load for gatherings in list");
                 /* URI for all rows of data in our gatherings table */
                 Uri uri = Contract_MyGathering.GatheringEntry.CONTENT_URI;
                 /* Sort order: Ascending by name */
@@ -189,6 +208,20 @@ public class Fragment_Gathering_List extends Fragment implements
                         null,
                         null,
                         sortOrder);
+
+            case Constants.GATHERING_FAVORITE_LOADER:
+                Log.i(Constants.TAG, "Create load for favorites in list");
+                /* URI for all rows of data in our gatherings table */
+                Uri uri_favs = Contract_MyGathering.FavoriteEntry.CONTENT_URI;
+                /* Sort order: Ascending by name */
+                String sort_favs = Contract_MyGathering.FavoriteEntry.COLUMN_GATHERING_NAME + " ASC";
+
+                return new android.support.v4.content.CursorLoader(getContext(),
+                        uri_favs,
+                        Constants.LOADER_GATHERING_DETAIL_COLUMNS,
+                        null,
+                        null,
+                        sort_favs);
 
             default:
                 throw new RuntimeException("Loader Not Implemented: " + loaderId);

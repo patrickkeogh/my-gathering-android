@@ -1,10 +1,12 @@
 package com.programming.kantech.mygathering.view.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.programming.kantech.mygathering.R;
 import com.programming.kantech.mygathering.data.model.mongo.Gathering;
@@ -37,20 +40,25 @@ import butterknife.OnClick;
 
 public class Fragment_Add_Details extends Fragment {
 
+    private String[] mFilterTypes;
+    private String[] mFilterTopics;
+    private int mSelectedType = 0;
+    private int mSelectedTopic = 0;
+
     @BindView(R.id.btn_next_to_location)
     Button btn_proceed;
-
-    @BindView(R.id.sp_types)
-    Spinner sp_types;
-
-    @BindView(R.id.sp_topics)
-    Spinner sp_topics;
 
     @BindView(R.id.et_add_gathering_title)
     EditText et_add_gathering_title;
 
     @BindView(R.id.et_add_gathering_description)
     EditText et_add_gathering_description;
+
+    @BindView(R.id.tv_select_type)
+    TextView tv_select_type;
+
+    @BindView(R.id.tv_select_topic)
+    TextView tv_select_topic;
 
     // Define a new interface DetailsListener that triggers a callback in the host activity
     DetailsListener mCallback;
@@ -88,7 +96,8 @@ public class Fragment_Add_Details extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setupSpinners();
+        mFilterTypes = getResources().getStringArray(R.array.gathering_types);
+        mFilterTopics = getResources().getStringArray(R.array.gathering_topics);
 
         setupForm();
 
@@ -139,6 +148,72 @@ public class Fragment_Add_Details extends Fragment {
         }
     }
 
+    @OnClick(R.id.iv_select_type)
+    public void onSelectTypeClicked() {
+        selectGatheringType();
+    }
+
+    @OnClick(R.id.tv_select_type)
+    public void onSelectTypeTextClicked() {
+        selectGatheringType();
+    }
+
+    @OnClick(R.id.iv_select_topic)
+    public void onSelectTopicClicked() {
+        selectGatheringTopic();
+    }
+
+    @OnClick(R.id.tv_select_topic)
+    public void onSelectTopicTextClicked() {
+        selectGatheringTopic();
+    }
+
+    private void selectGatheringType() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle("Select Gathering Type")
+                .setSingleChoiceItems(mFilterTypes, mSelectedType, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int position) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        dialog.dismiss();
+
+                        mSelectedType = position;
+                        setupForm();
+
+                    }
+                });
+
+        AlertDialog dialog_date_filter = builder.create();
+        dialog_date_filter.show();
+    }
+
+    private void selectGatheringTopic() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle("Select Gathering Topic")
+                .setSingleChoiceItems(mFilterTopics, mSelectedTopic, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int position) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        dialog.dismiss();
+
+                        mSelectedTopic = position;
+                        setupForm();
+
+                    }
+                });
+
+        AlertDialog dialog_date_filter = builder.create();
+        dialog_date_filter.show();
+    }
+
     @OnClick(R.id.btn_next_to_location)
     public void proceedToNext() {
 
@@ -149,13 +224,13 @@ public class Fragment_Add_Details extends Fragment {
 
         // Convert the selected topic and type to documents to store in MongoDB
         // by creating lists and adding the topic and type to them
-        String topic = sp_topics.getSelectedItem().toString();
+        String topic = mFilterTopics[mSelectedTopic];
         GatheringTopic gathering_topic = new GatheringTopic(topic);
         List<GatheringTopic> gathering_topics = new ArrayList<>();
         gathering_topics.add(gathering_topic);
         mGathering.setTopic(gathering_topics);
 
-        String type = sp_types.getSelectedItem().toString();
+        String type = mFilterTypes[mSelectedType];;
         GatheringType gathering_type = new GatheringType(type);
         List<GatheringType> gathering_types = new ArrayList<>();
         gathering_types.add(gathering_type);
@@ -165,61 +240,41 @@ public class Fragment_Add_Details extends Fragment {
 
     }
 
-    private void setupSpinners() {
-
-        String[] topics = Constants.GATHERING_TOPICS;
-        String[] types = Constants.GATHERING_TYPES;
-
-        ArrayAdapter<String> topics_dataAdapter = new ArrayAdapter<>(getContext(), R.layout.item_spinner, topics);
-
-        ArrayAdapter<String> types_dataAdapter = new ArrayAdapter<>(getContext(), R.layout.item_spinner, types);
-
-
-        // Set the drop down list style
-        topics_dataAdapter.setDropDownViewResource(R.layout.item_spinner_list);
-        types_dataAdapter.setDropDownViewResource(R.layout.item_spinner_list);
-
-        sp_topics.setSelection(0); //set the hint the default selection so it appears on launch.
-        sp_types.setSelection(0); //set the hint the default selection so it appears on launch.
-
-        // attaching data adapter to spinner
-        sp_topics.setAdapter(topics_dataAdapter);
-        sp_types.setAdapter(types_dataAdapter);
-    }
-
     private void setupForm() {
+
         boolean isFormValid = true;
+
+        String selected_type = mFilterTypes[mSelectedType];
+        String selected_topic = mFilterTopics[mSelectedTopic];
+
+        tv_select_type.setText(selected_type);
+        tv_select_topic.setText(selected_topic);
 
         String title = et_add_gathering_title.getText().toString().trim();
 
         if (title.length() == 0) {
-            et_add_gathering_title.setError("A title is required.");
+            //et_add_gathering_title.setError("A title is required.");
             isFormValid = false;
         }
 
         String description = et_add_gathering_description.getText().toString().trim();
 
         if (description.length() == 0) {
-            et_add_gathering_description.setError("A description is required.");
+            //et_add_gathering_description.setError("A description is required.");
             isFormValid = false;
         }
 
-        String topic = sp_topics.getSelectedItem().toString();
-
-        if (topic.length() == 0 || Objects.equals(topic, Constants.GATHERING_TOPIC_HINT)) {
+        if (selected_topic.length() == 0 || Objects.equals(selected_topic, Constants.GATHERING_TOPIC_HINT)) {
             //sp_topics..setError("A description is required.");
-            Utils_General.showToast(getContext(), "You must select a gathering topic!");
+            //Utils_General.showToast(getContext(), "You must select a gathering topic!");
 
             // show toast saying a topic has not been selected
             isFormValid = false;
         }
 
-        String type = sp_types.getSelectedItem().toString();
-
-        if (type.length() == 0 || Objects.equals(type, Constants.GATHERING_TYPE_HINT)) {
+        if (selected_type.length() == 0 || Objects.equals(selected_type, Constants.GATHERING_TYPE_HINT)) {
             //sp_topics..setError("A description is required.");
-            Utils_General.showToast(getContext(), "You must select a gathering type!");
-
+            //Utils_General.showToast(getContext(), "You must select a gathering type!");
             // show toast saying a topic has not been selected
             isFormValid = false;
         }

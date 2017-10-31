@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,58 +24,43 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:text="All fields are required"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/colorRed" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/title_title"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/colorPrimaryDark" />
 
             <EditText
                 android:id="@+id/et_add_gathering_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_title"
+                android:textColorHint="@color/colorBlack"
                 android:inputType="text"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:baselineAligned="false"
+                android:orientation="horizontal"
                 android:weightSum="2">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/title_topic"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-
-                    <Spinner
-                        android:id="@+id/sp_topics"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="8dp"
-                        android:prompt="@string/title_topics"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small">
-
-                    </Spinner>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -83,20 +69,102 @@
                         android:layout_marginStart="4dp"
                         android:layout_marginTop="8dp"
                         android:text="@string/title_type"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <Spinner
-                        android:id="@+id/sp_types"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="8dp"
-                        android:prompt="@string/title_types"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small">
-
-                    </Spinner>
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="@color/colorPrimaryDark" />
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/title_topic"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="@color/colorPrimaryDark" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_select_type"
+                        android:layout_width="0dp"
+                        android:layout_weight=".9"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/border"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:text="All gathering types"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/colorBlack"
+                        tools:ignore="NestedWeights" />
+
+                    <ImageView
+                        android:id="@+id/iv_select_type"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="8dp"
+                        android:contentDescription="@string/content_type_filter"
+                        app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+
+
+                    <TextView
+                        android:id="@+id/tv_select_topic"
+                        android:layout_width="0dp"
+                        android:layout_weight=".9"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/border"
+                        android:gravity="center_vertical"
+                        android:padding="8dp"
+                        android:text="All gathering topics"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/colorBlack" />
+
+                    <ImageView
+                    android:id="@+id/iv_select_topic"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/content_topic_filter"
+                    app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp" />
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
             <TextView
@@ -106,8 +174,8 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/title_description"
-                android:textColor="@color/colorPrimaryDark"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/colorPrimaryDark" />
 
             <EditText
                 android:id="@+id/et_add_gathering_description"
@@ -115,6 +183,7 @@
                 android:layout_height="150dp"
                 android:gravity="top"
                 android:hint="@string/hint_description"
+                android:textColorHint="@color/colorBlack"
                 android:inputType="text|textMultiLine"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 

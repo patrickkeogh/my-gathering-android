@@ -25,6 +25,7 @@ import com.programming.kantech.mygathering.utils.Constants;
 import com.programming.kantech.mygathering.utils.Utils_ContentValues;
 import com.programming.kantech.mygathering.utils.Utils_DateFormatting;
 import com.programming.kantech.mygathering.utils.Utils_General;
+import com.squareup.okhttp.internal.Util;
 import com.squareup.picasso.Picasso;
 
 import java.util.Date;
@@ -35,13 +36,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by patri on 2017-10-24.
+ * Created by patrick keogh on 2017-10-24.
+ *
  */
 
 public class Fragment_Main_Details extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private boolean mGatheringIsFav = false;
     private Gathering_Pojo mGathering;
+    private int mLoaderId = 0;
 
     private Uri mSelectedUri;
 
@@ -82,30 +85,30 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
     @BindView(R.id.tv_gathering_type)
     TextView tv_gathering_type;
 
+    // Define a new interface MainListener that triggers a callback in the host activity
+    DetailsListener mCallback;
 
-//    // Define a new interface MainListener that triggers a callback in the host activity
-//    MainListener mCallback;
-//
-//    // DetailsListener interface, calls a method in the host activity
-//    // after a callback has been triggered
-//    public interface MainListener {
-//        void onBannerClick(Gathering_Pojo gathering);
-//
-//        void refreshGatherings();
-//    }
+    // DetailsListener interface, calls a method in the host activity
+    // after a callback has been triggered
+    public interface DetailsListener {
+
+        void refreshFavsList();
+    }
 
     /**
      * Static factory method that
      * initializes the fragment's arguments, and returns the
      * new fragment to the client.
      */
-    public static Fragment_Main_Details newInstance(Uri uri) {
+    public static Fragment_Main_Details newInstance(Uri uri, int loaderId) {
 
         Fragment_Main_Details f = new Fragment_Main_Details();
         Bundle args = new Bundle();
 
         // Add any required arguments for start up - None needed right now
         args.putString(Constants.EXTRA_DETAILS_URI, uri.toString());
+        args.putInt(Constants.EXTRA_LOADER_ID, loaderId);
+
         f.setArguments(args);
         return f;
 
@@ -128,21 +131,20 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
                 //Log.i(Constants.TAG, "we found the step key in savedInstanceState");
                 mSelectedUri = Uri.parse(savedInstanceState.getString(Constants.STATE_DETAILS_URI));
             }
+            if (savedInstanceState.containsKey(Constants.STATE_LOADER_ID)) {
+                mLoaderId = savedInstanceState.getInt(Constants.STATE_LOADER_ID);
+            }
 
-        } else {
+        } else { // else load the extras
 
             Bundle args = getArguments();
             mSelectedUri = Uri.parse(args.getString(Constants.EXTRA_DETAILS_URI));
-            //Log.i(Constants.TAG, "Fragment_Step savedInstanceState is null, get data from intent:" + mSelectedUri.toString());
+            mLoaderId = args.getInt(Constants.EXTRA_LOADER_ID);
         }
 
-        if (mSelectedUri == null) {
+        if (mSelectedUri == null || mLoaderId == 0) {
             throw new IllegalArgumentException("Must pass EXTRA_DETAILS_URI");
-        } else {
-
-
         }
-
 
         return rootView;
 
@@ -154,7 +156,7 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
 
         // Prepare the loader.  Either re-connect with an existing one,
         // or start a new one.
-        getLoaderManager().initLoader(Constants.GATHERING_DETAIL_LOADER, null, this);
+        getLoaderManager().initLoader(mLoaderId, null, this);
 
 
     }
@@ -167,13 +169,12 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
         // This makes sure that the host activity has implemented the callback interface
         // If not, it throws an exception
         try {
-            //mCallback = (Fragment_Main_Details.MainListener) context;
+            mCallback = (Fragment_Main_Details.DetailsListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement DetailsListener");
         }
     }
-
 
     /**
      * Instantiate and return a new Loader for the given ID.
@@ -185,22 +186,15 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
 
-        //Log.i(Constants.TAG, "onCreateLoader() called in Details");
+        Log.i(Constants.TAG, "onCreateLoader() called in Details uri:" + mSelectedUri);
+        Log.i(Constants.TAG, "loaderId:" + loaderId);
 
-        switch (loaderId) {
-            case Constants.GATHERING_DETAIL_LOADER:
-
-                //Log.i(Constants.TAG, "mUri to use:" + mSelectedUri);
-
-                return new CursorLoader(getContext(),
-                        mSelectedUri,
-                        Constants.LOADER_GATHERING_DETAIL_COLUMNS,
-                        null,
-                        null,
-                        null);
-            default:
-                throw new RuntimeException("Loader Not Implemented: " + loaderId);
-        }
+        return new CursorLoader(getContext(),
+                mSelectedUri,
+                Constants.LOADER_GATHERING_DETAIL_COLUMNS,
+                null,
+                null,
+                null);
     }
 
     /**
@@ -213,24 +207,33 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
         //Log.i(Constants.TAG, "onLoadFinished() called in Details");
 
 
-
         boolean cursorHasValidData = false;
 
         if (data != null && data.moveToFirst()) {
-            //Log.i(Constants.TAG, "We have good data");
+            Log.i(Constants.TAG, "We have good data");
             /* We have valid data, continue on to bind the data to the UI */
             cursorHasValidData = true;
         }
 
         if (!cursorHasValidData) {
             /* No data to display, simply return and do nothing */
-            //Log.i(Constants.TAG, "No data to display");
+            Log.i(Constants.TAG, "No data to display");
             return;
         }
 
-        /* Read date from the cursor */
-        mGathering = Contract_MyGathering.GatheringEntry.getGatheringFromCursor(data);
+        switch (loader.getId()){
+            case Constants.GATHERING_DETAIL_LOADER:
+                /* Read gathering table data from the cursor */
+                Log.i(Constants.TAG, "Read gathering table data from the cursor");
 
+                mGathering = Contract_MyGathering.GatheringEntry.getGatheringFromCursor(data);
+                break;
+            case Constants.GATHERING_FAVORITE_LOADER:
+                /* Read gathering table data from the cursor */
+                Log.i(Constants.TAG, "Read favorite data from the cursor");
+                mGathering = Contract_MyGathering.FavoriteEntry.getFavoriteFromCursor(data);
+
+        }
         // Check if the movie is in the favorites collection
         new Task_CheckIfGatheringIsInFavorites().execute(mGathering);
 
@@ -343,31 +346,41 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
     private class Task_RemoveGatheringFromFavorites extends AsyncTask<Gathering_Pojo, Void, Integer> {
 
         @Override
-        protected Integer doInBackground(Gathering_Pojo... date) {
+        protected Integer doInBackground(Gathering_Pojo... data) {
 
             // Get the content resolver
             ContentResolver resolver = getActivity().getContentResolver();
 
-            long gathering_id = date[0].getId();
-            //Log.i(Constants.TAG, "Gathering_Id in background:" + gathering_id);
+            String gathering_id = data[0].getGathering_id();
+            Log.i(Constants.TAG, "Gathering_Id in background:" + gathering_id);
 
             String selection = Contract_MyGathering.FavoriteEntry.COLUMN_GATHERING_ID + "=?";
-            String[] args = {String.valueOf(gathering_id)};
+            String[] args = {gathering_id};
 
             return resolver.delete(Contract_MyGathering.FavoriteEntry.CONTENT_URI, selection, args);
         }
 
         @Override
         protected void onPostExecute(Integer i) {
-            gatheringDeletedFromFavorites();
+
+            gatheringDeletedFromFavorites(i);
         }
     }
 
-    private void gatheringDeletedFromFavorites() {
+    private void gatheringDeletedFromFavorites(Integer recsDeleted) {
+
+        Utils_General.showToast(getContext(), "Recs Deleted: " + recsDeleted);
+
         //change image to empty heart
         iv_favorite.setImageResource(R.drawable.ic_favorite_border_primary_24dp);
         Utils_General.showToast(getContext(), this.getString(R.string.toast_fav_removed));
         mGatheringIsFav = false;
+
+        if(mLoaderId == Constants.GATHERING_FAVORITE_LOADER){
+            // If this is the favs list, then refresh
+            mCallback.refreshFavsList();
+
+        }
     }
 
     // Use an async task to add the movie do the data fetch off of the main thread.
@@ -382,8 +395,9 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
             // Call the query method on the resolver with the correct Uri from the contract class
 
             String gathering_id = data[0].getGathering_id();
+            Log.i(Constants.TAG, "id:" + gathering_id);
             String selection = Contract_MyGathering.FavoriteEntry.COLUMN_GATHERING_ID + "=?";
-            String[] args = {String.valueOf(gathering_id)};
+            String[] args = {gathering_id};
 
             return resolver.query(Contract_MyGathering.FavoriteEntry.CONTENT_URI, null, selection, args, null);
         }
@@ -399,9 +413,10 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
 
         if (cursor != null) {
 
-            //Log.i(Constants.TAG, "Count:" + cursor.getCount());
+            Log.i(Constants.TAG, "Count:" + cursor.getCount());
 
             if (cursor.getCount() == 1) {
+                Log.i(Constants.TAG, "Gathering found in Favs");
                 iv_favorite.setImageResource(R.drawable.ic_favorite_primary_24dp);
                 mGatheringIsFav = true;
             } else {
@@ -409,6 +424,7 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
                 mGatheringIsFav = false;
             }
         } else {
+            Log.i(Constants.TAG, "Gathering not found in Favs");
             iv_favorite.setImageResource(R.drawable.ic_favorite_border_primary_24dp);
             mGatheringIsFav = false;
         }
