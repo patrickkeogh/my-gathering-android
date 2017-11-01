@@ -63,6 +63,8 @@ public class Fragment_Main extends Fragment {
         void onBannerClick(Gathering_Pojo gathering);
 
         void refreshGatherings();
+
+        void showFavMenuItem(boolean b);
     }
 
     /**
@@ -137,6 +139,7 @@ public class Fragment_Main extends Fragment {
         // If not, it throws an exception
         try {
             mCallback = (Fragment_Main.MainListener) context;
+            mCallback.showFavMenuItem(true);
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement DetailsListener");

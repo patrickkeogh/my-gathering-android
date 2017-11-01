@@ -394,7 +394,17 @@ public class Fragment_SearchFiltersDialog extends DialogFragment implements Goog
     }
 
     @OnClick(R.id.iv_select_topic)
-    public void selectTopic() {
+    public void iv_select_topic() {
+        showTopicList();
+
+    }
+
+    @OnClick(R.id.tv_select_topic)
+    public void tv_select_topic() {
+        showTopicList();
+    }
+
+    public void showTopicList(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -418,8 +428,16 @@ public class Fragment_SearchFiltersDialog extends DialogFragment implements Goog
     }
 
     @OnClick(R.id.iv_select_type)
-    public void selectTypes() {
+    public void iv_select_type() {
+        showTypeList();
+    }
 
+    @OnClick(R.id.tv_select_type)
+    public void tv_select_type() {
+        showTypeList();
+    }
+
+    public void showTypeList() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle("Select Type Filter")
@@ -439,12 +457,20 @@ public class Fragment_SearchFiltersDialog extends DialogFragment implements Goog
 
         AlertDialog dialog_date_filter = builder.create();
         dialog_date_filter.show();
-
     }
 
 
     @OnClick(R.id.iv_select_date_option)
-    public void selectDateOption() {
+    public void iv_select_date_option() {
+        showDateOptionsList();
+    }
+
+    @OnClick(R.id.tv_select_date_option)
+    public void tv_select_date_option() {
+        showDateOptionsList();
+    }
+
+    public void showDateOptionsList(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle("Select Date Filter")
@@ -480,12 +506,19 @@ public class Fragment_SearchFiltersDialog extends DialogFragment implements Goog
 
         AlertDialog dialog_date_filter = builder.create();
         dialog_date_filter.show();
-
     }
 
     @OnClick(R.id.iv_select_date)
-    public void selectDate() {
+    public void iv_select_date() {
+        showDateCalender();
+    }
 
+    @OnClick(R.id.tv_select_date)
+    public void tv_select_date() {
+        showDateCalender();
+    }
+
+    public void showDateCalender(){
         Calendar cal = Calendar.getInstance(TimeZone.getDefault()); // Get current date
 
         // Create the DatePickerDialog instance
@@ -500,12 +533,27 @@ public class Fragment_SearchFiltersDialog extends DialogFragment implements Goog
     }
 
     @OnClick(R.id.iv_select_location)
-    public void selectLocation() {
+    public void iv_select_location() {
         onSelectLocationClicked();
     }
 
+    @OnClick(R.id.tv_select_location)
+    public void tv_select_location() {
+        onSelectLocationClicked();
+    }
+
+
     @OnClick(R.id.iv_select_distance)
-    public void selectDistance() {
+    public void iv_select_distance() {
+        showDistanceList();
+    }
+
+    @OnClick(R.id.tv_select_distance)
+    public void tv_select_distance() {
+        showDistanceList();
+    }
+
+    public void showDistanceList(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle("Select Distance Option")

@@ -64,6 +64,8 @@ Fragment_Main_Details.DetailsListener,
     private ArrayList<Gathering_Pojo> mGatherings;
     private ActionBar mActionBar;
     private int mLoaderId;
+    private MenuItem mMenuItem_Favs;
+    private boolean mShowFavsMenu;
 
     private Query_Search mQuery;
 
@@ -101,6 +103,8 @@ Fragment_Main_Details.DetailsListener,
         mActionBar = this.getSupportActionBar();
 
         setThisActionBar(false, "My Gatherings");
+
+        //mShowFavsMenu = true;
 
 
         // Determine if you're in portrait or landscape mode
@@ -153,6 +157,7 @@ Fragment_Main_Details.DetailsListener,
         getSupportLoaderManager().initLoader(mLoaderId, null, this);
 
     }
+
 
     private void setThisActionBar(boolean showHomeButton, String title) {
 
@@ -210,62 +215,17 @@ Fragment_Main_Details.DetailsListener,
 
     //setupSharedPreferences();
 
-
-//        apiService = ApiClient.getClient().create(ApiInterface.class);
-//        Log.i(Constants.TAG, "API Service Created");
-//
-//        gv_gatherings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-//
-////                Movie movie = mImageAdapter.getItem(position);
-////
-////                Log.i(Constants.LOG_TAG, "Movie:" + movie.toString());
-////
-////                Intent intent = new Intent(Activity_Main.this, Activity_Details.class);
-////                intent.putExtra(Constants.EXTRA_MOVIE_DETAILS, movie);
-////                startActivity(intent);
-//            }
-//        });
-//
-//        // Start the swipe progress indicator
-//        mySwipeRefreshLayout.setRefreshing(true);
-//
-//
-//        getGatherings();
-//
-//        // Schedule the new gathering search job if notifications are allowed
-//        Boolean isAllowed = Utils_Preferences.isNotificationsAllowed(this);
-//        if (isAllowed) {
-//            Log.i(Constants.TAG, "Notifications are allowed");
-//
-//            ReminderUtilities.scheduleNewGatheringSearch(this);
-//        }
-//
-//        /*
-//         * Sets up a SwipeRefreshLayout.OnRefreshListener that is invoked when the user
-//         * performs a swipe-to-refresh gesture.
-//        */
-//        mySwipeRefreshLayout.setOnRefreshListener(
-//                new SwipeRefreshLayout.OnRefreshListener() {
-//                    @Override
-//                    public void onRefresh() {
-//                        Log.i(Constants.TAG, "onRefresh called from SwipeRefreshLayout");
-//
-//                        // This method performs the actual data-refresh operation.
-//                        // The method calls setRefreshing(false) when it's finished.
-//                        getGatherings();
-//                    }
-//                }
-//        );
-
-    // }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.i(Constants.TAG, "onCreateOptionsMenu:" + mShowFavsMenu);
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        mMenuItem_Favs = (MenuItem) menu.findItem(R.id.action_show_favs);
+
+        mMenuItem_Favs.setVisible(mShowFavsMenu);
+
         return true; //true means been handled
     }
 
@@ -369,6 +329,7 @@ Fragment_Main_Details.DetailsListener,
     public void onBannerClick(Gathering_Pojo gathering) {
 
         setThisActionBar(true, "Details");
+        //mMenuItem_Favs.setVisible(false);
 
         Uri uri;
 
@@ -463,6 +424,13 @@ Fragment_Main_Details.DetailsListener,
     public void refreshGatherings() {
 
         getGatherings(mQuery);
+    }
+
+    @Override
+    public void showFavMenuItem(boolean b) {
+        Log.i(Constants.TAG, "showFavMenuItem called  in Main actiivty:" + b);
+        mShowFavsMenu = b;
+        invalidateOptionsMenu();
     }
 
     /**

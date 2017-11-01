@@ -249,6 +249,8 @@
     <string name="action_show_favs">Show Favorites</string>
     <string name="app_title_live">My Gathering - Live</string>
     <string name="app_title_favorites">My Gathering - Favorites</string>
+    <string name="title_start_date">Start Date And Time</string>
+    <string name="title_end_date">End Date And Time</string>
 
 
 </resources>

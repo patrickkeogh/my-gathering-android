@@ -31,19 +31,15 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="Start Date and Time"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textColor="@color/colorPrimaryDark" />
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="@string/title_start_date"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="@dimen/title_line_view_height"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginTop="4dp"
-                        android:background="@color/colorAccent" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -52,8 +48,8 @@
 
                         <ImageView
                             android:id="@+id/iv_add_start_date"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:layout_gravity="fill"
                             android:layout_marginEnd="16dp"
                             app:srcCompat="@drawable/ic_date_accent_24dp" />
@@ -66,8 +62,8 @@
                             android:layout_marginBottom="4dp"
                             android:layout_marginStart="4dp"
                             android:layout_marginTop="4dp"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                            android:textColor="@color/colorTextGrey"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/colorBlack"
                             tools:text="Monday June 12th, 2017" />
                     </LinearLayout>
 
@@ -78,8 +74,8 @@
 
                         <ImageView
                             android:id="@+id/iv_add_start_time"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:layout_gravity="fill"
                             android:layout_marginEnd="16dp"
                             android:layout_marginRight="16dp"
@@ -90,10 +86,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="4dp"
-                            android:layout_marginLeft="4dp"
+                            android:layout_marginStart="4dp"
                             android:layout_marginTop="4dp"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                            android:textColor="@color/colorTextGrey"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/colorBlack"
                             tools:text="12:05 AM" />
                     </LinearLayout>
 
@@ -106,21 +102,15 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="End Date and Time"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="@dimen/title_line_view_height"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginTop="4dp"
-                        android:background="@color/colorAccent" />
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="8dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="@string/title_end_date"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -129,8 +119,8 @@
 
                         <ImageView
                             android:id="@+id/iv_add_end_date"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:layout_gravity="fill"
                             android:layout_marginEnd="16dp"
                             android:layout_marginRight="16dp"
@@ -144,8 +134,8 @@
                             android:layout_marginBottom="4dp"
                             android:layout_marginStart="4dp"
                             android:layout_marginTop="4dp"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                            android:textColor="@color/colorTextGrey"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/colorBlack"
                             tools:text="Monday June 12th, 2017" />
                     </LinearLayout>
 
@@ -156,8 +146,8 @@
 
                         <ImageView
                             android:id="@+id/iv_add_end_time"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
                             android:layout_gravity="fill"
                             android:layout_marginEnd="16dp"
                             android:layout_marginRight="16dp"
@@ -170,8 +160,8 @@
                             android:layout_marginBottom="4dp"
                             android:layout_marginLeft="4dp"
                             android:layout_marginTop="4dp"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                            android:textColor="@color/colorTextGrey"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/colorBlack"
                             tools:text="12:05 AM" />
                     </LinearLayout>
 

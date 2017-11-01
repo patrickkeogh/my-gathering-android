@@ -93,6 +93,7 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
     public interface DetailsListener {
 
         void refreshFavsList();
+        void showFavMenuItem(boolean b);
     }
 
     /**
@@ -170,6 +171,7 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
         // If not, it throws an exception
         try {
             mCallback = (Fragment_Main_Details.DetailsListener) context;
+            mCallback.showFavMenuItem(false);
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement DetailsListener");

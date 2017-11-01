@@ -91,6 +91,8 @@ public class Fragment_Gathering_List extends Fragment implements
         void onGatheringSelected(Uri uri);
         void removeDetailsFrag();
 
+        void showFavMenuItem(boolean b);
+
         //void refreshGatherings();
     }
 
@@ -179,19 +181,13 @@ public class Fragment_Gathering_List extends Fragment implements
         // If not, it throws an exception
         try {
             mCallback = (Fragment_Gathering_List.SelectListener) context;
+            mCallback.showFavMenuItem(false);
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement DetailsListener");
         }
     }
 
-    /**
-     * Instantiate and return a new Loader for the given ID.
-     *
-     * @param loaderId The ID whose loader is to be created.
-     * @param args     Any arguments supplied by the caller.
-     * @return Return a new Loader instance that is ready to start loading.
-     */
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
         switch (loaderId) {

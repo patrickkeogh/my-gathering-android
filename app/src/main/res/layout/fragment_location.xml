@@ -43,6 +43,8 @@
                 android:id="@+id/et_add_gathering_location_notes"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:padding="8dp"
+                android:background="@drawable/border"
                 android:gravity="top"
                 android:hint="@string/hint_description"
                 android:inputType="text|textMultiLine"
