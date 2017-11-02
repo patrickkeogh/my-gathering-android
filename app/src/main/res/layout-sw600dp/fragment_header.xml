@@ -12,9 +12,9 @@
     <LinearLayout
         android:id="@+id/layout_nav_details"
         android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
-        android:layout_weight="1"
         android:background="@color/colorPrimary"
         android:gravity="center"
         android:orientation="vertical">
@@ -22,8 +22,8 @@
 
         <ImageView
             android:id="@+id/iv_nav_header_details"
-            android:layout_width="@dimen/icon_height_width_header"
-            android:layout_height="@dimen/icon_height_width_header"
+            android:layout_width="@dimen/icon_height_width"
+            android:layout_height="@dimen/icon_height_width"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginTop="@dimen/margin_16dp"
             android:contentDescription="@string/content_description_gathering_details_icon"
@@ -32,10 +32,10 @@
         <TextView
             android:id="@+id/tv_nav_header_details"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="60dp"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/nav_title_details"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     </LinearLayout>
 
@@ -51,8 +51,8 @@
 
         <ImageView
             android:id="@+id/iv_nav_header_location"
-            android:layout_width="@dimen/icon_height_width_header"
-            android:layout_height="@dimen/icon_height_width_header"
+            android:layout_width="@dimen/icon_height_width"
+            android:layout_height="@dimen/icon_height_width"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/margin_16dp"
             android:contentDescription="@string/content_description_gathering_location_icon"
@@ -61,10 +61,10 @@
         <TextView
             android:id="@+id/tv_nav_header_location"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="60dp"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/nav_title_location"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     </LinearLayout>
 
@@ -82,8 +82,8 @@
 
         <ImageView
             android:id="@+id/iv_nav_header_dates"
-            android:layout_width="@dimen/icon_height_width_header"
-            android:layout_height="@dimen/icon_height_width_header"
+            android:layout_width="@dimen/icon_height_width"
+            android:layout_height="@dimen/icon_height_width"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginTop="@dimen/margin_16dp"
             android:contentDescription="@string/content_description_gathering_details_icon"
@@ -92,10 +92,10 @@
         <TextView
             android:id="@+id/tv_nav_header_dates"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="60dp"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/nav_title_dates"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     </LinearLayout>
 
@@ -112,8 +112,8 @@
 
         <ImageView
             android:id="@+id/iv_nav_header_banner"
-            android:layout_width="@dimen/icon_height_width_header"
-            android:layout_height="@dimen/icon_height_width_header"
+            android:layout_width="@dimen/icon_height_width"
+            android:layout_height="@dimen/icon_height_width"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginTop="@dimen/margin_16dp"
             android:contentDescription="@string/content_description_gathering_details_icon"
@@ -122,10 +122,10 @@
         <TextView
             android:id="@+id/tv_nav_header_banner"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="60dp"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/nav_title_banner"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     </LinearLayout>
 
@@ -142,8 +142,8 @@
 
         <ImageView
             android:id="@+id/iv_nav_header_save"
-            android:layout_width="@dimen/icon_height_width_header"
-            android:layout_height="@dimen/icon_height_width_header"
+            android:layout_width="@dimen/icon_height_width"
+            android:layout_height="@dimen/icon_height_width"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginTop="@dimen/margin_16dp"
             android:contentDescription="@string/content_description_gathering_details_icon"
@@ -152,10 +152,10 @@
         <TextView
             android:id="@+id/tv_nav_header_save"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="60dp"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/nav_title_save"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     </LinearLayout>
 

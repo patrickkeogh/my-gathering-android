@@ -139,6 +139,14 @@ public class Fragment_Nav_Header extends Fragment {
 
     }
 
+    /**
+     * Save the current state of this fragment
+     */
+    @Override
+    public void onSaveInstanceState(Bundle currentState) {
+        currentState.putString(Constants.STATE_FRAGMENT_TAG, mFragmentTag);
+    }
+
     private void setupNavHeader() {
 
         Log.i(Constants.TAG, "setupNavheader called");

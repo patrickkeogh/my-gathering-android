@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/iv_fav"
+        android:icon="@drawable/ic_email_primary_24dp"
+        android:title="Request Invite" />
+
+    <item
+        android:id="@+id/iv_request_invite"
+        android:icon="@drawable/ic_email_primary_24dp"
+        android:title="Request Invite" />
+
+    <item
+        android:id="@+id/iv_favorite"
+        android:icon="@drawable/ic_email_primary_24dp"
+        android:title="Request Invite" />
+
+</menu>

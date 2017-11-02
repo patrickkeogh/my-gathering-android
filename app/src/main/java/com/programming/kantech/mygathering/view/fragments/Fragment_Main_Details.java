@@ -48,7 +48,6 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
 
     private Uri mSelectedUri;
 
-
     @BindView(R.id.iv_gathering_banner)
     ImageView iv_gathering_banner;
 
@@ -151,6 +150,15 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
 
         return rootView;
 
+    }
+
+    /**
+     * Save the current state of this fragment
+     */
+    @Override
+    public void onSaveInstanceState(Bundle currentState) {
+        currentState.putInt(Constants.STATE_LOADER_ID, mLoaderId);
+        currentState.putString(Constants.STATE_DETAILS_URI, mSelectedUri.toString());
     }
 
     @Override

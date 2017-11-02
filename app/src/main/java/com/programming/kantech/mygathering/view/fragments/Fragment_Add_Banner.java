@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.programming.kantech.mygathering.R;
 import com.programming.kantech.mygathering.data.model.mongo.Banner;
@@ -60,8 +61,8 @@ public class Fragment_Add_Banner extends Fragment {
     @BindView(R.id.btn_next_to_save)
     Button btn_proceed;
 
-    @BindView(R.id.iv_add_banner)
-    ImageView iv_add_banner;
+    @BindView(R.id.layout_no_image)
+    LinearLayout layout_no_image;
 
     @BindView(R.id.iv_banner)
     ImageView iv_banner;
@@ -262,13 +263,15 @@ public class Fragment_Add_Banner extends Fragment {
 
     }
 
-    @OnClick(R.id.iv_add_banner)
+    @OnClick(R.id.layout_no_image)
     public void getBannerFromFileStack() {
 
         Intent intent = new Intent(getActivity(), Filepicker.class);
         //intent.putExtra("location", "S3");
         startActivityForResult(intent, Filepicker.REQUEST_CODE_GETFILE);
     }
+
+
 
     @OnClick(R.id.btn_next_to_save)
     public void proceedToNext() {
@@ -388,6 +391,7 @@ public class Fragment_Add_Banner extends Fragment {
             btn_proceed.setEnabled(false);
             btn_proceed.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryLight));
             iv_banner.setVisibility(View.GONE);
+            layout_no_image.setVisibility(View.VISIBLE);
 
         } else {
             Log.i(Constants.TAG, "Url NOT NULL:" + mImageUrl);
@@ -395,6 +399,7 @@ public class Fragment_Add_Banner extends Fragment {
             btn_proceed.setEnabled(true);
             btn_proceed.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
             iv_banner.setVisibility(View.VISIBLE);
+            layout_no_image.setVisibility(View.GONE);
 
         }
     }

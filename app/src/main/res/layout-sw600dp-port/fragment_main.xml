@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="?attr/actionBarSize"
     android:background="@color/colorPrimaryLight"
     android:orientation="vertical">
@@ -29,7 +30,8 @@
             android:background="@color/colorPrimaryLight"
             android:gravity="center"
             android:horizontalSpacing="@dimen/grid_spacing"
-            android:numColumns="1"
+            android:numColumns="2"
+            tools:listitem="@layout/item_grid_banner"
             android:padding="@dimen/padding_8dp"
             android:stretchMode="columnWidth"
             android:verticalSpacing="@dimen/grid_spacing" />

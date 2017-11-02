@@ -147,6 +147,15 @@ public class Fragment_Gathering_List extends Fragment implements
 
     }
 
+    /**
+     * Save the current state of this fragment
+     */
+    @Override
+    public void onSaveInstanceState(Bundle currentState) {
+        currentState.putInt(Constants.STATE_LOADER_ID, mLoaderId);
+        currentState.putInt(Constants.STATE_SELECTED_ID, mSelected_id);
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

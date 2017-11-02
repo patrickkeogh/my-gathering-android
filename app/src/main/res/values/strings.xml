@@ -156,7 +156,7 @@
 
     <string name="nav_title_details">DETAILS</string>
     <string name="nav_title_location">LOCATION</string>
-    <string name="nav_title_dates">DATE | TIME</string>
+    <string name="nav_title_dates">DATE</string>
     <string name="nav_title_banner">BANNER</string>
     <string name="nav_title_save">SAVE</string>
     <string name="form_footer_banner">Tap the icon to select an image.</string>
@@ -239,17 +239,17 @@
     <string name="label_topic_18">Performing &amp; Visual Arts</string>
     <string name="label_topic_19">Religion &amp; Spirituality</string>
     <string name="label_topic_20">Science &amp; Technology</string>
-
     <string name="label_topic_21">Seasonal &amp; Holidays</string>
     <string name="label_topic_22">Sports &amp; Fitness</string>
-    <string name="btn_cancel_new_gathering">CANCEL</string>
+
+    <string name="btn_cancel_new_gathering">Cancel</string>
     <string name="display_matches"> matches found</string>
     <string name="display_match"> match found</string>
     <string name="action_show_favs">Show Favorites</string>
 
-    <string name="app_title_live">MyGathering.com Live Events</string>
-    <string name="app_title_favorites">MyGathering.com Saved Favorites</string>
-    <string name="app_title_details">MyGathering.com Gathering Details</string>
+    <string name="app_title_live">Live Events</string>
+    <string name="app_title_favorites">Saved Favorites</string>
+    <string name="app_title_details">Details</string>
     <string name="app_title_search">Search</string>
 
     <string name="title_start_date">Start Date And Time</string>
@@ -260,7 +260,7 @@
     <string name="content_description_search_icon">Search Filter Icon</string>
     <string name="title_seach_filter_options">Search Filter Options</string>
     <string name="btn_reset">Reset</string>
-    <string name="btn_ok">Ok</string>
+    <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>
     <string name="content_description_promotional_banner">Promotional Banner</string>
     <string name="content_description_camera_icon">Camera Icon</string>
