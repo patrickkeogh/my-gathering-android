@@ -82,25 +82,6 @@ public class Fragment_SearchFiltersDialog extends DialogFragment implements Goog
     private int mDefaultDateOption = 0;
     private int mDefaultDistanceOption = 0;
 
-    @BindView(R.id.iv_select_date_option)
-    ImageView iv_select_date_option;
-
-    @BindView(R.id.iv_select_date)
-    ImageView iv_select_date;
-
-    @BindView(R.id.iv_select_distance)
-    ImageView iv_select_distance;
-
-    @BindView(R.id.iv_select_location)
-    ImageView iv_select_location;
-
-    @BindView(R.id.iv_select_type)
-    ImageView iv_select_type;
-
-    @BindView(R.id.iv_select_topic)
-    ImageView iv_select_topic;
-
-
     @BindView(R.id.tv_select_date_option)
     TextView tv_select_date_option;
 
@@ -274,40 +255,35 @@ public class Fragment_SearchFiltersDialog extends DialogFragment implements Goog
 
         if (mSelectedDistanceOption == 0) {
             Log.i(Constants.TAG, "No distance limits setFormFields() called");
-            iv_select_location.setEnabled(false);
-            iv_select_location.setImageResource(R.drawable.ic_location_on_disabled_24dp);
+            tv_select_location.setEnabled(false);
+            tv_select_location.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getActivity(), R.drawable.ic_location_on_disabled_24dp), null, null, null);
             tv_select_location.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.border_disabled));
             tv_select_location.setText("");
 
         } else {
             Log.i(Constants.TAG, "There is a distance limitsetFormFields() called");
-            iv_select_location.setEnabled(true);
-            iv_select_location.setImageResource(R.drawable.ic_location_on_black_24dp);
+            tv_select_location.setEnabled(true);
+            tv_select_location.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getActivity(), R.drawable.ic_location_on_black_24dp), null, null, null);
             tv_select_location.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.border));
             tv_select_location.setText(mLocationAddress);
         }
 
-
-        if (Objects.equals(selected_date_option, "No Date Filter")) {
-
-            iv_select_date.setEnabled(false);
-            iv_select_date.setImageResource(R.drawable.ic_date_range_disabled_24dp);
+        if (Objects.equals(mSelectedDateOption, 0)) { // 'No date filter'
             tv_select_date.setEnabled(false);
+            tv_select_date.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getActivity(), R.drawable.ic_date_range_disabled_24dp), null, null, null);
             tv_select_date.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.border_disabled));
             tv_select_date.setText("");
 
-        } else if (Objects.equals(selected_date_option, "Today") || Objects.equals(selected_date_option, "Tomorrow")) {
-            iv_select_date.setImageResource(R.drawable.ic_date_range_disabled_24dp);
-
-            iv_select_date.setEnabled(false);
+        } else if (mSelectedDateOption == 1 || mSelectedDateOption == 2) { // 'Today' or 'Tomorrow'
+            tv_select_date.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getActivity(), R.drawable.ic_date_range_disabled_24dp), null, null, null);
             tv_select_date.setEnabled(false);
             tv_select_date.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.border));
 
             if (mFilterDate != 0)
                 tv_select_date.setText(Utils_DateFormatting.getFormattedLongDateStringFromLongDate(mFilterDate));
+
         } else {
-            iv_select_date.setImageResource(R.drawable.ic_date_range_black_24dp);
-            iv_select_date.setEnabled(true);
+            tv_select_date.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getActivity(), R.drawable.ic_date_range_black_24dp), null, null, null);
             tv_select_date.setEnabled(true);
             tv_select_date.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.border));
 
@@ -393,18 +369,12 @@ public class Fragment_SearchFiltersDialog extends DialogFragment implements Goog
         dismiss();
     }
 
-    @OnClick(R.id.iv_select_topic)
-    public void iv_select_topic() {
-        showTopicList();
-
-    }
-
     @OnClick(R.id.tv_select_topic)
     public void tv_select_topic() {
         showTopicList();
     }
 
-    public void showTopicList(){
+    public void showTopicList() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -425,11 +395,6 @@ public class Fragment_SearchFiltersDialog extends DialogFragment implements Goog
         AlertDialog dialog_date_filter = builder.create();
         dialog_date_filter.show();
 
-    }
-
-    @OnClick(R.id.iv_select_type)
-    public void iv_select_type() {
-        showTypeList();
     }
 
     @OnClick(R.id.tv_select_type)
@@ -460,17 +425,12 @@ public class Fragment_SearchFiltersDialog extends DialogFragment implements Goog
     }
 
 
-    @OnClick(R.id.iv_select_date_option)
-    public void iv_select_date_option() {
-        showDateOptionsList();
-    }
-
     @OnClick(R.id.tv_select_date_option)
     public void tv_select_date_option() {
         showDateOptionsList();
     }
 
-    public void showDateOptionsList(){
+    public void showDateOptionsList() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle("Select Date Filter")
@@ -508,17 +468,12 @@ public class Fragment_SearchFiltersDialog extends DialogFragment implements Goog
         dialog_date_filter.show();
     }
 
-    @OnClick(R.id.iv_select_date)
-    public void iv_select_date() {
-        showDateCalender();
-    }
-
     @OnClick(R.id.tv_select_date)
     public void tv_select_date() {
         showDateCalender();
     }
 
-    public void showDateCalender(){
+    public void showDateCalender() {
         Calendar cal = Calendar.getInstance(TimeZone.getDefault()); // Get current date
 
         // Create the DatePickerDialog instance
@@ -532,20 +487,9 @@ public class Fragment_SearchFiltersDialog extends DialogFragment implements Goog
         datePicker.show();
     }
 
-    @OnClick(R.id.iv_select_location)
-    public void iv_select_location() {
-        onSelectLocationClicked();
-    }
-
     @OnClick(R.id.tv_select_location)
     public void tv_select_location() {
         onSelectLocationClicked();
-    }
-
-
-    @OnClick(R.id.iv_select_distance)
-    public void iv_select_distance() {
-        showDistanceList();
     }
 
     @OnClick(R.id.tv_select_distance)
@@ -553,7 +497,7 @@ public class Fragment_SearchFiltersDialog extends DialogFragment implements Goog
         showDistanceList();
     }
 
-    public void showDistanceList(){
+    public void showDistanceList() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle("Select Distance Option")

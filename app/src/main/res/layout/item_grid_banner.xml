@@ -12,7 +12,6 @@
         android:layout_height="200dp" />
 
     <TextView
-        android:text="Title"
         android:id="@+id/tv_gathering_banner_title"
         style="@style/TextAppearance.AppCompat.Small"
         android:layout_width="match_parent"

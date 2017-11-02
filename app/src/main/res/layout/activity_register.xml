@@ -8,13 +8,13 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="56dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginEnd="@dimen/margin_16dp">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/app_name"
             android:textColor="@color/colorAccent"
@@ -23,7 +23,8 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/margin_16dp"
             android:gravity="center"
             android:text="@string/title_register_screen"
             android:textColor="@color/colorPrimaryLight"
@@ -33,12 +34,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/margin_16dp"
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:layout_marginEnd="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_16dp"
             android:text="@string/title_register_name"
             android:textColor="@color/colorPrimaryDark"
+            android:labelFor="@+id/input_name"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <EditText
@@ -51,11 +53,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/margin_16dp"
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:layout_marginEnd="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_16dp"
             android:text="@string/title_register_email"
+            android:labelFor="@id/input_email"
             android:textColor="@color/colorPrimaryDark"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
@@ -73,7 +76,8 @@
             android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginBottom="@dimen/margin_16dp"
             android:background="@color/colorPrimary"
             android:text="@string/btn_register"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -82,8 +86,8 @@
         <TextView android:id="@+id/link_login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginBottom="@dimen/margin_16dp"
             android:text="@string/register_login_msg"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />

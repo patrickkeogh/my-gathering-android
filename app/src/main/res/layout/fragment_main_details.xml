@@ -17,10 +17,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:layout_marginEnd="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginBottom="@dimen/margin_16dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -37,7 +37,8 @@
                         android:id="@+id/iv_gathering_banner"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="centerCrop"
+                        android:contentDescription="@string/content_description_banner" />
 
                     <TextView
                         style="@style/TextAppearance.AppCompat.Title"
@@ -46,12 +47,12 @@
                         android:gravity="center_vertical"
                         android:layout_gravity="center_vertical"
                         android:background="@color/colorAccent"
-                        android:paddingEnd="16dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingStart="16dp"
+                        android:paddingEnd="@dimen/padding_16dp"
+                        android:paddingLeft="@dimen/padding_16dp"
+                        android:paddingRight="@dimen/padding_16dp"
+                        android:paddingStart="@dimen/padding_16dp"
                         android:paddingTop="1dp"
-                        android:text="Free"
+                        android:text="@string/title_free"
                         android:textColor="@color/colorWhite" />
 
                     <LinearLayout
@@ -65,37 +66,40 @@
                             android:id="@+id/iv_fav"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="40dp"
+                            android:layout_height="@dimen/icon_height_width"
                             android:layout_marginStart="2dp"
                             android:layout_marginTop="2dp"
                             android:layout_marginBottom="2dp"
                             android:layout_marginEnd="1dp"
                             android:background="@color/colorPrimaryLight"
-                            app:srcCompat="@drawable/ic_email_primary_24dp" />
+                            app:srcCompat="@drawable/ic_email_primary_24dp"
+                            android:contentDescription="@string/content_description_request_invite" />
 
                         <ImageView
                             android:id="@+id/iv_request_invite"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="40dp"
+                            android:layout_height="@dimen/icon_height_width"
                             android:layout_marginStart="1dp"
                             android:layout_marginTop="2dp"
                             android:layout_marginBottom="2dp"
                             android:layout_marginEnd="1dp"
                             android:background="@color/colorPrimaryLight"
-                            app:srcCompat="@drawable/ic_attach_money_primary_24dp" />
+                            app:srcCompat="@drawable/ic_attach_money_primary_24dp"
+                            android:contentDescription="@string/content_description_tickets" />
 
                         <ImageView
                             android:id="@+id/iv_favorite"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="40dp"
+                            android:layout_height="@dimen/icon_height_width"
                             android:layout_marginStart="1dp"
                             android:layout_marginTop="2dp"
                             android:layout_marginBottom="2dp"
                             android:layout_marginEnd="2dp"
                             android:background="@color/colorPrimaryLight"
-                            app:srcCompat="@drawable/ic_favorite_border_primary_24dp" />
+                            app:srcCompat="@drawable/ic_favorite_border_primary_24dp"
+                            android:contentDescription="@string/content_description_favorite" />
 
                     </LinearLayout>
 
@@ -111,11 +115,10 @@
                         style="@style/TextAppearance.AppCompat.Title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:paddingEnd="16dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingStart="16dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:layout_marginStart="@dimen/margin_16dp"
+                        android:layout_marginEnd="@dimen/margin_16dp"
                         android:textColor="@color/colorAccent"
                         tools:text="Gathering Name" />
 
@@ -123,11 +126,10 @@
                         android:id="@+id/tv_gathering_location"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="16dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingStart="16dp"
-                        android:paddingTop="8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:layout_marginStart="@dimen/margin_16dp"
+                        android:layout_marginEnd="@dimen/margin_16dp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/colorBlack"
                         tools:text="Barrie Molson Centre" />
@@ -136,11 +138,9 @@
                         android:id="@+id/tv_gathering_city"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="16dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingStart="16dp"
-                        android:paddingTop="8dp"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:layout_marginStart="@dimen/margin_16dp"
+                        android:layout_marginEnd="@dimen/margin_16dp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/colorBlack"
                         tools:text="Barrie, ON" />
@@ -149,12 +149,9 @@
                         android:id="@+id/tv_gathering_country"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"
-                        android:paddingEnd="16dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingStart="16dp"
-                        android:paddingTop="8dp"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:layout_marginStart="@dimen/margin_16dp"
+                        android:layout_marginEnd="@dimen/margin_16dp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/colorBlack"
                         tools:text="L4N3E2, Canada" />
@@ -163,12 +160,10 @@
                         android:id="@+id/tv_gathering_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"
-                        android:paddingEnd="16dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingStart="16dp"
-                        android:paddingTop="8dp"
+                        android:layout_marginTop="@dimen/margin_16dp"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:layout_marginStart="@dimen/margin_16dp"
+                        android:layout_marginEnd="@dimen/margin_16dp"
                         android:textColor="@color/colorBlack"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         tools:text="Something" />
@@ -177,12 +172,9 @@
                         android:id="@+id/tv_gathering_topic"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"
-                        android:paddingEnd="16dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingStart="16dp"
-                        android:paddingTop="8dp"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:layout_marginStart="@dimen/margin_16dp"
+                        android:layout_marginEnd="@dimen/margin_16dp"
                         android:textColor="@color/colorBlack"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         tools:text="Something" />
@@ -205,34 +197,32 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp"
-                    android:text="Date"
+                    android:text="@string/title_date"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/colorPrimaryDark" />
 
 
                 <View
                     android:layout_width="fill_parent"
-                    android:layout_height="2dip"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
+                    android:layout_height="@dimen/title_line_view_height"
+                    android:paddingBottom="@dimen/padding_8dp"
+                    android:paddingTop="@dimen/padding_8dp"
                     android:background="@color/colorPrimary" />
 
                 <TextView
                     android:id="@+id/tv_gathering_start_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    tools:text="Start: 12:00 AM JUL 23rd, 2017"
+                    android:paddingBottom="@dimen/padding_8dp"
+                    android:paddingTop="@dimen/padding_8dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 <TextView
                     android:id="@+id/tv_gathering_end_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    tools:text="Start: 12:00 AM JUL 23rd, 2017"
+                    android:paddingBottom="@dimen/padding_8dp"
+                    android:paddingTop="@dimen/padding_8dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 <TextView
@@ -240,16 +230,16 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp"
-                    android:text="Description"
+                    android:text="@string/title_description"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/colorPrimaryDark" />
 
 
                 <View
                     android:layout_width="fill_parent"
-                    android:layout_height="2dip"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
+                    android:layout_height="@dimen/title_line_view_height"
+                    android:paddingBottom="@dimen/padding_8dp"
+                    android:paddingTop="@dimen/padding_8dp"
                     android:background="@color/colorPrimary" />
 
 
@@ -257,8 +247,8 @@
                     android:id="@+id/tv_gathering_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
+                    android:paddingBottom="@dimen/padding_8dp"
+                    android:paddingTop="@dimen/padding_8dp"
                     android:text="@string/gathering_description_test_"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -267,26 +257,26 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
+                    android:paddingBottom="@dimen/padding_8dp"
+                    android:paddingTop="@dimen/padding_8dp"
                     android:text="@string/details_title_notes"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/colorPrimaryDark" />
 
                 <View
                     android:layout_width="fill_parent"
-                    android:layout_height="2dip"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
+                    android:layout_height="@dimen/title_line_view_height"
+                    android:paddingBottom="@dimen/padding_8dp"
+                    android:paddingTop="@dimen/padding_8dp"
                     android:background="@color/colorPrimary" />
 
                 <TextView
                     android:id="@+id/tv_gathering_notes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    android:text="Notes"
+                    android:paddingBottom="@dimen/padding_8dp"
+                    android:paddingTop="@dimen/padding_8dp"
+                    android:text="@string/title_notes"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 

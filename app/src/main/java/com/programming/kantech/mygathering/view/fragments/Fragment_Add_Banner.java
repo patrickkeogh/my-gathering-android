@@ -1,19 +1,15 @@
 package com.programming.kantech.mygathering.view.fragments;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,27 +23,17 @@ import android.widget.ImageView;
 
 import com.programming.kantech.mygathering.R;
 import com.programming.kantech.mygathering.data.model.mongo.Banner;
-import com.programming.kantech.mygathering.data.model.mongo.Gathering;
 import com.programming.kantech.mygathering.data.retrofit.ApiClient_FileStack;
 import com.programming.kantech.mygathering.data.retrofit.ApiInterface_FileStack;
 import com.programming.kantech.mygathering.utils.Constants;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,7 +48,8 @@ import retrofit2.Response;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * Created by patri on 2017-10-19.
+ * Created by patrick keogh on 2017-10-19.
+ *
  */
 
 public class Fragment_Add_Banner extends Fragment {
@@ -145,21 +132,25 @@ public class Fragment_Add_Banner extends Fragment {
         if (requestCode == Filepicker.REQUEST_CODE_GETFILE) {
             if (resultCode == RESULT_OK) {
 
-                if (data != null) {
-                    dumpIntent(data);
-                }
+//                if (data != null) {
+//                    dumpIntent(data);
+//                }
 
-                Log.i(Constants.TAG, "Data return from File stack:" + data.toString());
+                //Log.i(Constants.TAG, "Data return from File stack:" + data.toString());
 
                 // Filepicker always returns array of FPFile objects
-                ArrayList<FPFile> fpFiles = data.getParcelableArrayListExtra(Filepicker.FPFILES_EXTRA);
+                ArrayList<FPFile> fpFiles = null;
+
+                if (data != null) {
+                    fpFiles = data.getParcelableArrayListExtra(Filepicker.FPFILES_EXTRA);
+                }
 
                 // Option multiple was not set so only 1 object is expected
                 final FPFile file = fpFiles.get(0);
                 mImageUrl = file.getUrl();
 
 
-                Log.i(Constants.TAG, "FileObject URL:" + file.getUrl());
+                //Log.i(Constants.TAG, "FileObject URL:" + file.getUrl());
 
                 Picasso.with(getContext()).load(file.getUrl()).into(iv_banner, new Callback() {
                     @Override
@@ -187,6 +178,7 @@ public class Fragment_Add_Banner extends Fragment {
 
             } else {
                 // Handle errors here
+                Log.e(Constants.TAG, " No file was selected.");
             }
 
         }
@@ -194,8 +186,8 @@ public class Fragment_Add_Banner extends Fragment {
 
     private void calculateMaxCrop(int height, int width, String url) {
 
-        int crop_width = 0;
-        int crop_height = 0;
+        int crop_width;
+        int crop_height;
         int crop_y = 0;
         int crop_x = 0;
 
@@ -234,39 +226,28 @@ public class Fragment_Add_Banner extends Fragment {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
-                Log.i(Constants.TAG, "Response:" + response);
+                //Log.i(Constants.TAG, "Response:" + response);
 
                 if (response.isSuccessful()) {
                     // Code 200, 201
                     ResponseBody body = response.body();
 
                     // Get the croppedimage returned from Filestack
-                    byte[] bytes = new byte[0];
+                    byte[] bytes;
                     try {
                         if (body != null) {
                             bytes = body.bytes();
                             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-                            //loadDownloadedImage(bitmap);
-
                             saveImageToExternalStorage(bitmap);
                         }
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    // Notify the activity login was successfull
-                    //login_ok(result);
-                } else {
-                    // code 400, 401, etc
 
+                } else {
+                    Log.e(Constants.TAG, "Image could not be cropped");
                     // TODO: Add code to deal with unsuccessful crop requests
-//                    switch (response.code()){
-//                        case 401:
-//                            onLoginFailed("Password or username are incorrect");
-//                        default:
-//                            onLoginFailed(response.message());
-//                    }
                 }
             }
 
@@ -275,7 +256,6 @@ public class Fragment_Add_Banner extends Fragment {
                 // Log error here since request failed
                 Log.e(Constants.TAG, t.toString());
                 // TODO: Add code here to notify user crop failed
-                //onLoginFailed(t.toString());
             }
         });
 
@@ -299,20 +279,20 @@ public class Fragment_Add_Banner extends Fragment {
         mCallback.addBanner(Constants.TAG_FRAGMENT_ADD_SAVE, banner);
     }
 
-    public static void dumpIntent(Intent i) {
-
-        Bundle bundle = i.getExtras();
-        if (bundle != null) {
-            Set<String> keys = bundle.keySet();
-            Iterator<String> it = keys.iterator();
-            Log.e(Constants.TAG, "Dumping Intent start");
-            while (it.hasNext()) {
-                String key = it.next();
-                Log.e(Constants.TAG, "[" + key + "=" + bundle.get(key) + "]");
-            }
-            Log.e(Constants.TAG, "Dumping Intent end");
-        }
-    }
+//    public static void dumpIntent(Intent i) {
+//
+//        Bundle bundle = i.getExtras();
+//        if (bundle != null) {
+//            Set<String> keys = bundle.keySet();
+//            Iterator<String> it = keys.iterator();
+//            Log.e(Constants.TAG, "Dumping Intent start");
+//            while (it.hasNext()) {
+//                String key = it.next();
+//                Log.e(Constants.TAG, "[" + key + "=" + bundle.get(key) + "]");
+//            }
+//            Log.e(Constants.TAG, "Dumping Intent end");
+//        }
+//    }
 
     @Override
     public void onDestroy() {
@@ -403,13 +383,13 @@ public class Fragment_Add_Banner extends Fragment {
     private void setupForm() {
         Log.i(Constants.TAG, "Setup Form called");
 
-        if(mImageUrl.length() == 0){
+        if (mImageUrl.length() == 0) {
             Log.i(Constants.TAG, "Url NULL:" + mImageUrl);
             btn_proceed.setEnabled(false);
             btn_proceed.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryLight));
             iv_banner.setVisibility(View.GONE);
 
-        }else{
+        } else {
             Log.i(Constants.TAG, "Url NOT NULL:" + mImageUrl);
 
             btn_proceed.setEnabled(true);

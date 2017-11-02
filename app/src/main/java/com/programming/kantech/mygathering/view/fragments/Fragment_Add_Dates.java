@@ -160,7 +160,7 @@ public class Fragment_Add_Dates extends Fragment {
 
     }
 
-    @OnClick(R.id.iv_add_start_date)
+    @OnClick(R.id.tv_add_gathering_start_date)
     public void getStartDate() {
 
         Calendar cal = Calendar.getInstance(TimeZone.getDefault()); // Get current date
@@ -177,7 +177,7 @@ public class Fragment_Add_Dates extends Fragment {
 
     }
 
-    @OnClick(R.id.iv_add_end_date)
+    @OnClick(R.id.tv_add_gathering_end_date)
     public void getEndDate() {
 
         Calendar cal = Calendar.getInstance(TimeZone.getDefault()); // Get current date
@@ -194,7 +194,7 @@ public class Fragment_Add_Dates extends Fragment {
 
     }
 
-    @OnClick(R.id.iv_add_start_time)
+    @OnClick(R.id.tv_add_gathering_start_time)
     public void getStartTime() {
 
         Calendar cal = Calendar.getInstance(TimeZone.getDefault()); // Get current date
@@ -212,7 +212,7 @@ public class Fragment_Add_Dates extends Fragment {
 
     }
 
-    @OnClick(R.id.iv_add_end_time)
+    @OnClick(R.id.tv_add_gathering_end_time)
     public void getEndTime() {
 
         Calendar cal = Calendar.getInstance(TimeZone.getDefault()); // Get current date

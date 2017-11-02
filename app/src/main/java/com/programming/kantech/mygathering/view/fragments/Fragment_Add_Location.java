@@ -168,7 +168,7 @@ public class Fragment_Add_Location extends Fragment {
         if (mGatheringAddress != null) {
 
             mGatheringAddress.setNotes(et_add_gathering_location_notes.getText().toString());
-            mCallback.addLocation(Constants.TAG_FRAGMENT_ADD_LOCATION, mGatheringAddress);
+            mCallback.addLocation(Constants.TAG_FRAGMENT_ADD_DATES, mGatheringAddress);
 
 
         }

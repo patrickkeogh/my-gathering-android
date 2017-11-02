@@ -115,10 +115,10 @@ public class Adapter_List_Gatherings extends RecyclerView.Adapter<Adapter_List_G
         /* Read date from the cursor */
         Gathering_Pojo gathering = Contract_MyGathering.GatheringEntry.getGatheringFromCursor(mCursor);
 
-        Log.i(Constants.TAG, "SelectedId:" + mSelectedId);
+        //Log.i(Constants.TAG, "SelectedId:" + mSelectedId);
 
         if(gathering.getId() == mSelectedId){
-            Log.i(Constants.TAG, "This one is selected:" + gathering.getId() + " AND " + mSelectedId);
+            //Log.i(Constants.TAG, "This one is selected:" + gathering.getId() + " AND " + mSelectedId);
             mSelectedPosition = position;
             mSelectedId = -1;
             viewHolder.itemView
@@ -131,54 +131,6 @@ public class Adapter_List_Gatherings extends RecyclerView.Adapter<Adapter_List_G
         }
 
         viewHolder.itemView.setTag(position);
-
-
-//        DateFormat utcFormat = new SimpleDateFormat(Constants.DATE_TIME_UTC_MONGODB, Locale.getDefault());
-//
-//
-//        try {
-//            Date date = utcFormat.parse(gathering.getStart_date());
-//            viewHolder.tv_gathering_date.setText(Utils_DateFormatting.getFormattedGatheringDate(date));
-//
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        //DateFormat utcFormat2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
-//
-//        Date createdDate = Utils_DateFormatting.convertUtcToLocal(gathering.getCreatedAt_date());
-//
-//        if(createdDate != null){
-//            viewHolder.tv_gathering_createdAt.setText(Utils_DateFormatting.getFormattedGatheringDate(createdDate));
-//        }
-
-
-
-//        try {
-//            String dateStr = gathering.getCreatedAt_date();
-//            Log.i(Constants.TAG, "Created Date string:" + dateStr);
-//
-//            //SimpleDateFormat df = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss a");
-//
-//            utcFormat2.setTimeZone(TimeZone.getTimeZone("UTC"));
-//            Date date = utcFormat2.parse(dateStr);
-//            utcFormat2.setTimeZone(TimeZone.getDefault());
-//            String formattedDate = utcFormat2.format(date);
-//
-//
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-
-
-//        try {
-//
-//            Date date = format.parse(gathering.getCreatedAt_date());
-//            viewHolder.tv_gathering_createdAt.setText(Utils_DateFormatting.getFormattedGatheringDate(date));
-//
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
 
 
         viewHolder.tv_gathering_name.setText(gathering.getName());

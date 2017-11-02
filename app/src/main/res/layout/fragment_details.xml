@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:layout_margin="@dimen/margin_16dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -24,7 +23,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
-                android:text="All fields are required"
+                android:text="@string/msg_all_fields_are_required"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorRed" />
 
@@ -42,132 +41,12 @@
                 android:id="@+id/et_add_gathering_title"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:padding="8dp"
                 android:background="@drawable/border"
                 android:hint="@string/hint_title"
-                android:textColorHint="@color/colorBlack"
                 android:inputType="text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/title_type"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/title_topic"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_select_type"
-                        android:layout_width="0dp"
-                        android:layout_weight=".9"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/border"
-                        android:gravity="center_vertical"
-                        android:padding="8dp"
-                        android:text="All gathering types"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColor="@color/colorBlack"
-                        tools:ignore="NestedWeights" />
-
-                    <ImageView
-                        android:id="@+id/iv_select_type"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="8dp"
-                        android:contentDescription="@string/content_type_filter"
-                        app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-
-
-                    <TextView
-                        android:id="@+id/tv_select_topic"
-                        android:layout_width="0dp"
-                        android:layout_weight=".9"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/border"
-                        android:gravity="center_vertical"
-                        android:padding="8dp"
-                        android:text="All gathering topics"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColor="@color/colorBlack" />
-
-                    <ImageView
-                    android:id="@+id/iv_select_topic"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="8dp"
-                    android:contentDescription="@string/content_topic_filter"
-                    app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
+                android:padding="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColorHint="@color/colorBlack" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -183,13 +62,88 @@
                 android:id="@+id/et_add_gathering_description"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:padding="8dp"
                 android:background="@drawable/border"
                 android:gravity="top"
                 android:hint="@string/hint_description"
-                android:textColorHint="@color/colorBlack"
                 android:inputType="text|textMultiLine"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                android:padding="8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColorHint="@color/colorBlack" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/title_type"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/title_topic"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/colorPrimaryDark" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/tv_select_type"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="@dimen/margin_8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/colorBlack"
+                    tools:ignore="NestedWeights" />
+
+                <TextView
+                    android:id="@+id/tv_select_topic"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="@dimen/margin_8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:drawablePadding="@dimen/padding_8dp"
+                    android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/colorBlack" />
+
+
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/btn_next_to_location"

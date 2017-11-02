@@ -12,10 +12,10 @@
 
         <ImageView
             android:id="@+id/iv_select_location"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/icon_height_width"
+            android:layout_height="@dimen/icon_height_width"
             android:layout_gravity="fill"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="@dimen/margin_16dp"
             app:srcCompat="@drawable/ic_place_accent_24dp" />
 
         <LinearLayout
@@ -44,7 +44,7 @@
 
     <View
         android:layout_width="fill_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/title_line_view_height"
         android:layout_alignParentBottom="true"
         android:background="@android:color/darker_gray" />
 

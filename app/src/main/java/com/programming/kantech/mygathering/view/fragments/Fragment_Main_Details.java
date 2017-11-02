@@ -94,6 +94,8 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
 
         void refreshFavsList();
         void showFavMenuItem(boolean b);
+        void showSearchMenuItem(boolean b);
+        void setActionBarHomeButton(boolean b);
     }
 
     /**
@@ -172,6 +174,8 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
         try {
             mCallback = (Fragment_Main_Details.DetailsListener) context;
             mCallback.showFavMenuItem(false);
+            mCallback.showSearchMenuItem(false);
+            mCallback.setActionBarHomeButton(true);
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement DetailsListener");

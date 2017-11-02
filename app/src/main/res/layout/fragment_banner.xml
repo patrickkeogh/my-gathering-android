@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,64 +9,67 @@
     <ScrollView
         android:id="@+id/add_gathering_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="@dimen/padding_8dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="@dimen/margin_16dp"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_16dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:text="@string/title_banner"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="200dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:background="@color/colorLightGrey"
+                    android:background="@color/colorGrey"
                     android:orientation="vertical"
-                    android:layout_width="500dp"
-                    android:layout_height="250dp">
+                    android:gravity="center_vertical"
+                    android:layout_width="400dp"
+                    android:layout_height="match_parent">
 
 
                     <ImageView
                         android:id="@+id/iv_banner"
-                        android:layout_width="500dp"
-                        android:layout_height="250dp"
-                        android:background="@color/colorGrey"
+                        android:layout_width="400dp"
+                        android:contentDescription="@string/content_description_promotional_banner"
+                        android:layout_height="match_parent"
                         android:scaleType="centerCrop" />
 
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="8dp"
-                        app:srcCompat="@drawable/ic_photo_camera_primary_24dp" />
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_margin="@dimen/margin_8dp"
+                        app:srcCompat="@drawable/ic_photo_camera_primary_24dp"
+                        android:contentDescription="@string/content_description_camera_icon" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
+                        android:layout_margin="@dimen/margin_8dp"
                         android:gravity="center_horizontal"
-                        android:text="SELECT PROMOTIONAL BANNER"
+                        android:text="@string/msg_select_promotional_banner"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
+                        android:layout_margin="@dimen/margin_8dp"
                         android:gravity="center_horizontal"
-                        android:text="Bring your gathering to life."
+                        android:text="@string/msg_bring_your_gathering_to_life"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
 
@@ -86,21 +90,22 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="fill"
-                        android:layout_margin="8dp"
-                        app:srcCompat="@drawable/ic_image_accent_24dp" />
+                        android:layout_margin="@dimen/margin_8dp"
+                        app:srcCompat="@drawable/ic_image_accent_24dp"
+                        android:contentDescription="@string/content_description_image_icon" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:text="Upload an awesome banner to promote your gathering. We recommend using at least a 2160x1080px (2:1 ratio) image that's no larger than 10MB."
+                        android:layout_margin="@dimen/margin_8dp"
+                        android:text="@string/msg_promote_banner"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="8dp"
-                        android:text="All banners will be cropped to a 2:1 width to height ratio."
+                        android:layout_margin="@dimen/margin_8dp"
+                        android:text="@string/msg_banner_crop"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 </LinearLayout>
@@ -122,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@color/colorPrimaryLight"
-                android:text="NEXT - SAVE GATHERING"
+                android:text="@string/btn_next_save"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/colorWhite" />
 

@@ -148,19 +148,10 @@ public class Fragment_Add_Details extends Fragment {
         }
     }
 
-    @OnClick(R.id.iv_select_type)
-    public void onSelectTypeClicked() {
-        selectGatheringType();
-    }
 
     @OnClick(R.id.tv_select_type)
     public void onSelectTypeTextClicked() {
         selectGatheringType();
-    }
-
-    @OnClick(R.id.iv_select_topic)
-    public void onSelectTopicClicked() {
-        selectGatheringTopic();
     }
 
     @OnClick(R.id.tv_select_topic)

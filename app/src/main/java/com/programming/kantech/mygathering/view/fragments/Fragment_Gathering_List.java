@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.programming.kantech.mygathering.R;
 import com.programming.kantech.mygathering.provider.Contract_MyGathering;
@@ -42,8 +43,6 @@ public class Fragment_Gathering_List extends Fragment implements
 
     @BindView(R.id.rv_gatherings)
     RecyclerView rv_gatherings;
-
-
 
     // Define a new interface MainListener that triggers a callback in the host activity
     SelectListener mCallback;
@@ -92,6 +91,10 @@ public class Fragment_Gathering_List extends Fragment implements
         void removeDetailsFrag();
 
         void showFavMenuItem(boolean b);
+
+        void setActionBarHomeButton(boolean b);
+
+        void showSearchMenuItem(boolean b);
 
         //void refreshGatherings();
     }
@@ -182,9 +185,11 @@ public class Fragment_Gathering_List extends Fragment implements
         try {
             mCallback = (Fragment_Gathering_List.SelectListener) context;
             mCallback.showFavMenuItem(false);
+            mCallback.showSearchMenuItem(false);
+            mCallback.setActionBarHomeButton(true);
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement DetailsListener");
+                    + " must implement SelectListener");
         }
     }
 

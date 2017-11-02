@@ -67,6 +67,9 @@ Fragment_Main_Details.DetailsListener,
     private MenuItem mMenuItem_Favs;
     private boolean mShowFavsMenu;
 
+    private MenuItem mMenuItem_Search;
+    private boolean mShowSearchMenu;
+
     private Query_Search mQuery;
 
     // Track the orientation mode
@@ -102,7 +105,7 @@ Fragment_Main_Details.DetailsListener,
         // Set the action bar back button to look like an up button
         mActionBar = this.getSupportActionBar();
 
-        setThisActionBar(false, "My Gatherings");
+        setActionBarTitle(getString(R.string.app_title_live));
 
         //mShowFavsMenu = true;
 
@@ -158,13 +161,27 @@ Fragment_Main_Details.DetailsListener,
 
     }
 
-
-    private void setThisActionBar(boolean showHomeButton, String title) {
+    private void setActionBarTitle(String title) {
+        Log.i(Constants.TAG, "setActionBarTitle called:" + title);
 
         if (mActionBar != null) {
-            mActionBar.setDisplayHomeAsUpEnabled(showHomeButton);
             mActionBar.setTitle(title);
         }
+    }
+
+    public void setActionBarHomeButton(boolean b) {
+
+        if (mActionBar != null) {
+            Log.i(Constants.TAG, "action bar set:" + b);
+            mActionBar.setDisplayHomeAsUpEnabled(b);
+        }
+    }
+
+    @Override
+    public void showSearchMenuItem(boolean b) {
+        Log.i(Constants.TAG, "showSearchMenuItem called  in Main actiivty:" + b);
+        mShowSearchMenu = b;
+        invalidateOptionsMenu();
 
     }
 
@@ -223,8 +240,10 @@ Fragment_Main_Details.DetailsListener,
         inflater.inflate(R.menu.main_menu, menu);
 
         mMenuItem_Favs = (MenuItem) menu.findItem(R.id.action_show_favs);
+        mMenuItem_Search = (MenuItem) menu.findItem(R.id.action_search);
 
         mMenuItem_Favs.setVisible(mShowFavsMenu);
+        mMenuItem_Search.setVisible(mShowSearchMenu);
 
         return true; //true means been handled
     }
@@ -262,7 +281,7 @@ Fragment_Main_Details.DetailsListener,
 
             // Get all the favorites from Storage
             getFavorites();
-            setThisActionBar(true, getString(R.string.app_title_favorites));
+            setActionBarTitle(getString(R.string.app_title_favorites));
             return true;
 
         } else if (id == R.id.action_dump_favs) {
@@ -275,7 +294,11 @@ Fragment_Main_Details.DetailsListener,
         } else if (id == android.R.id.home) {
             //Log.i(Constants.TAG, "Home called()");
 
-            setThisActionBar(false, getString(R.string.app_title_live));
+            if(mLoaderId == Constants.GATHERING_DETAIL_LOADER){
+                setActionBarTitle(getString(R.string.app_title_live));
+            }else{
+                setActionBarTitle(getString(R.string.app_title_favorites));
+            }
 
             if (mLandscapeView) {
                 //Log.i(Constants.TAG, "we are in landscape mode");
@@ -328,7 +351,7 @@ Fragment_Main_Details.DetailsListener,
     @Override
     public void onBannerClick(Gathering_Pojo gathering) {
 
-        setThisActionBar(true, "Details");
+        setActionBarTitle(getString(R.string.app_title_details));
         //mMenuItem_Favs.setVisible(false);
 
         Uri uri;
@@ -476,14 +499,14 @@ Fragment_Main_Details.DetailsListener,
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.i(Constants.TAG, "onLoadFinished in Activity main called");
+        //Log.i(Constants.TAG, "onLoadFinished in Activity main called");
 
         int loaderId = loader.getId();
 
         switch (loaderId) {
 
             case Constants.GATHERING_DETAIL_LOADER:
-                Log.i(Constants.TAG, "Gatherings are loaded");
+                //Log.i(Constants.TAG, "Gatherings are loaded");
                 mGatherings = new ArrayList<>();
 
                 for (data.moveToFirst(); !data.isAfterLast(); data.moveToNext()) {
@@ -498,7 +521,7 @@ Fragment_Main_Details.DetailsListener,
 
                 break;
             case Constants.GATHERING_FAVORITE_LOADER:
-                Log.i(Constants.TAG, "Favorites are loaded");
+                //Log.i(Constants.TAG, "Favorites are loaded");
                 mGatherings = new ArrayList<>();
 
                 for (data.moveToFirst(); !data.isAfterLast(); data.moveToNext()) {
@@ -506,11 +529,11 @@ Fragment_Main_Details.DetailsListener,
 
                     /* Read date from the cursor */
                     Gathering_Pojo favorite = Contract_MyGathering.FavoriteEntry.getFavoriteFromCursor(data);
-                    Log.i(Constants.TAG, "add favorite:" + favorite.getName());
+                    //Log.i(Constants.TAG, "add favorite:" + favorite.getName());
                     mGatherings.add(favorite);
                 }
 
-                Log.i(Constants.TAG, "Count:" + mGatherings.size());
+                //Log.i(Constants.TAG, "Count:" + mGatherings.size());
 
 
                 notifyLoadedFragmentsDataHasChanged(loaderId);
@@ -540,7 +563,7 @@ Fragment_Main_Details.DetailsListener,
                 .findFragmentByTag(Constants.TAG_FRAGMENT_MAIN_LIST);
 
         if (fragment_list != null && fragment_list instanceof Fragment_Gathering_List) {
-            Log.i(Constants.TAG, "Fragment List is loaded");
+            //Log.i(Constants.TAG, "Fragment List is loaded");
 
             Fragment_Gathering_List frag = (Fragment_Gathering_List) fragment_list;
             frag.notifyDataChange(loader);
@@ -550,8 +573,8 @@ Fragment_Main_Details.DetailsListener,
                 .findFragmentByTag(Constants.TAG_FRAGMENT_MAIN);
 
         if (fragment_main != null && fragment_main instanceof Fragment_Main) {
-            Log.i(Constants.TAG, "Fragment Main is loaded");
-            Log.i(Constants.TAG, "GatheringCount:" + mGatherings.size());
+            //Log.i(Constants.TAG, "Fragment Main is loaded");
+            //Log.i(Constants.TAG, "GatheringCount:" + mGatherings.size());
 
             Fragment_Main frag = (Fragment_Main) fragment_main;
             frag.notifyDataChange(mGatherings);
@@ -570,7 +593,7 @@ Fragment_Main_Details.DetailsListener,
     public void onFinish(Query_Search query) {
         //Log.i(Constants.TAG, "onFinish called in activity");
 
-        setThisActionBar(true, getString(R.string.app_title_live));
+        setActionBarTitle(getString(R.string.app_title_live));
 
         mLoaderId = Constants.GATHERING_DETAIL_LOADER;
 

@@ -15,14 +15,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:layout_margin="@dimen/margin_16dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="@dimen/margin_8dp"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:text="@string/title_location"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
@@ -32,9 +32,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="@dimen/margin_8dp"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:text="@string/title_directions"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
@@ -43,10 +43,13 @@
                 android:id="@+id/et_add_gathering_location_notes"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:padding="8dp"
+                android:layout_marginBottom="@dimen/margin_8dp"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:padding="@dimen/padding_8dp"
                 android:background="@drawable/border"
                 android:gravity="top"
-                android:hint="@string/hint_description"
+                android:hint="@string/hint_directions"
                 android:inputType="text|textMultiLine"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
@@ -55,16 +58,19 @@
                 android:id="@+id/btn_next_to_dates"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="@dimen/margin_8dp"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+
                 android:background="@color/colorPrimaryLight"
                 android:text="@string/btn_next_to_dates"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/colorWhite" />
 
             <TextView
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/margin_16dp"
                 android:gravity="center_horizontal"
-                android:text="Tap the icon to select a location."
+                android:text="@string/msg_tap_the_icon_to_select_a_location"
                 android:textColor="@color/colorAccent"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:layout_width="match_parent"

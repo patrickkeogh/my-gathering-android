@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,89 +8,72 @@
     <ScrollView
         android:id="@+id/add_gathering_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:layout_margin="16dp"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="@dimen/margin_8dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="8dp"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_marginBottom="@dimen/margin_16dp"
+                        android:layout_marginStart="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_16dp"
                         android:text="@string/title_start_date"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="@color/colorPrimaryDark" />
 
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_add_gathering_start_date"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/border"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:layout_marginStart="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:drawablePadding="@dimen/padding_8dp"
+                        android:padding="@dimen/margin_8dp"
+                        android:drawableStart="@drawable/ic_date_accent_24dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorBlack"
+                        tools:text="Monday June 12th, 2017" />
 
-                        <ImageView
-                            android:id="@+id/iv_add_start_date"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_gravity="fill"
-                            android:layout_marginEnd="16dp"
-                            app:srcCompat="@drawable/ic_date_accent_24dp" />
-
-                        <TextView
-                            android:id="@+id/tv_add_gathering_start_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginTop="4dp"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/colorBlack"
-                            tools:text="Monday June 12th, 2017" />
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_add_gathering_start_time"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:layout_marginStart="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:padding="@dimen/padding_8dp"
+                        android:background="@drawable/border"
+                        android:gravity="center_vertical"
+                        android:drawablePadding="@dimen/padding_8dp"
+                        android:drawableStart="@drawable/ic_time_accent_24dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorBlack"
+                        tools:text="12:05 AM" />
 
-                        <ImageView
-                            android:id="@+id/iv_add_start_time"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_gravity="fill"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
-                            app:srcCompat="@drawable/ic_time_accent_24dp" />
-
-                        <TextView
-                            android:id="@+id/tv_add_gathering_start_time"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginTop="4dp"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/colorBlack"
-                            tools:text="12:05 AM" />
-                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -105,65 +87,44 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="8dp"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:layout_marginBottom="@dimen/margin_16dp"
+                        android:layout_marginStart="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_16dp"
                         android:text="@string/title_end_date"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="@color/colorPrimaryDark" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_add_gathering_end_date"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:layout_marginStart="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:padding="@dimen/padding_8dp"
+                        android:background="@drawable/border"
+                        android:drawableStart="@drawable/ic_date_accent_24dp"
+                        android:drawablePadding="@dimen/padding_8dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorBlack"
+                        tools:text="Monday June 12th, 2017" />
 
-                        <ImageView
-                            android:id="@+id/iv_add_end_date"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_gravity="fill"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
-                            app:srcCompat="@drawable/ic_date_accent_24dp" />
-
-                        <TextView
-                            android:id="@+id/tv_add_gathering_end_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginTop="4dp"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/colorBlack"
-                            tools:text="Monday June 12th, 2017" />
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_add_gathering_end_time"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:layout_marginStart="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:padding="@dimen/padding_8dp"
+                        android:background="@drawable/border"
+                        android:drawableStart="@drawable/ic_time_accent_24dp"
+                        android:drawablePadding="@dimen/margin_8dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorBlack"
+                        tools:text="12:05 AM" />
 
-                        <ImageView
-                            android:id="@+id/iv_add_end_time"
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:layout_gravity="fill"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginRight="16dp"
-                            app:srcCompat="@drawable/ic_time_accent_24dp" />
-
-                        <TextView
-                            android:id="@+id/tv_add_gathering_end_time"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginTop="4dp"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/colorBlack"
-                            tools:text="12:05 AM" />
-                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -182,20 +143,20 @@
                 android:id="@+id/btn_next_to_banner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/margin_16dp"
                 android:background="@color/colorPrimary"
-                android:text="Next - Select Promotional Banner"
+                android:text="@string/btn_next_select_promotional_banner"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/colorWhite" />
 
             <TextView
-                android:layout_marginTop="16dp"
-                android:gravity="center_horizontal"
-                android:text="Tap the icons to set date and time."
-                android:textColor="@color/colorAccent"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:gravity="center_horizontal"
+                android:text="@string/msg_tap_the_icons_to_set_date_and_time"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/colorAccent" />
 
         </LinearLayout>
     </ScrollView>

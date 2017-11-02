@@ -15,14 +15,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:layout_margin="@dimen/margin_16dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="@dimen/margin_8dp"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
                 android:text="@string/title_access"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/colorPrimaryDark" />
@@ -61,18 +61,16 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-
-                        android:layout_marginStart="4dp"
-
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:layout_marginStart="@dimen/margin_8dp"
                         android:text="@string/msg_access_public"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
                         android:text="@string/msg_access_private"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
                 </LinearLayout>
@@ -83,9 +81,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="@dimen/margin_8dp"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
                 android:text="@string/title_status"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/colorPrimaryDark" />
@@ -124,16 +122,16 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginBottom="@dimen/margin_8dp"
+                        android:layout_marginStart="@dimen/margin_8dp"
                         android:text="@string/msg_status_publish"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
                         android:text="@string/msg_status_notpublish"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
                 </LinearLayout>
@@ -144,7 +142,7 @@
                 android:id="@+id/btn_cancel_new_gathering"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/margin_16dp"
                 android:background="@color/colorAccent"
                 android:text="@string/btn_cancel_new_gathering"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -155,7 +153,7 @@
                 android:id="@+id/btn_save_new_gathering"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/margin_16dp"
                 android:background="@color/colorPrimary"
                 android:text="@string/btn_save_new_gathering"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"

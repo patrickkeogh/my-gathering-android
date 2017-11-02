@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Gathering</string>
+    <string name="app_name">MyGathering.com</string>
     <string name="app_description">A Full Stack Application</string>
     <string name="app_year">May 2017</string>
 
@@ -114,7 +114,6 @@
     <string name="login_register_msg">Not yet a member?  Register now</string>
     <string name="login_password_msg">If you have not reset your password, use the password emailed to you during registration!</string>
     <string name="action_logout">Sign Out</string>
-    <string name="app_title_details">Details</string>
 
     <string name="gathering_reminder_notification_title">New Gatherings</string>
     <string name="gathering_reminder_notification_title_1">New Gathering</string>
@@ -129,7 +128,7 @@
     <string name="btn_add_new_location">ADD NEW LOCATION</string>
     <string name="location_list">Locations</string>
     <string name="privacy">http://www.google.com/policies/privacy</string>
-    <string name="app_title_search">Search</string>
+
 
     <string name="need_location_permission_message">You need to enable location permissions first</string>
     <string name="location_permissions_granted_message">Location Permissions Granted</string>
@@ -247,10 +246,43 @@
     <string name="display_matches"> matches found</string>
     <string name="display_match"> match found</string>
     <string name="action_show_favs">Show Favorites</string>
-    <string name="app_title_live">My Gathering - Live</string>
-    <string name="app_title_favorites">My Gathering - Favorites</string>
+
+    <string name="app_title_live">MyGathering.com Live Events</string>
+    <string name="app_title_favorites">MyGathering.com Saved Favorites</string>
+    <string name="app_title_details">MyGathering.com Gathering Details</string>
+    <string name="app_title_search">Search</string>
+
     <string name="title_start_date">Start Date And Time</string>
     <string name="title_end_date">End Date And Time</string>
+    <string name="msg_empty_grid">Your search returned 0 results.</string>
+    <string name="hint_directions">Enter any additional directions required.</string>
+    <string name="btn_clear_location">Clear Preferred Location</string>
+    <string name="content_description_search_icon">Search Filter Icon</string>
+    <string name="title_seach_filter_options">Search Filter Options</string>
+    <string name="btn_reset">Reset</string>
+    <string name="btn_ok">Ok</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="content_description_promotional_banner">Promotional Banner</string>
+    <string name="content_description_camera_icon">Camera Icon</string>
+    <string name="msg_select_promotional_banner">SELECT PROMOTIONAL BANNER</string>
+    <string name="msg_bring_your_gathering_to_life">Bring your gathering to life.</string>
+    <string name="content_description_image_icon">Image Icon</string>
+    <string name="msg_promote_banner">Upload an awesome banner to promote your gathering. We recommend using at least a 2160x1080px (2:1 ratio) image that\'s no larger than 10MB.</string>
+    <string name="msg_banner_crop">All banners will be cropped to a 2:1 width to height ratio.</string>
+    <string name="btn_next_save">NEXT - SAVE GATHERING</string>
+    <string name="btn_next_select_promotional_banner">Next - Select Promotional Banner</string>
+    <string name="msg_tap_the_icons_to_set_date_and_time">Tap the icons to set date and time.</string>
+    <string name="msg_all_fields_are_required">All fields are required</string>
+    <string name="content_description_gathering_location_icon">Gathering Location Icon</string>
+    <string name="msg_tap_the_icon_to_select_a_location">Tap the icon to select a location.</string>
+    <string name="title_free">Free</string>
+    <string name="content_description_banner">Banner</string>
+    <string name="content_description_request_invite">Request Invite</string>
+    <string name="content_description_tickets">Tickets</string>
+    <string name="content_description_favorite">Favorite</string>
+    <string name="title_date">Date</string>
+    <string name="title_notes">Notes</string>
+    <string name="content_description_app_logo">App Logo</string>
 
 
 </resources>

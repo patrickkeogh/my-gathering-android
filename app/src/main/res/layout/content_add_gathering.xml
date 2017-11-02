@@ -15,7 +15,7 @@
     <!-- A small divider -->
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="@dimen/title_line_view_height"
         android:background="@color/colorPrimaryLight" />
 
     <FrameLayout

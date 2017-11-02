@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.programming.kantech.mygathering.R;
 import com.programming.kantech.mygathering.data.model.pojo.Gathering_Pojo;
@@ -36,6 +37,9 @@ public class Fragment_Main extends Fragment {
 
     @BindView(R.id.gv_gatherings)
     GridView gv_gatherings;
+
+    @BindView(R.id.tv_empty_message)
+    TextView tv_empty_message;
 
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout mySwipeRefreshLayout;
@@ -65,6 +69,10 @@ public class Fragment_Main extends Fragment {
         void refreshGatherings();
 
         void showFavMenuItem(boolean b);
+
+        void setActionBarHomeButton(boolean b);
+
+        void showSearchMenuItem(boolean b);
     }
 
     /**
@@ -94,6 +102,7 @@ public class Fragment_Main extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        gv_gatherings.setEmptyView(tv_empty_message);
 
 
         gv_gatherings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -140,6 +149,8 @@ public class Fragment_Main extends Fragment {
         try {
             mCallback = (Fragment_Main.MainListener) context;
             mCallback.showFavMenuItem(true);
+            mCallback.showSearchMenuItem(true);
+            mCallback.setActionBarHomeButton(false);
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement DetailsListener");
