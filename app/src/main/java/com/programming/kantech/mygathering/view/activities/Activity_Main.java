@@ -64,10 +64,8 @@ Fragment_Main_Details.DetailsListener,
     private ArrayList<Gathering_Pojo> mGatherings;
     private ActionBar mActionBar;
     private int mLoaderId;
-    private MenuItem mMenuItem_Favs;
     private boolean mShowFavsMenu;
 
-    private MenuItem mMenuItem_Search;
     private boolean mShowSearchMenu;
 
     private Query_Search mQuery;
@@ -239,8 +237,8 @@ Fragment_Main_Details.DetailsListener,
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
 
-        mMenuItem_Favs = (MenuItem) menu.findItem(R.id.action_show_favs);
-        mMenuItem_Search = (MenuItem) menu.findItem(R.id.action_search);
+        MenuItem mMenuItem_Favs = menu.findItem(R.id.action_show_favs);
+        MenuItem mMenuItem_Search = menu.findItem(R.id.action_search);
 
         mMenuItem_Favs.setVisible(mShowFavsMenu);
         mMenuItem_Search.setVisible(mShowSearchMenu);
@@ -664,7 +662,7 @@ Fragment_Main_Details.DetailsListener,
             }
 
             ContentResolver resolver = getContentResolver();
-            int count = resolver.delete(Contract_MyGathering.FavoriteEntry.CONTENT_URI, null, null);
+            resolver.delete(Contract_MyGathering.FavoriteEntry.CONTENT_URI, null, null);
             //Log.i(Constants.TAG, "Count:" + count);
 
         }

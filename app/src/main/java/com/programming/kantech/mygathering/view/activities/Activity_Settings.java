@@ -1,15 +1,12 @@
 package com.programming.kantech.mygathering.view.activities;
 
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.programming.kantech.mygathering.R;
-import com.programming.kantech.mygathering.utils.Constants;
-import com.programming.kantech.mygathering.view.fragments.Fragment_Settings;
 
 public class Activity_Settings extends AppCompatActivity {
 

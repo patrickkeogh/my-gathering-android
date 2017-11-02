@@ -2,7 +2,6 @@ package com.programming.kantech.mygathering.view.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +27,7 @@ import retrofit2.Response;
 
 /**
  * Created by patrick keogh on 2017-04-09.
+ *
  */
 
 public class Activity_Register extends AppCompatActivity {
@@ -48,7 +48,7 @@ public class Activity_Register extends AppCompatActivity {
     TextView mLoginLink;
 
     // create media player to play sound when login button is clicked
-    private MediaPlayer mp;
+    //private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

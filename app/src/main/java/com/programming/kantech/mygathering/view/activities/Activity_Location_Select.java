@@ -6,12 +6,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Parcelable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -50,8 +49,7 @@ public class Activity_Location_Select extends AppCompatActivity implements
 
     // Member variables
     private Adapter_PlaceList mAdapter;
-    private RecyclerView mRecyclerView;
-    private boolean mIsEnabled;
+    //private boolean mIsEnabled;
     private GoogleApiClient mClient;
 
 
@@ -61,7 +59,7 @@ public class Activity_Location_Select extends AppCompatActivity implements
         setContentView(R.layout.activity_location_select);
 
         // Set up the recycler view
-        mRecyclerView = (RecyclerView) findViewById(R.id.places_list_recycler_view);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.places_list_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new Adapter_PlaceList(this, null, this);
         mRecyclerView.setAdapter(mAdapter);
@@ -144,12 +142,12 @@ public class Activity_Location_Select extends AppCompatActivity implements
             }
 
             // Extract the place information from the API
-            String placeName = place.getName().toString();
-            String placeAddress = place.getAddress().toString();
+            //String placeName = place.getName().toString();
+            //String placeAddress = place.getAddress().toString();
             String placeID = place.getId();
-            final LatLng latlng = place.getLatLng();
+            //final LatLng latlng = place.getLatLng();
 
-            Log.i(Constants.TAG, "LatLng:" + latlng);
+            //Log.i(Constants.TAG, "LatLng:" + latlng);
 
             // Insert a new place into DB
             ContentValues contentValues = new ContentValues();
@@ -164,7 +162,7 @@ public class Activity_Location_Select extends AppCompatActivity implements
     /***
      * Button Click event handler to handle clicking the "Add new location" Button
      *
-     * @param view
+     * @param view the button clicked
      */
     public void onAddPlaceButtonClicked(View view) {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -178,9 +176,7 @@ public class Activity_Location_Select extends AppCompatActivity implements
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
             Intent i = builder.build(this);
             startActivityForResult(i, PLACE_PICKER_REQUEST);
-        } catch (GooglePlayServicesRepairableException e) {
-            Log.e(Constants.TAG, String.format("GooglePlayServices Not Available [%s]", e.getMessage()));
-        } catch (GooglePlayServicesNotAvailableException e) {
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             Log.e(Constants.TAG, String.format("GooglePlayServices Not Available [%s]", e.getMessage()));
         } catch (Exception e) {
             Log.e(Constants.TAG, String.format("PlacePicker Exception: %s", e.getMessage()));
@@ -205,7 +201,7 @@ public class Activity_Location_Select extends AppCompatActivity implements
                 null);
 
         if (data == null || data.getCount() == 0) return;
-        List<String> guids = new ArrayList<String>();
+        List<String> guids = new ArrayList<>();
         while (data.moveToNext()) {
             guids.add(data.getString(data.getColumnIndex(Contract_MyGathering.PlaceEntry.COLUMN_PLACE_ID)));
         }
@@ -218,13 +214,15 @@ public class Activity_Location_Select extends AppCompatActivity implements
 
             }
         });
+
+        data.close();
     }
 
     /**
      * This method is for responding to clicks from our list.
      *
-     * @param id The gathering id that was clicked in the list
-     * @param place
+     * @param id The id of the Place clicked
+     * @param place The Place object clicked
      */
     @Override
     public void onClick(long id, Place place) {

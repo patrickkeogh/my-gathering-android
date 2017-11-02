@@ -13,10 +13,7 @@ import com.programming.kantech.mygathering.R;
 import com.programming.kantech.mygathering.application.Application_MyGathering;
 import com.programming.kantech.mygathering.data.model.mongo.Banner;
 import com.programming.kantech.mygathering.data.model.mongo.Gathering;
-import com.programming.kantech.mygathering.data.model.mongo.GatheringTopic;
-import com.programming.kantech.mygathering.data.model.mongo.GatheringType;
 import com.programming.kantech.mygathering.data.model.mongo.Location;
-import com.programming.kantech.mygathering.data.model.mongo.Location_Coords;
 import com.programming.kantech.mygathering.data.model.mongo.Owner;
 import com.programming.kantech.mygathering.data.retrofit.ApiClient;
 import com.programming.kantech.mygathering.data.retrofit.ApiInterface;
@@ -29,11 +26,6 @@ import com.programming.kantech.mygathering.view.fragments.Fragment_Add_Location;
 import com.programming.kantech.mygathering.view.fragments.Fragment_Add_Save;
 import com.programming.kantech.mygathering.view.fragments.Fragment_Nav_Header;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -43,7 +35,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by patri on 2017-10-18.
+ * Created by patrick keogh on 2017-10-18.
+ *
  */
 
 public class Activity_AddGathering extends AppCompatActivity implements
@@ -228,7 +221,7 @@ public class Activity_AddGathering extends AppCompatActivity implements
 
                     // TODO: Notify user the gathering was crteated and send them to the details screen
 
-//                    Log.i(Constants.TAG, "We got a gathering back:" + gathering.toString());
+                    Log.i(Constants.TAG, "We got a gathering back:" + gathering.toString());
                     newGatheringAdded(nextFrag);
 
 
@@ -287,118 +280,7 @@ public class Activity_AddGathering extends AppCompatActivity implements
 
     }
 
-    private void createDummyGathering() {
 
-        mGathering = new Gathering();
-
-        mGathering.setName("Gathering Test");
-        mGathering.setDescription("This is a test description");
-
-        // Add type and topic
-        String topic = Constants.GATHERING_DEFAULT_TOPIC;
-        GatheringTopic gathering_topic = new GatheringTopic(topic);
-        List<GatheringTopic> gathering_topics = new ArrayList<>();
-        gathering_topics.add(gathering_topic);
-        mGathering.setTopic(gathering_topics);
-
-        String type = Constants.GATHERING_DEFAULT_TYPE;
-        GatheringType gathering_type = new GatheringType(type);
-        List<GatheringType> gathering_types = new ArrayList<>();
-        gathering_types.add(gathering_type);
-        mGathering.setType(gathering_types);
-
-        Date start = new Date();
-
-        String start_date = new SimpleDateFormat(Constants.DATE_TIME_FORMAT, Locale.getDefault()).format(start);
-
-        mGathering.setGatheringStartDateTime(start_date);
-
-        Date end = new Date();
-
-        String end_date = new SimpleDateFormat(Constants.DATE_TIME_FORMAT, Locale.getDefault()).format(end);
-
-        mGathering.setGatheringEndDateTime(end_date);
-
-        Location address = new Location();
-
-        address.setFormattedAddress("Formatted address");
-
-        address.setName("Some Place");
-
-        Double lat = 44.3591179;
-        Double lng = -79.7357619;
-
-        List<Double> coords = new ArrayList<>();
-
-        coords.add(lat);
-        coords.add(lng);
-
-        Location_Coords location_coords = new Location_Coords();
-        location_coords.setCoordinates(coords);
-
-        address.setLocation(location_coords);
-
-        address.setLocality("Barrie");
-        address.setName("Name of the location");
-        address.setCountry("Canada");
-        address.setCountryShort("CA");
-        address.setStateProv("ON");
-        address.setPostalCode("L4N 3E2");
-        address.setNotes("These are notes, directions, or other stuff");
-
-        mGathering.setLocation(address);
-        mGathering.setStatus("Not Published");
-        mGathering.setAccess("Public");
-
-        Application_MyGathering app = (Application_MyGathering) getApplication();
-
-        Owner owner = app.getCurrentUser();
-        //Log.i(Constants.TAG, "CurrentUser From App:" + owner.toString());
-
-        mGathering.setOwner(owner);
-
-        dumpGatheringVariable();
-
-        Call<Gathering> call = apiService.createGathering(app.getToken(), mGathering);
-
-        call.enqueue(new Callback<Gathering>() {
-            @Override
-            public void onResponse(@NonNull Call<Gathering> call, @NonNull Response<Gathering> response) {
-
-                Log.i(Constants.TAG, "Response:" + response);
-
-                if (response.isSuccessful()) {
-                    // Code 200, 201
-                    //Result_Login result = response.body();
-
-                    //Gathering gathering = response.body();
-
-                    //Log.i(Constants.TAG, "We got a gathering back:" + gathering.toString());
-
-
-                    // Notify the activity login was successfull
-                    //login_ok(result);
-                } else {
-                    // code 400, 401, etc
-//                    switch (response.code()){
-//                        case 401:
-//                            onLoginFailed("Password or username are incorrect");
-//                        default:
-//                            onLoginFailed(response.message());
-//                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Gathering> call, @NonNull Throwable t) {
-                // Log error here since request failed
-                Log.e(Constants.TAG, t.toString());
-                //onLoginFailed(t.toString());
-            }
-        });
-
-
-    }
 
 
 }

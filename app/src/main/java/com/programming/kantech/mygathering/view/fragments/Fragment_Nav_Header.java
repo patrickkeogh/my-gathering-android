@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,13 +15,12 @@ import android.widget.TextView;
 import com.programming.kantech.mygathering.R;
 import com.programming.kantech.mygathering.utils.Constants;
 
-import org.w3c.dom.Text;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by patri on 2017-10-19.
+ * Created by patrick keogh on 2017-10-19.
+ *
  */
 
 public class Fragment_Nav_Header extends Fragment {
@@ -74,19 +72,10 @@ public class Fragment_Nav_Header extends Fragment {
     @BindView(R.id.layout_nav_save)
     LinearLayout layout_nav_save;
 
-    // Define a new interface StepNavClickListener that triggers a callback in the host activity
-    NavheaderListener mCallback;
-
     public void setForm(String nextFrag) {
 
         mFragmentTag = nextFrag;
         setupNavHeader();
-    }
-
-    // NavheaderListener interface, calls a method in the host activity
-    // after a callback has been triggered
-    public interface NavheaderListener {
-        //void onCustomerSaved(Customer customer);
     }
 
     /**

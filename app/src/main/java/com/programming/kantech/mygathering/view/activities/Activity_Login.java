@@ -2,8 +2,8 @@ package com.programming.kantech.mygathering.view.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
@@ -31,6 +31,7 @@ import retrofit2.Response;
 
 /**
  * Created by patrick keogh on 2017-04-08.
+ *
  */
 
 public class Activity_Login extends AppCompatActivity {
@@ -53,7 +54,7 @@ public class Activity_Login extends AppCompatActivity {
     CheckBox mSaveLoginCheckBox;
 
     // create media player to play sound when login button is clicked
-    private MediaPlayer mp;
+    //private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +126,7 @@ public class Activity_Login extends AppCompatActivity {
 
             call.enqueue(new Callback<Result_Login>() {
                 @Override
-                public void onResponse(Call<Result_Login>call, Response<Result_Login> response) {
+                public void onResponse(@NonNull Call<Result_Login>call, @NonNull Response<Result_Login> response) {
 
                     //Log.i(Constants.TAG, "Response:" + response);
 
@@ -147,7 +148,7 @@ public class Activity_Login extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<Result_Login>call, Throwable t) {
+                public void onFailure(@NonNull Call<Result_Login>call, @NonNull Throwable t) {
                     // Log error here since request failed
                     Log.e(Constants.TAG, t.toString());
                     onLoginFailed(t.toString());

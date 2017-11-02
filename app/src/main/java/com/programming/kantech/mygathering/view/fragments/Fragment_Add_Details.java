@@ -12,10 +12,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.programming.kantech.mygathering.R;
@@ -23,7 +21,6 @@ import com.programming.kantech.mygathering.data.model.mongo.Gathering;
 import com.programming.kantech.mygathering.data.model.mongo.GatheringTopic;
 import com.programming.kantech.mygathering.data.model.mongo.GatheringType;
 import com.programming.kantech.mygathering.utils.Constants;
-import com.programming.kantech.mygathering.utils.Utils_General;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -221,7 +218,7 @@ public class Fragment_Add_Details extends Fragment {
         gathering_topics.add(gathering_topic);
         mGathering.setTopic(gathering_topics);
 
-        String type = mFilterTypes[mSelectedType];;
+        String type = mFilterTypes[mSelectedType];
         GatheringType gathering_type = new GatheringType(type);
         List<GatheringType> gathering_types = new ArrayList<>();
         gathering_types.add(gathering_type);
