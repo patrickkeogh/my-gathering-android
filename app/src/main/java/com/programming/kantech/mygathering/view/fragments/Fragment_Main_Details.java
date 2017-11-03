@@ -254,7 +254,18 @@ public class Fragment_Main_Details extends Fragment implements LoaderManager.Loa
         //Log.i(Constants.TAG, "Gathering Returned in Details cursor:" + mGathering.toString());
 
         tv_gathering_name.setText(mGathering.getName());
-        tv_gathering_notes.setText(mGathering.getNotes());
+
+        if(mGathering.getNotes() != null){
+
+            String notes = mGathering.getNotes();
+
+            if(notes.length() != 0 ){
+                tv_gathering_notes.setText(notes);
+            }
+        }
+
+
+
 
         Date start_date = Utils_DateFormatting.convertUtcToLocal(mGathering.getStart_date());
 

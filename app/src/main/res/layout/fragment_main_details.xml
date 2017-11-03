@@ -28,7 +28,6 @@
                 style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:background="@color/colorWhite"
                 android:gravity="center_vertical"
